@@ -108,7 +108,7 @@ The AI modification feature generates a new version of the recipe while preservi
 
    Copy the example environment file:
    ```bash
-   cp .env.example .env
+   cp .env .env
    ```
 
    Then edit `.env` with your credentials (see [Environment Variables](#environment-variables) section).
