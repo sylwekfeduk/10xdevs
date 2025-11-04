@@ -1,0 +1,14 @@
+---
+import AuthLayout from "@/layouts/AuthLayout.astro";
+import { OnboardingForm } from "@/components/auth/OnboardingForm";
+
+// Check if user is authenticated
+if (!Astro.locals.user) {
+  // Redirect to login if not authenticated
+  return Astro.redirect("/login");
+}
+---
+
+<AuthLayout title="Complete your profile - HealthyMeal">
+  <OnboardingForm client:load />
+</AuthLayout>

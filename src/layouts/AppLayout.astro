@@ -1,0 +1,40 @@
+---
+import "../styles/global.css";
+import { UserNav } from "@/components/layout/UserNav";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "HealthyMeal" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-background">
+    <header class="border-b">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between">
+          <div class="flex items-center gap-6">
+            <a href="/dashboard" class="text-xl font-bold">HealthyMeal</a>
+            <nav class="hidden md:flex gap-6">
+              <a href="/dashboard" class="text-sm font-medium hover:text-primary transition-colors">Dashboard</a>
+              <a href="/recipes" class="text-sm font-medium hover:text-primary transition-colors">Recipes</a>
+            </nav>
+          </div>
+          <UserNav client:load />
+        </div>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

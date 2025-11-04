@@ -1,5 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import AppLayout from "../layouts/AppLayout.astro";
 import { ToasterStandalone } from "../components/ui/toaster-standalone";
 import { ProfileView } from "../components/profile/ProfileView";
 
@@ -10,11 +10,9 @@ if (!Astro.locals.user) {
 }
 ---
 
-<Layout title="Profile Settings">
-  <main class="min-h-screen bg-background">
-    <div class="container mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-      <ProfileView client:load />
-    </div>
-  </main>
+<AppLayout title="Profile Settings">
+  <div class="container mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+    <ProfileView client:load />
+  </div>
   <ToasterStandalone client:load />
-</Layout>
+</AppLayout>

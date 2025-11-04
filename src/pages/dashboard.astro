@@ -1,0 +1,40 @@
+---
+import AppLayout from "@/layouts/AppLayout.astro";
+
+// Check if user is authenticated
+if (!Astro.locals.user) {
+  // Redirect to login if not authenticated
+  return Astro.redirect("/login");
+}
+---
+
+<AppLayout title="Dashboard - HealthyMeal">
+  <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div class="space-y-6">
+      <div>
+        <h1 class="text-3xl font-bold">Dashboard</h1>
+        <p class="text-muted-foreground mt-2">Welcome to your personalized recipe dashboard</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded-lg border bg-card p-6">
+          <h2 class="text-xl font-semibold mb-2">My Recipes</h2>
+          <p class="text-muted-foreground">View and manage your saved recipes</p>
+          <a href="/recipes" class="mt-4 inline-block text-primary hover:underline">View recipes →</a>
+        </div>
+
+        <div class="rounded-lg border bg-card p-6">
+          <h2 class="text-xl font-semibold mb-2">Profile Settings</h2>
+          <p class="text-muted-foreground">Update your dietary preferences and allergies</p>
+          <a href="/profile" class="mt-4 inline-block text-primary hover:underline">Edit profile →</a>
+        </div>
+
+        <div class="rounded-lg border bg-card p-6">
+          <h2 class="text-xl font-semibold mb-2">Create Recipe</h2>
+          <p class="text-muted-foreground">Add a new recipe to your collection</p>
+          <a href="/recipes/new" class="mt-4 inline-block text-primary hover:underline">Create recipe →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</AppLayout>

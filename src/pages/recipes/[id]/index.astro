@@ -1,14 +1,13 @@
 ---
-import Layout from "../../../layouts/Layout.astro";
+import AppLayout from "../../../layouts/AppLayout.astro";
 import { ToasterStandalone } from "../../../components/ui/toaster-standalone";
 import { RecipeDetailsPage } from "../../../components/recipe-details/RecipeDetailsPage";
 
-// TODO: Temporarily disabled for UI testing - Re-enable authentication before production!
 // Check if user is authenticated
-// if (!Astro.locals.user) {
-//   // Redirect to login if not authenticated
-//   return Astro.redirect("/login");
-// }
+if (!Astro.locals.user) {
+  // Redirect to login if not authenticated
+  return Astro.redirect("/login");
+}
 
 // Extract recipe ID from URL parameters
 const { id } = Astro.params;
@@ -19,11 +18,9 @@ if (!id) {
 }
 ---
 
-<Layout title="Recipe Details">
-  <main class="min-h-screen bg-background">
-    <div class="container mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-      <RecipeDetailsPage recipeId={id} client:load />
-    </div>
-  </main>
+<AppLayout title="Recipe Details">
+  <div class="container mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <RecipeDetailsPage recipeId={id} client:load />
+  </div>
   <ToasterStandalone client:load />
-</Layout>
+</AppLayout>

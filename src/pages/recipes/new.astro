@@ -1,22 +1,19 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
 import { ToasterStandalone } from "../../components/ui/toaster-standalone";
 import { NewRecipeForm } from "../../components/forms/NewRecipeForm";
 
-// TODO: Temporarily disabled for UI testing - Re-enable authentication before production!
 // Check if user is authenticated
-// if (!Astro.locals.user) {
-//   // Redirect to login if not authenticated
-//   return Astro.redirect("/login");
-// }
+if (!Astro.locals.user) {
+  // Redirect to login if not authenticated
+  return Astro.redirect("/login");
+}
 ---
 
-<Layout title="Create New Recipe">
-  <main class="min-h-screen bg-background">
-    <div class="container mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold tracking-tight mb-8">Create New Recipe</h1>
-      <NewRecipeForm client:load />
-    </div>
-  </main>
+<AppLayout title="Create New Recipe">
+  <div class="container mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold tracking-tight mb-8">Create New Recipe</h1>
+    <NewRecipeForm client:load />
+  </div>
   <ToasterStandalone client:load />
-</Layout>
+</AppLayout>
