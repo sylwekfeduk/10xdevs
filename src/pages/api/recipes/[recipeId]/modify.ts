@@ -20,19 +20,23 @@ export const prerender = false;
  */
 export const POST: APIRoute = async (context) => {
   try {
+    // TODO: Temporarily disabled for UI testing - Re-enable authentication before production!
     // Check for authenticated user
-    if (!context.locals.user) {
-      return new Response(
-        JSON.stringify({
-          error: "Unauthorized",
-          message: "You must be authenticated to modify recipes",
-        }),
-        {
-          status: 401,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-    }
+    // if (!context.locals.user) {
+    //   return new Response(
+    //     JSON.stringify({
+    //       error: "Unauthorized",
+    //       message: "You must be authenticated to modify recipes",
+    //     }),
+    //     {
+    //       status: 401,
+    //       headers: { "Content-Type": "application/json" },
+    //     }
+    //   );
+    // }
+
+    // TEMPORARY: Use a mock user ID for testing
+    const userId = context.locals.user?.id || "00000000-0000-0000-0000-000000000000";
 
     // Validate recipeId from URL params
     const recipeId = context.params.recipeId;
@@ -53,7 +57,7 @@ export const POST: APIRoute = async (context) => {
     }
 
     // Call AI modification service
-    const modifiedRecipe = await modifyRecipe(context.locals.user.id, validationResult.data, context.locals.supabase);
+    const modifiedRecipe = await modifyRecipe(userId, validationResult.data, context.locals.supabase);
 
     // Return success response with 200 OK
     return new Response(JSON.stringify(modifiedRecipe), {

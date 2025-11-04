@@ -1,0 +1,36 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { ToasterStandalone } from "../../../components/ui/toaster-standalone";
+import { AIModificationPage } from "../../../components/ai-modification/AIModificationPage";
+
+// TODO: Temporarily disabled for UI testing - Re-enable authentication before production!
+// Check if user is authenticated
+// if (!Astro.locals.user) {
+//   // Redirect to login if not authenticated
+//   return Astro.redirect("/login");
+// }
+
+// Extract recipe ID from URL parameters
+const { id } = Astro.params;
+
+// Validate that ID exists
+if (!id) {
+  return Astro.redirect("/recipes");
+}
+
+// Basic UUID format validation
+const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+if (!uuidRegex.test(id)) {
+  // Invalid UUID format - redirect to recipes list
+  return Astro.redirect("/recipes");
+}
+---
+
+<Layout title="AI Recipe Modification">
+  <main class="min-h-screen bg-background">
+    <div class="container mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+      <AIModificationPage recipeId={id} client:load />
+    </div>
+  </main>
+  <ToasterStandalone client:load />
+</Layout>

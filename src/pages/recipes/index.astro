@@ -1,0 +1,21 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { ToasterStandalone } from "../../components/ui/toaster-standalone";
+import { RecipeLibraryPage } from "../../components/recipes/RecipeLibraryPage";
+
+// TODO: Temporarily disabled for UI testing - Re-enable authentication before production!
+// Check if user is authenticated
+// if (!Astro.locals.user) {
+//   // Redirect to login if not authenticated
+//   return Astro.redirect("/login");
+// }
+---
+
+<Layout title="My Recipes">
+  <main class="min-h-screen bg-background">
+    <div class="container mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <RecipeLibraryPage client:load />
+    </div>
+  </main>
+  <ToasterStandalone client:load />
+</Layout>

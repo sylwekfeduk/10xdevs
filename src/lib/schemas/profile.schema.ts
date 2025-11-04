@@ -7,7 +7,12 @@ import { z } from "zod";
  */
 export const UpdateProfileSchema = z.object({
   full_name: z.string().optional(),
-  avatar_url: z.string().url("Invalid URL format for avatar_url").optional(),
+  avatar_url: z
+    .string()
+    .refine((val) => val === "" || z.string().url().safeParse(val).success, {
+      message: "Invalid URL format for avatar_url",
+    })
+    .optional(),
   allergies: z.array(z.string()).optional(),
   diets: z.array(z.string()).optional(),
   disliked_ingredients: z.array(z.string()).optional(),

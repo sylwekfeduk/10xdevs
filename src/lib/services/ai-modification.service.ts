@@ -75,6 +75,14 @@ export async function modifyRecipe(
       throw new NotFoundError("User profile not found. Please complete your profile setup first.");
     }
 
+    // Log for debugging
+    console.log("=== AI Modification Debug ===");
+    console.log("Recipe:", recipe.title);
+    console.log("Profile allergies:", profile.allergies);
+    console.log("Profile diets:", profile.diets);
+    console.log("API Key exists:", !!import.meta.env.OPENROUTER_API_KEY);
+    console.log("API Key starts with:", import.meta.env.OPENROUTER_API_KEY?.substring(0, 10));
+
     // Step 2: Construct AI prompt
     const prompt = constructAIPrompt(recipe, profile);
 
@@ -97,7 +105,7 @@ export async function modifyRecipe(
         diets: profile.diets,
         disliked_ingredients: profile.disliked_ingredients,
       },
-      aiModelUsed: "anthropic/claude-3.5-sonnet",
+      aiModelUsed: "google/gemini-2.0-flash-exp:free",
       processingTimeMs,
       wasSuccessful: true,
       errorMessage: null,
@@ -136,7 +144,7 @@ export async function modifyRecipe(
         originalRecipeId: recipeId,
         modifiedRecipeId: null,
         userPreferencesSnapshot: {},
-        aiModelUsed: "anthropic/claude-3.5-sonnet",
+        aiModelUsed: "google/gemini-2.0-flash-exp:free",
         processingTimeMs,
         wasSuccessful: false,
         errorMessage: error.message,
@@ -157,7 +165,7 @@ export async function modifyRecipe(
       originalRecipeId: recipeId,
       modifiedRecipeId: null,
       userPreferencesSnapshot: {},
-      aiModelUsed: "anthropic/claude-3.5-sonnet",
+      aiModelUsed: "google/gemini-2.0-flash-exp:free",
       processingTimeMs,
       wasSuccessful: false,
       errorMessage: error instanceof Error ? error.message : "Unknown error",
@@ -244,7 +252,7 @@ async function callOpenRouterAPI(prompt: string): Promise<string> {
         "X-Title": "HealthyMeal Recipe Modifier",
       },
       body: JSON.stringify({
-        model: "anthropic/claude-3.5-sonnet",
+        model: "google/gemini-2.0-flash-exp:free",
         messages: [
           {
             role: "user",
@@ -258,6 +266,9 @@ async function callOpenRouterAPI(prompt: string): Promise<string> {
 
     if (!response.ok) {
       const errorText = await response.text();
+      console.log("=== OpenRouter API Error ===");
+      console.log("Status:", response.status);
+      console.log("Error:", errorText);
       throw new AIServiceUnavailableError(`OpenRouter API returned ${response.status}: ${errorText.substring(0, 200)}`);
     }
 
