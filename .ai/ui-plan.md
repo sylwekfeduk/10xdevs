@@ -7,6 +7,7 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 ## 2. View List
 
 ### Onboarding View
+
 - **Path:** `/onboarding`
 - **Purpose:** Guide new users to provide at least one dietary preference before accessing other features.
 - **Key Info:** Progress indicator, allergens (select), diets (select), disliked ingredients (text), completion requirement.
@@ -14,6 +15,7 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 - **UX/Accessibility/Security:** Enforces input of at least one preference; ARIA for form fields; progress visible; cannot skip; input validated for type/length.
 
 ### Authentication View
+
 - **Path:** `/auth`
 - **Purpose:** Allow sign in/up via email+password or Google OAuth.
 - **Key Info:** Email, password, OAuth option, session status.
@@ -21,6 +23,7 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 - **UX/Accessibility/Security:** All forms keyboard accessible; secure password input; error feedback; JWT management; prevents unauth access; rate limit/error display.
 
 ### User Profile View
+
 - **Path:** `/profile`
 - **Purpose:** View and edit dietary preferences.
 - **Key Info:** Allergens (select), diets (select), disliked ingredients (text), avatar (optional), onboarding completion.
@@ -28,6 +31,7 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 - **UX/Accessibility/Security:** Clear field labels; edit controls constrained to allowed values; feedback on success/failure.
 
 ### Recipe Entry View
+
 - **Path:** `/recipes/new`
 - **Purpose:** Submit recipes via manual form.
 - **Key Info:** Recipe title, ingredients, instructions (all required).
@@ -35,6 +39,7 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 - **UX/Accessibility/Security:** Robust validation; all controls keyboard and screen-reader accessible; feedback for missing/invalid data.
 
 ### Recipe Library View
+
 - **Path:** `/recipes`
 - **Purpose:** Browse all user recipes, originals and AI-modified.
 - **Key Info:** Recipe cards (title, status, date), filter/sort, AI-modified flag.
@@ -42,6 +47,7 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 - **UX/Accessibility/Security:** Distinct visual states for originals/AI; filterable; all cards labeled for context; supports keyboard navigation.
 
 ### Recipe Details View
+
 - **Path:** `/recipes/{id}`
 - **Purpose:** Inspect recipe (original or AI-modified), trigger AI modification if eligible.
 - **Key Info:** Full recipe, source (original/AI), changessummary, disclaimer, allergens/diets.
@@ -49,6 +55,7 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 - **UX/Accessibility/Security:** Change summary and disclaimer highlighted; explicit action required to trigger/save AI mods; robust error handling and feedback.
 
 ### AI Modification Flow View
+
 - **Path:** `/recipes/{id}/modify`
 - **Purpose:** Show suggested AI changes, allow review and saving.
 - **Key Info:** Proposed changes, changessummary, original vs. modified preview, disclaimer.
@@ -56,6 +63,7 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 - **UX/Accessibility/Security:** Strong separation between original and modified; disclaimer visually prominent; cannot overwrite original; all actions confirmed.
 
 ### Error/Status Views
+
 - **Paths:** `/error`, `/status`
 - **Purpose:** Show system errors (404, 401, validation errors, AI unavailable).
 - **Key Info:** Error type, action, helpful message.
@@ -63,6 +71,7 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 - **UX/Accessibility/Security:** Friendly, clear messaging; no dead ends; always provide actionable next steps.
 
 ### Settings/Account Management View
+
 - **Path:** `/settings`
 - **Purpose:** Manage account details, sign out, OAuth links.
 - **Key Info:** Auth controls, user info, logout.
@@ -72,6 +81,7 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 ## 3. User Journey Map
 
 **Main journey:**
+
 1. User visits app → Auth view (register/login with email/password or Google)
 2. On successful login, navigates to Onboarding (if first time) → sets at least one dietary preference (allergens/diets/disliked)
 3. Arrives at Recipe Library → sees empty or existing recipes
@@ -82,6 +92,7 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 8. Can always revisit/edit profile, manage preferences or recipes, or logout.
 
 **Alternative journeys:**
+
 - Save/delete any recipe from library/details
 - Edit profile/dietary preferences at any time
 - Encounter error/status page if something goes wrong
@@ -104,4 +115,3 @@ HealthyMeal is built around a set of core user journeys: onboarding and preferen
 - **AI Modification Summary:** List of changes, diff/highlight, accept or reject
 - **Disclaimer Modal:** Visually prominent, reaffirm allergy responsibility
 - **Error Message Block:** Info, context, actionable next step
-

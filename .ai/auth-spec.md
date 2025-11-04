@@ -129,6 +129,7 @@ src/components/auth/OnboardingForm.tsx
 UI: Built with Shadcn/ui (Multi-select components for arrays, Textarea for text).
 
 Fields:
+
 - Allergens: Multi-select checkboxes (e.g., "Orzechy", "Gluten", "Mleko", "Jaja", "Ryby", "Skorupiaki", "Soja", "Seler").
 - Diets: Multi-select checkboxes (e.g., "Wegetariańska", "Wegańska", "Bezglutenowa", "Ketogeniczna", "Śródziemnomorska").
 - Disliked Ingredients: Textarea field for free-form text input.
@@ -237,21 +238,25 @@ src/pages/api/onboarding/complete.ts (POST)
 This endpoint is called when a user completes the onboarding form.
 
 Request Body (JSON):
+
 - allergens: string[] (array of selected allergens)
 - diets: string[] (array of selected diets)
 - disliked_ingredients: string (free-form text)
 
 Validation:
+
 - Use Zod schema to validate the request body.
 - Ensure at least one field has data (allergens.length > 0 OR diets.length > 0 OR disliked_ingredients.trim() !== '') to meet the PRD 90% activation requirement.
 
 Logic:
+
 - Get the authenticated user from context.locals.supabase.auth.getUser().
 - If no user, return 401 Unauthorized.
 - Update the profiles table: UPDATE profiles SET allergens = $1, diets = $2, disliked_ingredients = $3, onboarding_completed = true WHERE id = $user_id.
 - Use RLS-aware queries (the Supabase client will automatically enforce RLS policies).
 
 Response:
+
 - On Success: Return 200 OK with { success: true }.
 - On Error: Return 400 Bad Request with validation errors or 500 Internal Server Error.
 
@@ -260,21 +265,25 @@ src/pages/api/profile/update.ts (PATCH)
 This endpoint allows authenticated users to update their profile preferences after onboarding (e.g., from /profile page).
 
 Request Body (JSON):
+
 - allergens: string[] (optional)
 - diets: string[] (optional)
 - disliked_ingredients: string (optional)
 
 Validation:
+
 - Use Zod schema to validate the request body.
 - All fields are optional (user can update any subset of preferences).
 
 Logic:
+
 - Get the authenticated user from context.locals.supabase.auth.getUser().
 - If no user, return 401 Unauthorized.
 - Update only the provided fields in the profiles table using a partial update.
 - Use RLS-aware queries.
 
 Response:
+
 - On Success: Return 200 OK with updated profile data.
 - On Error: Return 400 Bad Request or 500 Internal Server Error.
 

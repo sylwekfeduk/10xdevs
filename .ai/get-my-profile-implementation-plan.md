@@ -1,18 +1,22 @@
 # API Endpoint Implementation Plan: Get My Profile
 
 ## 1. Endpoint Overview
+
 This endpoint retrieves the complete profile data for the currently authenticated user. It's a fundamental read operation that allows the frontend to display user-specific information like their name, dietary preferences, and onboarding status.
 
 ## 2. Request Details
+
 - **HTTP Method**: `GET`
 - **URL Structure**: `/api/me/profile`
 - **Parameters**: None
 - **Request Body**: None
 
 ## 3. Used Types
+
 - **Response DTO**: `ProfileDto` from `src/types.ts`.
 
 ## 4. Response Details
+
 - **Success (200 OK)**: Returns the user's profile object.
   ```json
   {
@@ -34,6 +38,7 @@ This endpoint retrieves the complete profile data for the currently authenticate
   - `500 Internal Server Error`: For unexpected database or server errors.
 
 ## 5. Data Flow
+
 1. A `GET` request is made to `/api/me/profile`.
 2. Astro middleware validates the JWT from the `Authorization` header. If invalid, it rejects the request with a `401`.
 3. The user's ID is extracted from the valid JWT and passed to the endpoint handler via `context.locals.user`.
@@ -44,14 +49,17 @@ This endpoint retrieves the complete profile data for the currently authenticate
 8. If a database error occurs, the service throws an exception, which is caught by a global error handler and results in a `500 Internal Server Error` response.
 
 ## 6. Security Considerations
+
 - **Authentication**: The endpoint is protected. All requests must include a valid JWT issued by Supabase. This will be handled by a shared middleware.
 - **Authorization**: The service logic must ensure that the query to the `profiles` table is strictly filtered by the `user_id` obtained from the JWT. This prevents any possibility of a user accessing another user's profile.
 
 ## 7. Performance Considerations
+
 - The query on `profiles.user_id` is expected to be highly performant, as `user_id` should be an indexed column (as it's a foreign key).
 - The payload size is small, so network latency should be minimal.
 
 ## 8. Implementation Steps
+
 1. **Create Service**: If it doesn't exist, create `src/lib/services/profile.service.ts`.
 2. **Implement `getProfile` method**:
    - The method will accept `userId: string` and `supabase: SupabaseClient` as arguments.

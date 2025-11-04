@@ -11,12 +11,9 @@ const OnboardingSchema = z
     diets: z.array(z.string()).default([]),
     disliked_ingredients: z.string().default(""),
   })
-  .refine(
-    (data) => data.allergens.length > 0 || data.diets.length > 0 || data.disliked_ingredients.trim().length > 0,
-    {
-      message: "At least one preference (allergens, diets, or disliked ingredients) must be provided",
-    }
-  );
+  .refine((data) => data.allergens.length > 0 || data.diets.length > 0 || data.disliked_ingredients.trim().length > 0, {
+    message: "At least one preference (allergens, diets, or disliked ingredients) must be provided",
+  });
 
 /**
  * POST /api/onboarding/complete

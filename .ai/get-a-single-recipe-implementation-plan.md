@@ -1,9 +1,11 @@
 # API Endpoint Implementation Plan: Get a Single Recipe
 
 ## 1. Endpoint Overview
+
 This endpoint retrieves the full details of a single recipe, identified by its unique ID. It is used when a user wants to view a specific recipe's ingredients, instructions, and other metadata. The endpoint ensures that users can only access recipes they own.
 
 ## 2. Request Details
+
 - **HTTP Method**: `GET`
 - **URL Structure**: `/api/recipes/{recipeId}`
 - **Parameters**:
@@ -11,9 +13,11 @@ This endpoint retrieves the full details of a single recipe, identified by its u
 - **Request Body**: None
 
 ## 3. Used Types
+
 - **Response DTO**: `RecipeDetailDto` from `src/types.ts`.
 
 ## 4. Response Details
+
 - **Success (200 OK)**: Returns the full recipe object.
   ```json
   {
@@ -35,6 +39,7 @@ This endpoint retrieves the full details of a single recipe, identified by its u
   - `500 Internal Server Error`: For unexpected database or server errors.
 
 ## 5. Data Flow
+
 1. A `GET` request is made to `/api/recipes/{recipeId}`.
 2. Middleware validates the JWT and rejects with `401` if invalid.
 3. The API route handler extracts `recipeId` from the URL parameters (`context.params`).
@@ -50,14 +55,17 @@ This endpoint retrieves the full details of a single recipe, identified by its u
 10. Other database errors are caught and result in a `500 Internal Server Error`.
 
 ## 6. Security Considerations
+
 - **Authentication**: The endpoint must be protected by JWT middleware.
 - **Authorization**: This is the most critical aspect. The database query **must** include `WHERE id = ? AND user_id = ?`. This prevents Insecure Direct Object Reference (IDOR) vulnerabilities, where a user could otherwise cycle through UUIDs to access recipes owned by other users.
 
 ## 7. Performance Considerations
+
 - The query uses the primary key (`id`) and an indexed foreign key (`user_id`), so it will be very fast.
 - The payload for a single recipe is expected to be reasonably small. No significant performance issues are anticipated.
 
 ## 8. Implementation Steps
+
 1. **Create Zod Schema**: In `src/lib/schemas/recipe.schema.ts`, add a schema or utility to validate a UUID string, e.g., `z.string().uuid()`.
 2. **Create/Update Service**: Open `src/lib/services/recipe.service.ts`.
 3. **Implement `getRecipeById` method**:

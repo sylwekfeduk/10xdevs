@@ -1,9 +1,11 @@
 # API Endpoint Implementation Plan: Get All My Recipes
 
 ## 1. Endpoint Overview
+
 This endpoint provides a paginated list of all recipes belonging to the authenticated user. It supports sorting and is optimized to return a lightweight list, excluding heavy fields like ingredients and instructions, making it suitable for overview pages.
 
 ## 2. Request Details
+
 - **HTTP Method**: `GET`
 - **URL Structure**: `/api/recipes`
 - **Parameters**:
@@ -15,10 +17,12 @@ This endpoint provides a paginated list of all recipes belonging to the authenti
 - **Request Body**: None
 
 ## 3. Used Types
+
 - **Response DTO**: `RecipeListItemDto` for items in the data array.
 - **Pagination Structure**: A wrapper object containing `data` and `pagination` fields.
 
 ## 4. Response Details
+
 - **Success (200 OK)**: Returns a paginated response object.
   ```json
   {
@@ -45,6 +49,7 @@ This endpoint provides a paginated list of all recipes belonging to the authenti
   - `500 Internal Server Error`: For unexpected database or server errors.
 
 ## 5. Data Flow
+
 1. A `GET` request is made to `/api/recipes` with optional query parameters.
 2. Middleware validates the JWT and rejects with `401` if invalid.
 3. The API route handler validates the query parameters (`page`, `pageSize`, etc.) using a Zod schema. If validation fails, it returns `400`. Default values are applied if parameters are not provided.
@@ -61,16 +66,19 @@ This endpoint provides a paginated list of all recipes belonging to the authenti
 8. The handler sends the response with a `200 OK` status.
 
 ## 6. Security Considerations
+
 - **Authentication**: Endpoint must be protected by JWT middleware.
 - **Authorization**: All database queries must be filtered by the `user_id` from the authenticated JWT session to ensure users only see their own recipes.
 
 ## 7. Performance Considerations
+
 - **Pagination**: The use of `range()` is crucial for performance, preventing the database from sending large datasets.
 - **Indexing**: `recipes.user_id` must be indexed to ensure fast lookups. The `sortBy` fields (`created_at`, `updated_at`, `title`) are also good candidates for indexing.
 - **Efficient Count**: Executing a separate `head` query for the count is more efficient than fetching all IDs.
 - **Lightweight DTO**: Selecting only the necessary columns (`RecipeListItemDto`) reduces data transfer size.
 
 ## 8. Implementation Steps
+
 1. **Create Zod Schema**: In `src/lib/schemas/recipe.schema.ts`, define `GetRecipesQuerySchema` to validate the optional query parameters. Use `.default()` to specify default values and `.refine()` or `z.enum()` to constrain `sortBy` and `order` values.
 2. **Create Service**: If it doesn't exist, create `src/lib/services/recipe.service.ts`.
 3. **Implement `getUserRecipes` method**:

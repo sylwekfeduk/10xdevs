@@ -1,9 +1,11 @@
 # API Endpoint Implementation Plan: Delete a Recipe
 
 ## 1. Endpoint Overview
+
 This endpoint allows an authenticated user to permanently delete one of their recipes, identified by its unique ID. The operation must be secure, ensuring users can only delete recipes they own.
 
 ## 2. Request Details
+
 - **HTTP Method**: `DELETE`
 - **URL Structure**: `/api/recipes/{recipeId}`
 - **Parameters**:
@@ -11,9 +13,11 @@ This endpoint allows an authenticated user to permanently delete one of their re
 - **Request Body**: None
 
 ## 3. Used Types
+
 - None.
 
 ## 4. Response Details
+
 - **Success (204 No Content)**: An empty response indicating the resource was successfully deleted.
 - **Error**:
   - `400 Bad Request`: If `{recipeId}` is not a valid UUID.
@@ -22,6 +26,7 @@ This endpoint allows an authenticated user to permanently delete one of their re
   - `500 Internal Server Error`: For unexpected database errors.
 
 ## 5. Data Flow
+
 1. A `DELETE` request is made to `/api/recipes/{recipeId}`.
 2. Middleware validates the JWT and rejects with `401` if invalid.
 3. The API route handler extracts `recipeId` from `context.params` and validates it as a UUID. If invalid, it returns `400`.
@@ -38,15 +43,18 @@ This endpoint allows an authenticated user to permanently delete one of their re
 9. Any other database errors are caught and result in a `500 Internal Server Error`.
 
 ## 6. Security Considerations
+
 - **Authentication**: Endpoint must be protected by JWT middleware.
 - **Authorization**: The `DELETE` operation must be conditional on both the recipe `id` and the `user_id` from the token. This is the primary defense against a user being able to delete another user's data.
 
 ## 7. Performance Considerations
+
 - The `DELETE` operation targets a single row by its primary key (`id`) and is very efficient.
 - No performance issues are anticipated.
 - **Cascading Deletes**: The database schema specifies `ON DELETE SET NULL` for `original_recipe_id` in other recipes and `ON DELETE CASCADE` for logs. This means deleting an original recipe will not delete its AI-modified copies (they will just lose the link), but it will delete related logs. This is the intended behavior.
 
 ## 8. Implementation Steps
+
 1. **Create Zod Schema**: Ensure a UUID validation schema is available in `src/lib/schemas/recipe.schema.ts`.
 2. **Create/Update Service**: Open `src/lib/services/recipe.service.ts`.
 3. **Implement `deleteRecipe` method**:

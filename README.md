@@ -59,6 +59,7 @@ The AI modification feature generates a new version of the recipe while preservi
 ## Tech Stack
 
 ### Frontend
+
 - **[Astro 5](https://astro.build/)** - Fast, modern web framework with minimal JavaScript
 - **[React 19](https://react.dev/)** - Interactive UI components
 - **[TypeScript 5](https://www.typescriptlang.org/)** - Type-safe development
@@ -66,6 +67,7 @@ The AI modification feature generates a new version of the recipe while preservi
 - **[Shadcn/ui](https://ui.shadcn.com/)** - Accessible component library
 
 ### Backend
+
 - **[Supabase](https://supabase.com/)** - Backend-as-a-Service platform
   - PostgreSQL database
   - Built-in authentication
@@ -73,12 +75,30 @@ The AI modification feature generates a new version of the recipe while preservi
   - Open-source and self-hostable
 
 ### AI
+
 - **[OpenRouter.ai](https://openrouter.ai/)** - AI model aggregator
   - Access to multiple providers (OpenAI, Anthropic, Google, etc.)
   - Cost optimization through model selection
   - Built-in API cost controls
 
+### Testing
+
+- **[Vitest](https://vitest.dev/)** - Fast unit and integration testing framework
+  - Native ESM support
+  - Compatible with Vite ecosystem
+  - Built-in TypeScript support
+- **[React Testing Library](https://testing-library.com/react)** - Component testing library
+  - User-centric testing approach
+  - Testing React components and custom hooks
+- **[Cypress](https://www.cypress.io/)** / **[Playwright](https://playwright.dev/)** - End-to-end testing
+  - Browser automation for E2E scenarios
+  - Reliable and fast test execution
+- **[Supertest](https://github.com/ladjs/supertest)** - HTTP API testing
+  - Integration with Vitest
+  - API endpoint validation
+
 ### CI/CD & Hosting
+
 - **GitHub Actions** - Automated CI/CD pipelines
 - **DigitalOcean** - Application hosting via Docker
 
@@ -94,12 +114,14 @@ The AI modification feature generates a new version of the recipe while preservi
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/10xdevs.git
    cd 10xdevs
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
@@ -107,6 +129,7 @@ The AI modification feature generates a new version of the recipe while preservi
 3. **Set up environment variables**
 
    Copy the example environment file:
+
    ```bash
    cp .env .env
    ```
@@ -124,17 +147,20 @@ OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
 **Where to get these:**
+
 - **Supabase credentials**: Create a project at [supabase.com](https://supabase.com) and find your URL and anon key in Project Settings > API
 - **OpenRouter API key**: Sign up at [openrouter.ai](https://openrouter.ai) and generate an API key in your account settings
 
 ### Running the Application
 
 **Development mode** (runs on http://localhost:3000):
+
 ```bash
 npm run dev
 ```
 
 **Production build**:
+
 ```bash
 npm run build
 npm run preview
@@ -142,14 +168,18 @@ npm run preview
 
 ## Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development server on port 3000 |
-| `npm run build` | Build the application for production |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Check code for linting errors |
-| `npm run lint:fix` | Automatically fix linting errors |
-| `npm run format` | Format code with Prettier |
+| Script                  | Description                                |
+| ----------------------- | ------------------------------------------ |
+| `npm run dev`           | Start development server on port 3000      |
+| `npm run build`         | Build the application for production       |
+| `npm run preview`       | Preview production build locally           |
+| `npm test`              | Run unit and integration tests with Vitest |
+| `npm run test:watch`    | Run tests in watch mode                    |
+| `npm run test:coverage` | Run tests with coverage report             |
+| `npm run test:e2e`      | Run end-to-end tests                       |
+| `npm run lint`          | Check code for linting errors              |
+| `npm run lint:fix`      | Automatically fix linting errors           |
+| `npm run format`        | Format code with Prettier                  |
 
 ## Project Structure
 
@@ -229,11 +259,13 @@ The MVP focuses on measuring two key metrics:
 🚧 **MVP Development In Progress**
 
 ### Completed
+
 - [x] Project setup and tech stack configuration
 - [x] Development environment configuration
 - [x] Project documentation (PRD, tech stack, CLAUDE.md)
 
 ### In Progress
+
 - [ ] User authentication system (email + Google OAuth)
 - [ ] User profile and preferences management
 - [ ] Recipe CRUD functionality
@@ -241,6 +273,7 @@ The MVP focuses on measuring two key metrics:
 - [ ] Recipe modification feature
 
 ### Planned
+
 - [ ] Onboarding flow
 - [ ] UI/UX for AI modification display
 - [ ] Testing and bug fixes
@@ -248,6 +281,7 @@ The MVP focuses on measuring two key metrics:
 - [ ] Production deployment on DigitalOcean
 
 ### Open Questions
+
 - AI provider selection and cost estimation
 - Detailed UI/UX for presenting AI modifications (highlighting changes, change list, etc.)
 

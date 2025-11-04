@@ -35,6 +35,7 @@ Rekomendacja (dot. Metryk): Doprecyzowanie metryk sukcesu (definiowanie "wypełn
 <prd_planning_summary>
 
 Podsumowanie Planowania PRD dla HealthyMeal (MVP)
+
 1. Główne Wymagania Funkcjonalne
    System Kont Użytkowników:
 

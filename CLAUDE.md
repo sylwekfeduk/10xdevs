@@ -79,6 +79,7 @@ export const prerender = false
 ```
 
 Key patterns:
+
 - Use **Zod schemas** for input validation
 - Extract business logic into services in `src/lib/services`
 - Access Supabase via `context.locals.supabase`, NOT by importing the client directly
@@ -87,6 +88,7 @@ Key patterns:
 ### Middleware
 
 Middleware is defined in `src/middleware/index.ts` and runs on every request. Use for:
+
 - Request/response modification
 - Authentication checks
 - Setting up context.locals (e.g., Supabase client)
@@ -101,26 +103,26 @@ Use the guard clause pattern with early returns:
 // ✅ Good
 function processData(data: Data) {
   if (!data) {
-    return { error: 'Data is required' }
+    return { error: "Data is required" };
   }
   if (!data.isValid) {
-    return { error: 'Invalid data' }
+    return { error: "Invalid data" };
   }
 
   // Happy path at the end
-  return processValidData(data)
+  return processValidData(data);
 }
 
 // ❌ Avoid
 function processData(data: Data) {
   if (data) {
     if (data.isValid) {
-      return processValidData(data)
+      return processValidData(data);
     } else {
-      return { error: 'Invalid data' }
+      return { error: "Invalid data" };
     }
   } else {
-    return { error: 'Data is required' }
+    return { error: "Data is required" };
   }
 }
 ```
@@ -163,6 +165,7 @@ function processData(data: Data) {
 ## Environment Variables
 
 Required environment variables (see `.env.example`):
+
 - `SUPABASE_URL` - Supabase project URL
 - `SUPABASE_KEY` - Supabase anon/public key
 - `OPENROUTER_API_KEY` - OpenRouter API key (if using AI features)
@@ -170,6 +173,7 @@ Required environment variables (see `.env.example`):
 ## Pre-commit Hooks
 
 The project uses Husky + lint-staged for pre-commit checks:
+
 - TypeScript/TSX/Astro files: Auto-fix with ESLint
 - JSON/CSS/MD files: Auto-format with Prettier
 

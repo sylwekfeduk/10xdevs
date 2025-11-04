@@ -225,10 +225,12 @@ CREATE TRIGGER on_auth_user_created
 ### Konfiguracja Supabase
 
 **Redirect URLs:**
+
 - Lokalne: `http://localhost:3000/api/auth/callback`
 - Produkcja: `https://[DOMENA]/api/auth/callback`
 
 **Email Templates:**
+
 - Password reset redirect: `http://localhost:3000/update-password`
 - Język: Polski
 - Email confirmation: **WYŁĄCZONE** (zgodnie z wymaganiem "szybko założyć konto")

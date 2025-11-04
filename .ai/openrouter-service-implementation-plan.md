@@ -15,37 +15,37 @@ The service must **only** be called from a **server-side context** (e.g., Astro 
 
 The constructor initializes the service with the necessary configuration, primarily the OpenRouter API Key.
 
-| Element | Type | Purpose |
-| :--- | :--- | :--- |
-| `apiKey` | `string` | The API key for OpenRouter, securely loaded from `process.env`. |
+| Element   | Type     | Purpose                                                               |
+| :-------- | :------- | :-------------------------------------------------------------------- |
+| `apiKey`  | `string` | The API key for OpenRouter, securely loaded from `process.env`.       |
 | `baseUrl` | `string` | The base URL for the OpenRouter API (`https://openrouter.ai/api/v1`). |
 
 **Example (TypeScript):**
 
 ```typescript
 class OpenRouterService {
-    private apiKey: string;
-    private baseUrl: string = 'https://openrouter.ai/api/v1';
+  private apiKey: string;
+  private baseUrl: string = "https://openrouter.ai/api/v1";
 
-    /**
-     * @param apiKey The OpenRouter API key. Must be passed from a secure server context.
-     */
-    constructor(apiKey: string) {
-        if (!apiKey) {
-            throw new Error('OpenRouter API Key is required for service initialization.');
-        }
-        this.apiKey = apiKey;
+  /**
+   * @param apiKey The OpenRouter API key. Must be passed from a secure server context.
+   */
+  constructor(apiKey: string) {
+    if (!apiKey) {
+      throw new Error("OpenRouter API Key is required for service initialization.");
     }
-    // ...
+    this.apiKey = apiKey;
+  }
+  // ...
 }
 ```
 
------
+---
 
 ### 3\. Public Methods and Fields
 
-| Name | Description |
-| :--- | :--- |
+| Name                                                                            | Description                                                                                                       |
+| :------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------- |
 | `completeChat(request: ChatCompletionRequest): Promise<ChatCompletionResponse>` | The core method for generating LLM responses. Takes a structured request object and returns the model's response. |
 
 #### `ChatCompletionRequest` DTO Structure
@@ -55,29 +55,29 @@ The request DTO should use TypeScript interfaces and be validated with a library
 ```typescript
 // Define the Message structure
 export type ChatMessage = {
-    role: 'system' | 'user' | 'assistant';
-    content: string;
-    // Add support for multimodal content if required: content: string | (TextPart | ImagePart)[];
+  role: "system" | "user" | "assistant";
+  content: string;
+  // Add support for multimodal content if required: content: string | (TextPart | ImagePart)[];
 };
 
 // Define the structured response format
 export type ResponseFormat = {
-    type: 'json_schema';
-    json_schema: {
-        name: string;
-        strict: boolean;
-        schema: Record<string, any>; // JSON Schema object
-    };
+  type: "json_schema";
+  json_schema: {
+    name: string;
+    strict: boolean;
+    schema: Record<string, any>; // JSON Schema object
+  };
 };
 
 // Define the main request object
 export interface ChatCompletionRequest {
-    model: string; // The model name (e.g., 'openai/gpt-4o') [Example 4]
-    messages: ChatMessage[];
-    temperature?: number; // Optional model parameters [Example 5]
-    max_tokens?: number;
-    top_p?: number;
-    response_format?: ResponseFormat; // Optional for structured output [Example 3]
+  model: string; // The model name (e.g., 'openai/gpt-4o') [Example 4]
+  messages: ChatMessage[];
+  temperature?: number; // Optional model parameters [Example 5]
+  max_tokens?: number;
+  top_p?: number;
+  response_format?: ResponseFormat; // Optional for structured output [Example 3]
 }
 
 // Example Request Construction (Message Handling):
@@ -88,18 +88,18 @@ export interface ChatCompletionRequest {
 // ]
 ```
 
------
+---
 
 ### 4\. Private Methods and Fields
 
-| Name | Description |
-| :--- | :--- |
-| `private apiKey: string` | Stores the confidential OpenRouter API key. |
-| `private baseUrl: string` | Stores the constant API endpoint base URL. |
-| `private handleError(error: Response \| Error): never` | A utility to catch network/HTTP errors, extract details, log the error, and throw a standardized custom service error. |
-| `private buildHeaders(): Headers` | Constructs the necessary HTTP headers, including `Authorization: Bearer <API_KEY>` and `Content-Type: application/json`. |
+| Name                                                   | Description                                                                                                              |
+| :----------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+| `private apiKey: string`                               | Stores the confidential OpenRouter API key.                                                                              |
+| `private baseUrl: string`                              | Stores the constant API endpoint base URL.                                                                               |
+| `private handleError(error: Response \| Error): never` | A utility to catch network/HTTP errors, extract details, log the error, and throw a standardized custom service error.   |
+| `private buildHeaders(): Headers`                      | Constructs the necessary HTTP headers, including `Authorization: Bearer <API_KEY>` and `Content-Type: application/json`. |
 
------
+---
 
 ### 5\. Error Handling
 
@@ -117,19 +117,19 @@ Error handling must follow the `if-return` and **Guard Clause** pattern. A custo
 #### Potential Error Scenarios & Handling (numbered)
 
 1.  **Authentication/Authorization Error (401):**
-    * **Handling:** The `handleError` method catches the 401 status code and throws a `new AuthError('Invalid OpenRouter API Key.')`. The user should be informed that the service is unavailable (log: check environment variable `OPENROUTER_API_KEY`).
+    - **Handling:** The `handleError` method catches the 401 status code and throws a `new AuthError('Invalid OpenRouter API Key.')`. The user should be informed that the service is unavailable (log: check environment variable `OPENROUTER_API_KEY`).
 2.  **Rate Limit Exceeded Error (429):**
-    * **Handling:** `handleError` catches 429 and throws a `new RateLimitError('Too many requests. Please try again later.')`. The frontend UI (built with React/Shadcn/ui) can display a temporary block message.
+    - **Handling:** `handleError` catches 429 and throws a `new RateLimitError('Too many requests. Please try again later.')`. The frontend UI (built with React/Shadcn/ui) can display a temporary block message.
 3.  **Bad Request/Validation Error (400):**
-    * **Handling:** `handleError` catches 400 and throws a `new BadRequestError('The request payload is invalid.')`. This typically points to an issue with the service's `ChatCompletionRequest` construction (e.g., invalid model name or incorrect message format).
+    - **Handling:** `handleError` catches 400 and throws a `new BadRequestError('The request payload is invalid.')`. This typically points to an issue with the service's `ChatCompletionRequest` construction (e.g., invalid model name or incorrect message format).
 4.  **Model/Provider Error (500/503):**
-    * **Handling:** `handleError` catches 5xx codes and throws a `new ModelServiceError('The LLM provider service is currently unavailable.')`. Implement logging to track the frequency of these external failures.
+    - **Handling:** `handleError` catches 5xx codes and throws a `new ModelServiceError('The LLM provider service is currently unavailable.')`. Implement logging to track the frequency of these external failures.
 5.  **Network/Timeout Error:**
-    * **Handling:** The `fetch` promise rejection (not an HTTP status) is caught. The service should use an `AbortController` and a fixed timeout for the request. If the request times out or a general network error occurs, throw a `ModelServiceError` with a specific message.
+    - **Handling:** The `fetch` promise rejection (not an HTTP status) is caught. The service should use an `AbortController` and a fixed timeout for the request. If the request times out or a general network error occurs, throw a `ModelServiceError` with a specific message.
 6.  **Structured Response Parsing Error:**
-    * **Handling:** After a successful 200 response where `response_format` was used, the service must attempt to `JSON.parse(content)`. If this fails, throw a `new ParsingError('Model response is malformed and cannot be parsed as JSON.')`.
+    - **Handling:** After a successful 200 response where `response_format` was used, the service must attempt to `JSON.parse(content)`. If this fails, throw a `new ParsingError('Model response is malformed and cannot be parsed as JSON.')`.
 
------
+---
 
 ### 6\. Security Considerations
 
@@ -138,7 +138,7 @@ Error handling must follow the `if-return` and **Guard Clause** pattern. A custo
 3.  **Data Transmission Security:** All communication with OpenRouter occurs over **HTTPS**, which is mandatory for the base URL.
 4.  **Cost Control:** Integrate a mechanism to monitor OpenRouter's usage data (from the response `usage` object) and consider setting financial limits on the API key via the OpenRouter dashboard.
 
------
+---
 
 ### 7\. Step-by-Step Implementation Plan
 

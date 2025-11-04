@@ -1,9 +1,11 @@
 # API Endpoint Implementation Plan: Create a New Recipe
 
 ## 1. Endpoint Overview
+
 This endpoint allows an authenticated user to create a new recipe. This can be either a brand-new, original recipe or an AI-modified version of an existing recipe. The endpoint is responsible for validating the incoming data and persisting it to the database.
 
 ## 2. Request Details
+
 - **HTTP Method**: `POST`
 - **URL Structure**: `/api/recipes`
 - **Parameters**: None
@@ -18,10 +20,12 @@ This endpoint allows an authenticated user to create a new recipe. This can be e
   ```
 
 ## 3. Used Types
+
 - **Command Model**: `CreateRecipeCommand` from `src/types.ts` for the request body.
 - **Response DTO**: `RecipeDetailDto` from `src/types.ts` for the response body.
 
 ## 4. Response Details
+
 - **Success (201 Created)**: Returns the newly created recipe object, including server-generated values like `id`, `user_id`, `created_at`, etc.
 - **Error**:
   - `400 Bad Request`: If the request body is invalid (e.g., missing `title`, `original_recipe_id` is invalid or not owned by user).
@@ -29,6 +33,7 @@ This endpoint allows an authenticated user to create a new recipe. This can be e
   - `500 Internal Server Error`: For unexpected database or server errors.
 
 ## 5. Data Flow
+
 1. A `POST` request is made to `/api/recipes`.
 2. Middleware validates the JWT and rejects with `401` if invalid.
 3. The API route handler validates the request body using a Zod schema based on `CreateRecipeCommand`. If invalid, it returns `400`.
@@ -45,15 +50,18 @@ This endpoint allows an authenticated user to create a new recipe. This can be e
 9. Database errors (e.g., constraint violations) are caught and result in a `500 Internal Server Error`.
 
 ## 6. Security Considerations
+
 - **Authentication**: Endpoint must be protected by JWT middleware.
 - **Authorization/Data Integrity**: The check for `original_recipe_id` ownership is a critical security and data integrity measure. It prevents a user from creating a modified recipe and linking it to an original recipe they do not own.
 - **Input Validation**: `title`, `ingredients`, and `instructions` are required and must not be empty. This is enforced by the Zod schema and database constraints (`CHECK (length(title) > 0)`).
 
 ## 7. Performance Considerations
+
 - The operation involves an `INSERT` and potentially one preceding `SELECT` (if `original_recipe_id` is present). Both queries will be on indexed columns (`id`, `user_id`), so performance should be good.
 - The transaction is simple and should not cause bottlenecks.
 
 ## 8. Implementation Steps
+
 1. **Create Zod Schema**: In `src/lib/schemas/recipe.schema.ts`, define `CreateRecipeSchema`.
    - `title`, `ingredients`, `instructions` should be `z.string().min(1)`.
    - `original_recipe_id` should be `z.string().uuid().optional().nullable()`.
