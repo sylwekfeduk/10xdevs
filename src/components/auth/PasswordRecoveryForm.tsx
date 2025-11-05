@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { supabaseClient } from "@/db/supabase.client";
 
 // Zod schema for client-side validation
 export const PasswordRecoveryFormSchema = z.object({
@@ -40,12 +39,23 @@ export function PasswordRecoveryForm() {
     setIsSuccess(false);
 
     try {
-      const { error } = await supabaseClient.auth.resetPasswordForEmail(data.email, {
-        redirectTo: `${window.location.origin}/update-password`,
+      const response = await fetch("/api/auth/password-reset", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: data.email }),
       });
 
-      if (error) {
-        setGlobalError(error.message);
+      const result = await response.json();
+
+      if (!response.ok) {
+        // Handle different error cases
+        if (response.status === 404) {
+          setGlobalError("No account found with this email address. Please check your email or sign up for a new account.");
+        } else {
+          setGlobalError(result.message || "An error occurred while processing your request.");
+        }
         return;
       }
 
@@ -96,7 +106,7 @@ export function PasswordRecoveryForm() {
         )}
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" noValidate>
             {/* Email Field */}
             <FormField
               control={form.control}

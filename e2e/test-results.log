@@ -1,0 +1,710 @@
+[dotenv@17.2.3] injecting env (5) from .env.test -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+
+Running 26 tests using 10 workers
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+
+[1A[2K[1/26] [chromium] › e2e\auth-onboarding.spec.ts:10:5 › Authentication and Onboarding › Registration › TC1.1: User can successfully register with valid email and password and is redirected to onboarding
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+
+[1A[2K[2/26] [chromium] › e2e\auth-onboarding.spec.ts:28:5 › Authentication and Onboarding › Registration › TC1.2: System prevents registration with invalid email or too short password
+[1A[2K[3/26] [chromium] › e2e\auth-onboarding.spec.ts:109:5 › Authentication and Onboarding › Password Recovery › TC1.6: User can reset password and receives email link
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+
+[1A[2K[4/26] [chromium] › e2e\auth-onboarding.spec.ts:47:5 › Authentication and Onboarding › Login › TC1.3: User can login with correct credentials and is redirected to main panel
+[1A[2K[5/26] [chromium] › e2e\auth-onboarding.spec.ts:76:5 › Authentication and Onboarding › Login › TC1.4: User cannot login with incorrect credentials
+[1A[2K[6/26] [chromium] › e2e\auth-onboarding.spec.ts:122:5 › Authentication and Onboarding › Onboarding › TC1.7: User must select at least one preference to continue onboarding
+[1A[2K[7/26] [chromium] › e2e\recipe-ai-modification.spec.ts:9:5 › AI Recipe Modification › Happy Path › TC3.1: User can modify recipe with AI and see comparison
+[1A[2K[8/26] [chromium] › e2e\auth-onboarding.spec.ts:87:5 › Authentication and Onboarding › Login › TC1.5: User loses access to protected resources after logout
+[1A[2K[9/26] [chromium] › e2e\recipe-ai-modification.spec.ts:40:5 › AI Recipe Modification › Happy Path › TC3.2: AI warning is always visible on modification page
+[1A[2K[10/26] [chromium] › e2e\auth-onboarding.spec.ts:152:5 › Authentication and Onboarding › Onboarding › TC1.8: After completing onboarding, preferences are saved and user is redirected to main panel
+[1A[2K  1) [chromium] › e2e\auth-onboarding.spec.ts:109:5 › Authentication and Onboarding › Password Recovery › TC1.6: User can reset password and receives email link 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32mtrue[39m
+    Received: [31mfalse[39m
+
+      115 |       // Should see success message
+      116 |       await page.waitForTimeout(1000);
+    > 117 |       expect(await passwordRecoveryPage.isSuccessMessageVisible()).toBe(true);
+          |                                                                    ^
+      118 |     });
+      119 |   });
+      120 |
+        at C:\10xdevs\e2e\auth-onboarding.spec.ts:117:68
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-onboarding-Authentica-6207b-ord-and-receives-email-link-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-onboarding-Authentica-6207b-ord-and-receives-email-link-chromium\error-context.md
+
+
+[1A[2K  2) [chromium] › e2e\auth-onboarding.spec.ts:28:5 › Authentication and Onboarding › Registration › TC1.2: System prevents registration with invalid email or too short password 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32mtrue[39m
+    Received: [31mfalse[39m
+
+      35 |       // Test invalid email
+      36 |       await registerPage.register("invalid-email", "ValidPassword123!");
+    > 37 |       expect(await registerPage.isErrorVisible()).toBe(true);
+         |                                                   ^
+      38 |
+      39 |       // Test short password
+      40 |       await page.reload();
+        at C:\10xdevs\e2e\auth-onboarding.spec.ts:37:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-onboarding-Authentica-855cc-email-or-too-short-password-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-onboarding-Authentica-855cc-email-or-too-short-password-chromium\error-context.md
+
+
+[1A[2K[11/26] [chromium] › e2e\recipe-ai-modification.spec.ts:148:5 › AI Recipe Modification › Save and Discard › TC3.5: User can discard changes and return to original recipe
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+
+[1A[2K[12/26] [chromium] › e2e\recipe-ai-modification.spec.ts:66:5 › AI Recipe Modification › Save and Discard › TC3.3: User can save modified recipe creating new AI-Modified entry
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+
+[1A[2K[13/26] [chromium] › e2e\recipe-ai-modification.spec.ts:111:5 › AI Recipe Modification › Save and Discard › TC3.4: Original recipe remains unchanged after saving AI-modified version
+[1A[2K  3) [chromium] › e2e\recipe-ai-modification.spec.ts:9:5 › AI Recipe Modification › Happy Path › TC3.1: User can modify recipe with AI and see comparison 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-ai-modification.spec.ts:18:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-ai-modification-AI--21f93--with-AI-and-see-comparison-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-ai-modification-AI--21f93--with-AI-and-see-comparison-chromium\error-context.md
+
+
+[1A[2K  4) [chromium] › e2e\auth-onboarding.spec.ts:10:5 › Authentication and Onboarding › Registration › TC1.1: User can successfully register with valid email and password and is redirected to onboarding 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: page.waitForURL: Test timeout of 60000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+       at pages\RegisterPage.ts:42
+
+      40 |
+      41 |   async waitForRedirect() {
+    > 42 |     await this.page.waitForURL(/\/onboarding/);
+         |                     ^
+      43 |   }
+      44 |
+      45 |   async isErrorVisible() {
+        at RegisterPage.waitForRedirect (C:\10xdevs\e2e\pages\RegisterPage.ts:42:21)
+        at C:\10xdevs\e2e\auth-onboarding.spec.ts:22:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-onboarding-Authentica-1f9c4-is-redirected-to-onboarding-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-onboarding-Authentica-1f9c4-is-redirected-to-onboarding-chromium\error-context.md
+
+
+[1A[2K  5) [chromium] › e2e\auth-onboarding.spec.ts:122:5 › Authentication and Onboarding › Onboarding › TC1.7: User must select at least one preference to continue onboarding 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: page.waitForURL: Test timeout of 60000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+      navigated to "http://localhost:3000/login"
+    ============================================================
+
+       at pages\RegisterPage.ts:42
+
+      40 |
+      41 |   async waitForRedirect() {
+    > 42 |     await this.page.waitForURL(/\/onboarding/);
+         |                     ^
+      43 |   }
+      44 |
+      45 |   async isErrorVisible() {
+        at RegisterPage.waitForRedirect (C:\10xdevs\e2e\pages\RegisterPage.ts:42:21)
+        at C:\10xdevs\e2e\auth-onboarding.spec.ts:132:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-onboarding-Authentica-f645c-ence-to-continue-onboarding-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-onboarding-Authentica-f645c-ence-to-continue-onboarding-chromium\error-context.md
+
+
+[1A[2K  6) [chromium] › e2e\auth-onboarding.spec.ts:47:5 › Authentication and Onboarding › Login › TC1.3: User can login with correct credentials and is redirected to main panel 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: page.waitForURL: Test timeout of 60000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+      navigated to "http://localhost:3000/login"
+    ============================================================
+
+       at pages\RegisterPage.ts:42
+
+      40 |
+      41 |   async waitForRedirect() {
+    > 42 |     await this.page.waitForURL(/\/onboarding/);
+         |                     ^
+      43 |   }
+      44 |
+      45 |   async isErrorVisible() {
+        at RegisterPage.waitForRedirect (C:\10xdevs\e2e\pages\RegisterPage.ts:42:21)
+        at C:\10xdevs\e2e\auth-onboarding.spec.ts:57:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-onboarding-Authentica-b97a0-is-redirected-to-main-panel-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-onboarding-Authentica-b97a0-is-redirected-to-main-panel-chromium\error-context.md
+
+
+[1A[2K  7) [chromium] › e2e\auth-onboarding.spec.ts:87:5 › Authentication and Onboarding › Login › TC1.5: User loses access to protected resources after logout 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: /logout|wyloguj/i })[22m
+
+
+       at pages\DashboardPage.ts:35
+
+      33 |
+      34 |   async logout() {
+    > 35 |     await this.logoutButton.click();
+         |                             ^
+      36 |   }
+      37 |
+      38 |   async clickNewRecipe() {
+        at DashboardPage.logout (C:\10xdevs\e2e\pages\DashboardPage.ts:35:29)
+        at C:\10xdevs\e2e\auth-onboarding.spec.ts:97:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-onboarding-Authentica-dd4ca-cted-resources-after-logout-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-onboarding-Authentica-dd4ca-cted-resources-after-logout-chromium\error-context.md
+
+
+[1A[2K  8) [chromium] › e2e\auth-onboarding.spec.ts:152:5 › Authentication and Onboarding › Onboarding › TC1.8: After completing onboarding, preferences are saved and user is redirected to main panel 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: page.waitForURL: Test timeout of 60000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+      navigated to "http://localhost:3000/login"
+    ============================================================
+
+       at pages\RegisterPage.ts:42
+
+      40 |
+      41 |   async waitForRedirect() {
+    > 42 |     await this.page.waitForURL(/\/onboarding/);
+         |                     ^
+      43 |   }
+      44 |
+      45 |   async isErrorVisible() {
+        at RegisterPage.waitForRedirect (C:\10xdevs\e2e\pages\RegisterPage.ts:42:21)
+        at C:\10xdevs\e2e\auth-onboarding.spec.ts:162:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-onboarding-Authentica-596e7-is-redirected-to-main-panel-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-onboarding-Authentica-596e7-is-redirected-to-main-panel-chromium\error-context.md
+
+
+[1A[2K  9) [chromium] › e2e\recipe-ai-modification.spec.ts:40:5 › AI Recipe Modification › Happy Path › TC3.2: AI warning is always visible on modification page 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-ai-modification.spec.ts:49:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-ai-modification-AI--e77dd-isible-on-modification-page-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-ai-modification-AI--e77dd-isible-on-modification-page-chromium\error-context.md
+
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: ⚙️  write to custom object with { processEnv: myObject }
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: ⚙️  enable debug logging with { debug: true }
+
+[1A[2K[14/26] [chromium] › e2e\recipe-ai-modification.spec.ts:181:5 › AI Recipe Modification › Error Handling › TC3.6: When AI service is unavailable, user sees error with retry option
+[1A[2K[15/26] [chromium] › e2e\recipe-ai-modification.spec.ts:243:5 › AI Recipe Modification › Edge Cases › Multiple modifications: User can modify a recipe multiple times
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: ⚙️  write to custom object with { processEnv: myObject }
+
+[1A[2K[16/26] [chromium] › e2e\recipe-ai-modification.spec.ts:220:5 › AI Recipe Modification › Error Handling › TC3.7: Attempting to modify non-existent recipe shows error page
+[1A[2K[17/26] [chromium] › e2e\recipe-crud.spec.ts:8:5 › Recipe Management (CRUD) › Create Recipe › TC2.1: Authenticated user can create new recipe with all required fields
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: ⚙️  write to custom object with { processEnv: myObject }
+
+[1A[2K[18/26] [chromium] › e2e\recipe-crud.spec.ts:37:5 › Recipe Management (CRUD) › Create Recipe › TC2.2: System validates recipe form and prevents saving with empty required fields
+[1A[2K[19/26] [chromium] › e2e\recipe-crud.spec.ts:56:5 › Recipe Management (CRUD) › View Recipes › TC2.3: User can see list of their recipes
+[1A[2K[20/26] [chromium] › e2e\recipe-crud.spec.ts:79:5 › Recipe Management (CRUD) › View Recipes › TC2.4: Sorting and pagination functionality works correctly
+[1A[2K  10) [chromium] › e2e\recipe-ai-modification.spec.ts:148:5 › AI Recipe Modification › Save and Discard › TC3.5: User can discard changes and return to original recipe 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-ai-modification.spec.ts:157:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-ai-modification-AI--de988-d-return-to-original-recipe-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-ai-modification-AI--de988-d-return-to-original-recipe-chromium\error-context.md
+
+
+[1A[2K  11) [chromium] › e2e\recipe-ai-modification.spec.ts:66:5 › AI Recipe Modification › Save and Discard › TC3.3: User can save modified recipe creating new AI-Modified entry 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-ai-modification.spec.ts:77:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-ai-modification-AI--1d248-ating-new-AI-Modified-entry-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-ai-modification-AI--1d248-ating-new-AI-Modified-entry-chromium\error-context.md
+
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+
+[1A[2K  12) [chromium] › e2e\recipe-ai-modification.spec.ts:111:5 › AI Recipe Modification › Save and Discard › TC3.4: Original recipe remains unchanged after saving AI-modified version 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-ai-modification.spec.ts:121:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-ai-modification-AI--8e67a--saving-AI-modified-version-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-ai-modification-AI--8e67a--saving-AI-modified-version-chromium\error-context.md
+
+
+[1A[2K[21/26] [chromium] › e2e\recipe-crud.spec.ts:133:5 › Recipe Management (CRUD) › View Recipes › TC2.5: User can open recipe details by clicking on card
+[1A[2K[22/26] [chromium] › e2e\recipe-crud.spec.ts:169:5 › Recipe Management (CRUD) › Delete Recipe › TC2.6: User can permanently delete their recipe after confirmation
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+
+[1A[2K[23/26] [chromium] › e2e\smoke.spec.ts:4:3 › Smoke Tests › Can load register page
+[1A[2K  13) [chromium] › e2e\recipe-crud.spec.ts:37:5 › Recipe Management (CRUD) › Create Recipe › TC2.2: System validates recipe form and prevents saving with empty required fields 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32mtrue[39m
+    Received: [31mfalse[39m
+
+      49 |       const isButtonDisabled = await newRecipePage.isSubmitButtonDisabled();
+      50 |
+    > 51 |       expect(hasValidationError || isButtonDisabled).toBe(true);
+         |                                                      ^
+      52 |     });
+      53 |   });
+      54 |
+        at C:\10xdevs\e2e\recipe-crud.spec.ts:51:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-crud-Recipe-Managem-52702--with-empty-required-fields-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-crud-Recipe-Managem-52702--with-empty-required-fields-chromium\error-context.md
+
+
+[1A[2K[chromium] › e2e\smoke.spec.ts:4:3 › Smoke Tests › Can load register page
+✅ Register page loads correctly
+
+[1A[2K[24/26] [chromium] › e2e\smoke.spec.ts:33:3 › Smoke Tests › Can login with test user
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+
+[1A[2K[25/26] [chromium] › e2e\smoke.spec.ts:19:3 › Smoke Tests › Can load login page
+[1A[2K  14) [chromium] › e2e\recipe-ai-modification.spec.ts:220:5 › AI Recipe Modification › Error Handling › TC3.7: Attempting to modify non-existent recipe shows error page 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32mtrue[39m
+    Received: [31mfalse[39m
+
+      236 |           .catch(() => false));
+      237 |
+    > 238 |       expect(isErrorPage).toBe(true);
+          |                           ^
+      239 |     });
+      240 |   });
+      241 |
+        at C:\10xdevs\e2e\recipe-ai-modification.spec.ts:238:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-ai-modification-AI--120ce-ent-recipe-shows-error-page-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-ai-modification-AI--120ce-ent-recipe-shows-error-page-chromium\error-context.md
+
+
+[1A[2K[chromium] › e2e\smoke.spec.ts:19:3 › Smoke Tests › Can load login page
+✅ Login page loads correctly
+
+[1A[2K[dotenv@17.2.3] injecting env (0) from .env.test -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+
+[1A[2K[26/26] [chromium] › e2e\smoke.spec.ts:66:3 › Smoke Tests › Can fill register form with React hydrated
+[1A[2K[chromium] › e2e\smoke.spec.ts:33:3 › Smoke Tests › Can login with test user
+Current URL after login: http://localhost:3000/dashboard
+
+[1A[2KNo error visible
+
+[1A[2K✅ Screenshot saved
+
+[1A[2K[chromium] › e2e\smoke.spec.ts:66:3 › Smoke Tests › Can fill register form with React hydrated
+⚠️  No [astro-island-hydrated] attribute found
+
+[1A[2K✅ Page loaded and waiting for React
+
+[1A[2K✅ Can fill form fields
+
+[1A[2KCurrent URL after registration attempt: http://localhost:3000/register
+
+[1A[2KAlert visible: ErrorEmail address "test-1762262752337@example.com" is invalid
+
+[1A[2K✅ Screenshot saved to test-results/smoke-register-result.png
+
+[1A[2K  15) [chromium] › e2e\recipe-crud.spec.ts:79:5 › Recipe Management (CRUD) › View Recipes › TC2.4: Sorting and pagination functionality works correctly 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-crud.spec.ts:90:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-crud-Recipe-Managem-c50e3-nctionality-works-correctly-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-crud-Recipe-Managem-c50e3-nctionality-works-correctly-chromium\error-context.md
+
+
+[1A[2K  16) [chromium] › e2e\recipe-ai-modification.spec.ts:243:5 › AI Recipe Modification › Edge Cases › Multiple modifications: User can modify a recipe multiple times 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-ai-modification.spec.ts:252:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-ai-modification-AI--16189-ify-a-recipe-multiple-times-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-ai-modification-AI--16189-ify-a-recipe-multiple-times-chromium\error-context.md
+
+
+[1A[2K  17) [chromium] › e2e\recipe-crud.spec.ts:56:5 › Recipe Management (CRUD) › View Recipes › TC2.3: User can see list of their recipes 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-crud.spec.ts:62:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-crud-Recipe-Managem-a43c2-n-see-list-of-their-recipes-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-crud-Recipe-Managem-a43c2-n-see-list-of-their-recipes-chromium\error-context.md
+
+
+[1A[2K  18) [chromium] › e2e\recipe-ai-modification.spec.ts:181:5 › AI Recipe Modification › Error Handling › TC3.6: When AI service is unavailable, user sees error with retry option 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-ai-modification.spec.ts:189:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-ai-modification-AI--af2d5-ees-error-with-retry-option-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-ai-modification-AI--af2d5-ees-error-with-retry-option-chromium\error-context.md
+
+
+[1A[2K  19) [chromium] › e2e\recipe-crud.spec.ts:8:5 › Recipe Management (CRUD) › Create Recipe › TC2.1: Authenticated user can create new recipe with all required fields 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-crud.spec.ts:26:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-crud-Recipe-Managem-3b7de-pe-with-all-required-fields-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-crud-Recipe-Managem-3b7de-pe-with-all-required-fields-chromium\error-context.md
+
+
+[1A[2K  20) [chromium] › e2e\recipe-crud.spec.ts:169:5 › Recipe Management (CRUD) › Delete Recipe › TC2.6: User can permanently delete their recipe after confirmation 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-crud.spec.ts:179:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-crud-Recipe-Managem-af5da-r-recipe-after-confirmation-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-crud-Recipe-Managem-af5da-r-recipe-after-confirmation-chromium\error-context.md
+
+
+[1A[2K  21) [chromium] › e2e\recipe-crud.spec.ts:133:5 › Recipe Management (CRUD) › View Recipes › TC2.5: User can open recipe details by clicking on card 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for getByLabel(/description|opis/i)[22m
+
+
+       at pages\NewRecipePage.ts:50
+
+      48 |
+      49 |     if (recipe.description) {
+    > 50 |       await this.descriptionInput.fill(recipe.description);
+         |                                   ^
+      51 |     }
+      52 |
+      53 |     if (recipe.ingredients) {
+        at NewRecipePage.fillRecipeForm (C:\10xdevs\e2e\pages\NewRecipePage.ts:50:35)
+        at NewRecipePage.createRecipe (C:\10xdevs\e2e\pages\NewRecipePage.ts:79:5)
+        at C:\10xdevs\e2e\recipe-crud.spec.ts:143:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recipe-crud-Recipe-Managem-4de4c-details-by-clicking-on-card-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recipe-crud-Recipe-Managem-4de4c-details-by-clicking-on-card-chromium\error-context.md
+
+
+[1A[2K  21 failed
+    [chromium] › e2e\auth-onboarding.spec.ts:10:5 › Authentication and Onboarding › Registration › TC1.1: User can successfully register with valid email and password and is redirected to onboarding 
+    [chromium] › e2e\auth-onboarding.spec.ts:28:5 › Authentication and Onboarding › Registration › TC1.2: System prevents registration with invalid email or too short password 
+    [chromium] › e2e\auth-onboarding.spec.ts:47:5 › Authentication and Onboarding › Login › TC1.3: User can login with correct credentials and is redirected to main panel 
+    [chromium] › e2e\auth-onboarding.spec.ts:87:5 › Authentication and Onboarding › Login › TC1.5: User loses access to protected resources after logout 
+    [chromium] › e2e\auth-onboarding.spec.ts:109:5 › Authentication and Onboarding › Password Recovery › TC1.6: User can reset password and receives email link 
+    [chromium] › e2e\auth-onboarding.spec.ts:122:5 › Authentication and Onboarding › Onboarding › TC1.7: User must select at least one preference to continue onboarding 
+    [chromium] › e2e\auth-onboarding.spec.ts:152:5 › Authentication and Onboarding › Onboarding › TC1.8: After completing onboarding, preferences are saved and user is redirected to main panel 
+    [chromium] › e2e\recipe-ai-modification.spec.ts:9:5 › AI Recipe Modification › Happy Path › TC3.1: User can modify recipe with AI and see comparison 
+    [chromium] › e2e\recipe-ai-modification.spec.ts:40:5 › AI Recipe Modification › Happy Path › TC3.2: AI warning is always visible on modification page 
+    [chromium] › e2e\recipe-ai-modification.spec.ts:66:5 › AI Recipe Modification › Save and Discard › TC3.3: User can save modified recipe creating new AI-Modified entry 
+    [chromium] › e2e\recipe-ai-modification.spec.ts:111:5 › AI Recipe Modification › Save and Discard › TC3.4: Original recipe remains unchanged after saving AI-modified version 
+    [chromium] › e2e\recipe-ai-modification.spec.ts:148:5 › AI Recipe Modification › Save and Discard › TC3.5: User can discard changes and return to original recipe 
+    [chromium] › e2e\recipe-ai-modification.spec.ts:181:5 › AI Recipe Modification › Error Handling › TC3.6: When AI service is unavailable, user sees error with retry option 
+    [chromium] › e2e\recipe-ai-modification.spec.ts:220:5 › AI Recipe Modification › Error Handling › TC3.7: Attempting to modify non-existent recipe shows error page 
+    [chromium] › e2e\recipe-ai-modification.spec.ts:243:5 › AI Recipe Modification › Edge Cases › Multiple modifications: User can modify a recipe multiple times 
+    [chromium] › e2e\recipe-crud.spec.ts:8:5 › Recipe Management (CRUD) › Create Recipe › TC2.1: Authenticated user can create new recipe with all required fields 
+    [chromium] › e2e\recipe-crud.spec.ts:37:5 › Recipe Management (CRUD) › Create Recipe › TC2.2: System validates recipe form and prevents saving with empty required fields 
+    [chromium] › e2e\recipe-crud.spec.ts:56:5 › Recipe Management (CRUD) › View Recipes › TC2.3: User can see list of their recipes 
+    [chromium] › e2e\recipe-crud.spec.ts:79:5 › Recipe Management (CRUD) › View Recipes › TC2.4: Sorting and pagination functionality works correctly 
+    [chromium] › e2e\recipe-crud.spec.ts:133:5 › Recipe Management (CRUD) › View Recipes › TC2.5: User can open recipe details by clicking on card 
+    [chromium] › e2e\recipe-crud.spec.ts:169:5 › Recipe Management (CRUD) › Delete Recipe › TC2.6: User can permanently delete their recipe after confirmation 
+  5 passed (2.3m)

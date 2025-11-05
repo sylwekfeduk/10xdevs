@@ -84,7 +84,7 @@ export function RegisterForm() {
         )}
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" noValidate>
             {/* Email Field */}
             <FormField
               control={form.control}

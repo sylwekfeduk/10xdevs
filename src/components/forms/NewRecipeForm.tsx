@@ -25,6 +25,7 @@ export function NewRecipeForm() {
   // Initialize form with react-hook-form and zod resolver
   const form = useForm<CreateRecipeFormViewModel>({
     resolver: zodResolver(CreateRecipeFormSchema),
+    mode: "onChange", // Validate on change to enable real-time button state updates
     defaultValues: {
       title: "",
       ingredients: "",
@@ -156,7 +157,7 @@ export function NewRecipeForm() {
 
           {/* Action Buttons */}
           <div className="flex gap-4">
-            <Button type="submit" disabled={form.formState.isSubmitting}>
+            <Button type="submit" disabled={form.formState.isSubmitting || !form.formState.isValid}>
               {form.formState.isSubmitting ? "Creating..." : "Create Recipe"}
             </Button>
             <Button type="button" variant="outline" onClick={onReset} disabled={form.formState.isSubmitting}>

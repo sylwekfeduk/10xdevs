@@ -6,9 +6,27 @@ import type { Database } from "./database.types.ts";
 
 const supabaseUrl = import.meta.env.SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.SUPABASE_KEY;
+const supabaseServiceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
 
 // Client-side Supabase client (for use in React components if needed)
 export const supabaseClient = createClient<Database>(supabaseUrl, supabaseAnonKey);
+
+/**
+ * Create an admin Supabase client with service role key.
+ * WARNING: Only use this on the server side for admin operations.
+ * Never expose this client to the client side.
+ */
+export const createSupabaseAdminClient = () => {
+  if (!supabaseServiceRoleKey) {
+    throw new Error("SUPABASE_SERVICE_ROLE_KEY is not configured");
+  }
+  return createClient<Database>(supabaseUrl, supabaseServiceRoleKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
+};
 
 // Export typed Supabase client for use throughout the application
 export type SupabaseClient = SupabaseClientBase<Database>;

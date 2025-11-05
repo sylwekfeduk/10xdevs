@@ -11,6 +11,7 @@ const PUBLIC_PATHS = [
   "/api/auth/login",
   "/api/auth/register",
   "/api/auth/logout",
+  "/api/auth/password-reset",
 ];
 
 // Auth paths that authenticated users shouldn't access
