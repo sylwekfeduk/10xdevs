@@ -117,7 +117,7 @@ test.describe("Recipe Management (CRUD)", () => {
       const paginationVisible = await recipesPage.paginationNext.isVisible().catch(() => false);
 
       if (paginationVisible) {
-        const urlBefore = authenticatedPage.url();
+        const _urlBefore = authenticatedPage.url();
         await recipesPage.clickNextPage();
         await authenticatedPage.waitForTimeout(500);
         const urlAfter = authenticatedPage.url();
@@ -164,7 +164,7 @@ test.describe("Recipe Management (CRUD)", () => {
     test("TC2.6: User can permanently delete their recipe after confirmation", async ({ authenticatedPage }) => {
       const newRecipePage = new NewRecipePage(authenticatedPage);
       const recipeDetailPage = new RecipeDetailPage(authenticatedPage);
-      const recipesPage = new RecipesPage(authenticatedPage);
+      const _recipesPage = new RecipesPage(authenticatedPage);
 
       // Create a recipe to delete
       const recipeName = `Recipe to Delete ${Date.now()}`;

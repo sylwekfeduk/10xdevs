@@ -34,14 +34,11 @@ export function LoginForm() {
       description="Enter your email and password to sign in to your account"
       footer={
         <div className="flex flex-col space-y-2 text-center">
-          <a
-            href="/password-recovery"
-            className="text-sm text-gray-600 hover:text-[#3F8C4F] transition-colors"
-          >
+          <a href="/password-recovery" className="text-sm text-gray-600 hover:text-[#3F8C4F] transition-colors">
             Forgot your password?
           </a>
           <div className="text-sm text-gray-600">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <a href="/register" className="text-[#3F8C4F] hover:text-[#234a3d] font-medium">
               Sign up
             </a>

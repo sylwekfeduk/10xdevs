@@ -9,7 +9,7 @@ interface AuthFixtures {
 }
 
 // Helper function to register and complete onboarding
-async function registerAndOnboard(page: Page, email: string, password: string) {
+async function _registerAndOnboard(page: Page, email: string, password: string) {
   const registerPage = new RegisterPage(page);
   const onboardingPage = new OnboardingPage(page);
 
@@ -23,7 +23,7 @@ async function registerAndOnboard(page: Page, email: string, password: string) {
 }
 
 // Helper function to login
-async function login(page: Page, email: string, password: string) {
+async function _login(page: Page, email: string, password: string) {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
   await loginPage.login(email, password);
@@ -32,13 +32,14 @@ async function login(page: Page, email: string, password: string) {
 
 // Define custom fixtures
 export const test = base.extend<AuthFixtures>({
-  testUser: async ({}, use) => {
+  testUser: async (_unusedContext, use) => {
     // Use existing test user from .env.test
     const user = {
       email: process.env.E2E_USERNAME || "testuser@wavestone.com",
       password: process.env.E2E_PASSWORD || "Test123!",
       userId: process.env.E2E_USERNAME_ID || "cf5abe4a-c633-4a0e-ae51-2a79c480f577",
     };
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(user);
   },
 
@@ -59,6 +60,7 @@ export const test = base.extend<AuthFixtures>({
       await onboardingPage.waitForRedirect();
     }
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(page);
   },
 });

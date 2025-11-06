@@ -107,9 +107,7 @@ export function PasswordUpdateForm() {
           </Alert>
           <div className="flex justify-center">
             <a href="/password-recovery">
-              <Button className="bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium">
-                Request New Reset Link
-              </Button>
+              <Button className="bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium">Request New Reset Link</Button>
             </a>
           </div>
         </CardContent>

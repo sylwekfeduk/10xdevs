@@ -92,7 +92,7 @@ test.describe("AI Recipe Modification", () => {
       expect(newRecipeUrl).toMatch(/\/recipes\/[^/]+$/);
 
       // New recipe should have AI-Modified badge (if implemented)
-      const hasBadge = await recipeDetailPage.isAIModifiedBadgeVisible().catch(() => false);
+      const _hasBadge = await recipeDetailPage.isAIModifiedBadgeVisible().catch(() => false);
 
       // Go to recipes list and verify we have 2 recipes now
       await recipesPage.goto();
@@ -128,7 +128,8 @@ test.describe("AI Recipe Modification", () => {
       await recipeModifyPage.waitForRedirectAfterSave();
 
       // Navigate back to original recipe
-      await recipeDetailPage.goto(originalRecipeId!);
+      if (!originalRecipeId) throw new Error("Original recipe ID not found");
+      await recipeDetailPage.goto(originalRecipeId);
       await authenticatedPage.waitForLoadState("networkidle");
 
       // Original title should still be there
@@ -183,6 +184,7 @@ test.describe("AI Recipe Modification", () => {
       await newRecipePage.waitForRedirect();
 
       const recipeId = authenticatedPage.url().split("/").pop();
+      if (!recipeId) throw new Error("Recipe ID not found");
 
       // Mock API error by intercepting the request
       await authenticatedPage.route(`**/api/recipes/${recipeId}/modify`, (route) => {
@@ -193,7 +195,7 @@ test.describe("AI Recipe Modification", () => {
       });
 
       // Try to modify
-      await recipeModifyPage.goto(recipeId!);
+      await recipeModifyPage.goto(recipeId);
       await authenticatedPage.waitForTimeout(2000);
 
       // Should see error message
