@@ -29,16 +29,12 @@ async function globalSetup() {
 
   try {
     // Initialize Supabase admin client
-    const supabase = createClient(
-      process.env.SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
-      {
-        auth: {
-          autoRefreshToken: false,
-          persistSession: false
-        }
-      }
-    );
+    const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
 
     // Check if test user exists in auth.users
     const { data: existingUser, error: fetchError } = await supabase.auth.admin.getUserById(userId);

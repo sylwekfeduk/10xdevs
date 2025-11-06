@@ -49,7 +49,11 @@ async function verifyUser() {
     }
 
     // Now check recipes using the ACTUAL user ID
-    const { data: recipes, error: recipeError, count } = await supabase
+    const {
+      data: recipes,
+      error: recipeError,
+      count,
+    } = await supabase
       .from("recipes")
       .select("id, title, user_id, created_at", { count: "exact" })
       .eq("user_id", actualUserId!);
@@ -76,7 +80,6 @@ async function verifyUser() {
       .eq("user_id", expectedUserId!);
 
     console.log(`\nRecipes for expected user ID (${expectedUserId}): ${wrongCount}`);
-
   } catch (error) {
     console.error("Error:", error);
   }

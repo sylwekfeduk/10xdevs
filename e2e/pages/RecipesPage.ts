@@ -35,7 +35,7 @@ export class RecipesPage {
     return await this.recipeCards.count();
   }
 
-  async clickRecipeCard(index: number = 0) {
+  async clickRecipeCard(index = 0) {
     await this.recipeCards.nth(index).click();
   }
 

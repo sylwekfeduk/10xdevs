@@ -24,14 +24,16 @@ export function RecipeLibraryPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">My Recipes</h1>
-          <p className="text-muted-foreground mt-2">Browse and manage your recipe collection</p>
+      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-md">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900">My Recipes</h1>
+            <p className="text-gray-600 mt-2">Browse and manage your recipe collection</p>
+          </div>
+          <Button asChild className="bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium">
+            <a href="/recipes/new">Create Recipe</a>
+          </Button>
         </div>
-        <Button asChild>
-          <a href="/recipes/new">Create Recipe</a>
-        </Button>
       </div>
 
       {/* Error State */}

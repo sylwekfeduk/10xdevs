@@ -27,7 +27,7 @@ export class OnboardingPage {
     await this.page.waitForTimeout(500);
   }
 
-  async selectPreference(index: number = 0) {
+  async selectPreference(index = 0) {
     const checkboxes = await this.preferenceCheckboxes.all();
     if (checkboxes.length > index) {
       await checkboxes[index].check();
@@ -38,7 +38,7 @@ export class OnboardingPage {
     }
   }
 
-  async selectMultiplePreferences(count: number = 2) {
+  async selectMultiplePreferences(count = 2) {
     // The onboarding form uses MultiSelectCombobox for diets and allergies
     // And TagInput for disliked ingredients
 

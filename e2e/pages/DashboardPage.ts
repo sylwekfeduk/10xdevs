@@ -18,7 +18,9 @@ export class DashboardPage {
     this.recipesLink = page.getByRole("link", { name: /recipes|przepisy/i });
     this.profileLink = page.getByRole("link", { name: /profile|profil/i });
     // User avatar button to open dropdown menu (UserNav component)
-    this.userMenuButton = page.getByRole("button", { name: /user menu|open user menu/i }).or(page.locator('button.rounded-full').first());
+    this.userMenuButton = page
+      .getByRole("button", { name: /user menu|open user menu/i })
+      .or(page.locator("button.rounded-full").first());
     // Logout button is in a dropdown menu (UserNav component)
     this.logoutButton = page.getByRole("menuitem", { name: /log out|logging out/i });
     this.newRecipeButton = page.getByRole("link", { name: /new recipe|nowy przepis|add recipe|dodaj/i });

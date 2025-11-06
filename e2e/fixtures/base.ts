@@ -3,10 +3,10 @@ import { LoginPage } from "../pages/LoginPage";
 import { RegisterPage } from "../pages/RegisterPage";
 import { OnboardingPage } from "../pages/OnboardingPage";
 
-type AuthFixtures = {
+interface AuthFixtures {
   authenticatedPage: Page;
   testUser: { email: string; password: string; userId: string };
-};
+}
 
 // Helper function to register and complete onboarding
 async function registerAndOnboard(page: Page, email: string, password: string) {

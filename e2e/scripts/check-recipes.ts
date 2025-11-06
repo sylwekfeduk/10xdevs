@@ -21,7 +21,11 @@ async function checkRecipes() {
 
   try {
     // Get all recipes for this user WITHOUT RLS
-    const { data: recipes, error, count } = await supabase
+    const {
+      data: recipes,
+      error,
+      count,
+    } = await supabase
       .from("recipes")
       .select("id, title, user_id, created_at", { count: "exact" })
       .eq("user_id", userId);
@@ -42,9 +46,7 @@ async function checkRecipes() {
     }
 
     // Also check total recipes in database (all users)
-    const { count: totalCount } = await supabase
-      .from("recipes")
-      .select("*", { count: "exact", head: true });
+    const { count: totalCount } = await supabase.from("recipes").select("*", { count: "exact", head: true });
 
     console.log(`\nTotal recipes in database (all users): ${totalCount}`);
 
@@ -58,7 +60,6 @@ async function checkRecipes() {
     if (otherRecipes && otherRecipes.length > 0) {
       console.log(`\nFound recipes belonging to other users`);
     }
-
   } catch (error) {
     console.error("Error:", error);
   }

@@ -6,7 +6,7 @@ export const TestData = {
   /**
    * Generate unique email for test user
    */
-  generateEmail: (prefix: string = "test") => {
+  generateEmail: (prefix = "test") => {
     const timestamp = Date.now();
     return `${prefix}-${timestamp}@example.com`;
   },
@@ -32,7 +32,8 @@ export const TestData = {
       title: "Detailed Test Recipe",
       description: "A detailed recipe with all fields",
       ingredients: "2 cups all-purpose flour\n3 large eggs\n1.5 cups whole milk\n1/2 cup sugar\n1 tsp vanilla extract",
-      instructions: "1. Preheat oven to 350F\n2. Mix dry ingredients\n3. Add wet ingredients\n4. Bake for 35-40 minutes\n5. Let cool before serving",
+      instructions:
+        "1. Preheat oven to 350F\n2. Mix dry ingredients\n3. Add wet ingredients\n4. Bake for 35-40 minutes\n5. Let cool before serving",
       prepTime: "20",
       cookTime: "40",
       servings: "8",

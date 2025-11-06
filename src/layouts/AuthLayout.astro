@@ -17,8 +17,25 @@ const { title = "HealthyMeal" } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="bg-background">
-    <main class="min-h-screen flex items-center justify-center px-4 py-8">
+  <body class="relative min-h-screen">
+    <!-- Background with blur effect -->
+    <div class="fixed inset-0 bg-[url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=2832')] bg-cover bg-center">
+      <div class="absolute inset-0 backdrop-blur-sm bg-white/30"></div>
+    </div>
+
+    <!-- Logo/Branding -->
+    <div class="fixed top-6 left-6 z-10">
+      <div class="flex items-center gap-2 text-white drop-shadow-lg">
+        <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+          <path d="M7 2v20"></path>
+          <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+        </svg>
+        <span class="text-xl font-bold">HealthyMeal</span>
+      </div>
+    </div>
+
+    <main class="relative min-h-screen flex items-center justify-center px-4 py-8">
       <div class="w-full max-w-md">
         <slot />
       </div>

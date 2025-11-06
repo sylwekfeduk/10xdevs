@@ -35,8 +35,8 @@ export function ProfileView() {
   if (isLoading && profile === null) {
     return (
       <div className="flex flex-col items-center justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <p className="mt-4 text-sm text-muted-foreground">Loading your profile...</p>
+        <Loader2 className="h-8 w-8 animate-spin text-[#2d5f4f]" />
+        <p className="mt-4 text-sm text-gray-600">Loading your profile...</p>
       </div>
     );
   }
@@ -78,18 +78,18 @@ export function ProfileView() {
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Profile Settings</h1>
-        <p className="text-muted-foreground mt-2">Manage your profile information and dietary preferences</p>
+    <div className="space-y-8">
+      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-md">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Profile Settings</h1>
+        <p className="text-gray-600 mt-2">Manage your profile information and dietary preferences</p>
       </div>
 
       {/* Onboarding Alert */}
       {!profile.has_completed_onboarding && (
-        <Alert>
-          <Info className="h-4 w-4" />
-          <AlertTitle>Welcome!</AlertTitle>
-          <AlertDescription>
+        <Alert className="border-[#2d5f4f] bg-[#2d5f4f]/10 backdrop-blur-sm">
+          <Info className="h-4 w-4 text-[#2d5f4f]" />
+          <AlertTitle className="text-[#234a3d]">Welcome!</AlertTitle>
+          <AlertDescription className="text-[#2d5f4f]">
             Please complete your profile to get started. Your dietary preferences help us personalize recipes for you.
           </AlertDescription>
         </Alert>

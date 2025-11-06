@@ -67,7 +67,7 @@ test.describe("Smoke Tests", () => {
     await page.goto("/register");
 
     // Wait for React to fully hydrate by checking for Astro islands
-    await page.waitForSelector('[astro-island-hydrated]', { timeout: 10000 }).catch(() => {
+    await page.waitForSelector("[astro-island-hydrated]", { timeout: 10000 }).catch(() => {
       console.log("⚠️  No [astro-island-hydrated] attribute found");
     });
 

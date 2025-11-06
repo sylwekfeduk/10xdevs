@@ -81,10 +81,10 @@ export function PasswordUpdateForm() {
 
   if (isValidToken === null) {
     return (
-      <Card>
-        <CardContent className="pt-6">
+      <Card className="bg-white shadow-2xl border-0">
+        <CardContent className="pt-12 pb-12">
           <div className="flex items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <Loader2 className="h-8 w-8 animate-spin text-[#2d5f4f]" />
           </div>
         </CardContent>
       </Card>
@@ -93,19 +93,23 @@ export function PasswordUpdateForm() {
 
   if (isValidToken === false) {
     return (
-      <Card>
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Invalid Reset Link</CardTitle>
-          <CardDescription>This password reset link is invalid or has expired</CardDescription>
+      <Card className="bg-white shadow-2xl border-0">
+        <CardHeader className="space-y-2 px-8 pt-8">
+          <CardTitle className="text-2xl font-bold text-gray-900">Invalid Reset Link</CardTitle>
+          <CardDescription className="text-gray-600">
+            This password reset link is invalid or has expired
+          </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 px-8 pb-8">
           <Alert variant="destructive">
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{globalError}</AlertDescription>
           </Alert>
           <div className="flex justify-center">
             <a href="/password-recovery">
-              <Button>Request New Reset Link</Button>
+              <Button className="bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium">
+                Request New Reset Link
+              </Button>
             </a>
           </div>
         </CardContent>
@@ -114,12 +118,12 @@ export function PasswordUpdateForm() {
   }
 
   return (
-    <Card>
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold">Set new password</CardTitle>
-        <CardDescription>Enter your new password below</CardDescription>
+    <Card className="bg-white shadow-2xl border-0">
+      <CardHeader className="space-y-2 px-8 pt-8">
+        <CardTitle className="text-2xl font-bold text-gray-900">Set new password</CardTitle>
+        <CardDescription className="text-gray-600">Enter your new password below</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 px-8 pb-8">
         {globalError && (
           <Alert variant="destructive">
             <AlertTitle>Error</AlertTitle>
@@ -160,7 +164,11 @@ export function PasswordUpdateForm() {
             />
 
             {/* Submit Button */}
-            <Button type="submit" disabled={form.formState.isSubmitting} className="w-full">
+            <Button
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              className="w-full bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium"
+            >
               {form.formState.isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

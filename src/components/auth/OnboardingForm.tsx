@@ -82,12 +82,14 @@ export function OnboardingForm() {
   }
 
   return (
-    <Card>
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold">Welcome to HealthyMeal</CardTitle>
-        <CardDescription>Tell us about your dietary preferences to personalize your experience</CardDescription>
+    <Card className="bg-white shadow-2xl border-0">
+      <CardHeader className="space-y-2 px-8 pt-8">
+        <CardTitle className="text-2xl font-bold text-gray-900">Welcome to HealthyMeal</CardTitle>
+        <CardDescription className="text-gray-600">
+          Tell us about your dietary preferences to personalize your experience
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-8 pb-8">
         {globalError && (
           <Alert variant="destructive" className="mb-4">
             <AlertTitle>Error</AlertTitle>
@@ -105,7 +107,7 @@ export function OnboardingForm() {
               onChange={setAllergies}
               placeholder="Select your allergies"
             />
-            <p className="text-sm text-muted-foreground">Select any food allergies you have</p>
+            <p className="text-sm text-gray-600">Select any food allergies you have</p>
           </div>
 
           {/* Diets */}
@@ -117,7 +119,7 @@ export function OnboardingForm() {
               onChange={setDiets}
               placeholder="Select your dietary preferences"
             />
-            <p className="text-sm text-muted-foreground">Select any dietary preferences you follow</p>
+            <p className="text-sm text-gray-600">Select any dietary preferences you follow</p>
           </div>
 
           {/* Disliked Ingredients */}
@@ -128,18 +130,22 @@ export function OnboardingForm() {
               onChange={setDislikedIngredients}
               placeholder="Type an ingredient and press Enter"
             />
-            <p className="text-sm text-muted-foreground">Enter ingredients you don't like</p>
+            <p className="text-sm text-gray-600">Enter ingredients you don't like</p>
           </div>
 
           {/* Validation message */}
           {!isValid && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-gray-600">
               Please select at least one preference (allergy, diet, or disliked ingredient) to continue.
             </p>
           )}
 
           {/* Submit Button */}
-          <Button type="submit" disabled={!isValid || isSubmitting} className="w-full">
+          <Button
+            type="submit"
+            disabled={!isValid || isSubmitting}
+            className="w-full bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium"
+          >
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

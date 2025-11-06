@@ -49,7 +49,6 @@ async function createTestUser() {
     console.log("3. Click the user and check 'Email Confirmed'");
     console.log("4. (Optional) Set up onboarding preferences");
     console.log("\n✅ Then run: npm run test:e2e");
-
   } catch (error) {
     console.error("❌ Error:", error);
     process.exit(1);

@@ -1,115 +1,26 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import type { CreateRecipeCommand, RecipeDetailDto } from "@/types";
+import { useRecipeForm } from "@/components/hooks/useRecipeForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-
-// Zod schema for client-side validation
-export const CreateRecipeFormSchema = z.object({
-  title: z.string().min(1, "Title is required."),
-  ingredients: z.string().min(1, "Ingredients are required."),
-  instructions: z.string().min(1, "Instructions are required."),
-});
-
-// ViewModel type inferred from schema
-export type CreateRecipeFormViewModel = z.infer<typeof CreateRecipeFormSchema>;
+import { Card, CardContent } from "@/components/ui/card";
 
 export function NewRecipeForm() {
-  const [globalError, setGlobalError] = useState<string | null>(null);
-
-  // Initialize form with react-hook-form and zod resolver
-  const form = useForm<CreateRecipeFormViewModel>({
-    resolver: zodResolver(CreateRecipeFormSchema),
-    mode: "onChange", // Validate on change to enable real-time button state updates
-    defaultValues: {
-      title: "",
-      ingredients: "",
-      instructions: "",
-    },
-  });
-
-  // Submit handler
-  async function onSubmit(data: CreateRecipeFormViewModel) {
-    setGlobalError(null);
-
-    const payload: CreateRecipeCommand = {
-      ...data,
-      original_recipe_id: null,
-    };
-
-    try {
-      const response = await fetch("/api/recipes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      // Handle 401 Unauthorized - session expired
-      if (response.status === 401) {
-        // eslint-disable-next-line react-compiler/react-compiler
-        window.location.href = "/login";
-        return;
-      }
-
-      // Handle 400 Bad Request - validation errors
-      if (response.status === 400) {
-        const errorData = await response.json();
-        if (errorData.details) {
-          // Handle field-specific errors from the API
-          for (const fieldName in errorData.details) {
-            form.setError(fieldName as keyof CreateRecipeFormViewModel, {
-              type: "server",
-              message: errorData.details[fieldName][0], // Use first error message
-            });
-          }
-        } else {
-          setGlobalError(errorData.message || "An error occurred.");
-        }
-        return;
-      }
-
-      // Handle 500+ Server Error
-      if (response.status >= 500) {
-        setGlobalError("An internal server error occurred. Please try again later.");
-        return;
-      }
-
-      // Handle success (201 Created)
-      if (response.ok) {
-        const newRecipe: RecipeDetailDto = await response.json();
-        window.location.href = `/recipes/${newRecipe.id}`;
-        return;
-      }
-
-      // Handle any other non-ok response
-      setGlobalError("An unexpected error occurred. Please try again.");
-    } catch {
-      setGlobalError("A network error occurred. Please check your connection.");
-    }
-  }
-
-  // Reset handler
-  function onReset() {
-    form.reset();
-    setGlobalError(null);
-  }
+  const { form, globalError, onSubmit, onReset } = useRecipeForm();
 
   return (
-    <div className="space-y-6">
-      {globalError && (
-        <Alert variant="destructive">
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>{globalError}</AlertDescription>
-        </Alert>
-      )}
+    <Card className="bg-white/95 backdrop-blur-sm shadow-md border-0">
+      <CardContent className="pt-6">
+        {globalError && (
+          <Alert variant="destructive" className="mb-6">
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{globalError}</AlertDescription>
+          </Alert>
+        )}
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Title Field */}
           <FormField
             control={form.control}
@@ -157,15 +68,26 @@ export function NewRecipeForm() {
 
           {/* Action Buttons */}
           <div className="flex gap-4">
-            <Button type="submit" disabled={form.formState.isSubmitting || !form.formState.isValid}>
+            <Button
+              type="submit"
+              disabled={form.formState.isSubmitting || !form.formState.isValid}
+              className="bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium"
+            >
               {form.formState.isSubmitting ? "Creating..." : "Create Recipe"}
             </Button>
-            <Button type="button" variant="outline" onClick={onReset} disabled={form.formState.isSubmitting}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onReset}
+              disabled={form.formState.isSubmitting}
+              className="border-gray-300 text-gray-700 hover:bg-gray-50"
+            >
               Reset
             </Button>
           </div>
         </form>
       </Form>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

@@ -25,9 +25,7 @@ test.describe("Authentication and Onboarding", () => {
       expect(await onboardingPage.isOnboardingPage()).toBe(true);
     });
 
-    test("TC1.2: System prevents registration with invalid email or too short password", async ({
-      page,
-    }) => {
+    test("TC1.2: System prevents registration with invalid email or too short password", async ({ page }) => {
       const registerPage = new RegisterPage(page);
 
       await registerPage.goto();
@@ -83,9 +81,7 @@ test.describe("Authentication and Onboarding", () => {
       expect(await loginPage.isErrorVisible()).toBe(true);
     });
 
-    test("TC1.5: User loses access to protected resources after logout", async ({
-      authenticatedPage,
-    }) => {
+    test("TC1.5: User loses access to protected resources after logout", async ({ authenticatedPage }) => {
       const dashboardPage = new DashboardPage(authenticatedPage);
       const loginPage = new LoginPage(authenticatedPage);
 
@@ -137,9 +133,7 @@ test.describe("Authentication and Onboarding", () => {
       expect(successText).toContain("Email sent");
     });
 
-    test("TC1.6.1: User sees error message when requesting password reset for non-existent email", async ({
-      page,
-    }) => {
+    test("TC1.6.1: User sees error message when requesting password reset for non-existent email", async ({ page }) => {
       const passwordRecoveryPage = new PasswordRecoveryPage(page);
 
       await passwordRecoveryPage.goto();
@@ -168,9 +162,7 @@ test.describe("Authentication and Onboarding", () => {
   });
 
   test.describe("Onboarding", () => {
-    test("TC1.7: User must select at least one preference to continue onboarding", async ({
-      page,
-    }) => {
+    test("TC1.7: User must select at least one preference to continue onboarding", async ({ page }) => {
       const registerPage = new RegisterPage(page);
       const onboardingPage = new OnboardingPage(page);
 

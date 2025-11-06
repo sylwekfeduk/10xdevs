@@ -29,7 +29,7 @@ export class NewRecipePage {
     this.submitButton = page.getByRole("button", { name: /create|save|submit/i });
     this.cancelButton = page.getByRole("button", { name: /cancel|anuluj|reset/i });
     // React Hook Form validation messages (can be in role="alert" or just text)
-    this.validationError = page.locator('text=/required|is required|cannot be empty/i');
+    this.validationError = page.locator("text=/required|is required|cannot be empty/i");
   }
 
   async goto() {

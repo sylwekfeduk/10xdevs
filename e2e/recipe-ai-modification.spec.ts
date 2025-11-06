@@ -6,9 +6,7 @@ import { RecipesPage } from "./pages/RecipesPage";
 
 test.describe("AI Recipe Modification", () => {
   test.describe("Happy Path", () => {
-    test("TC3.1: User can modify recipe with AI and see comparison", async ({
-      authenticatedPage,
-    }) => {
+    test("TC3.1: User can modify recipe with AI and see comparison", async ({ authenticatedPage }) => {
       const newRecipePage = new NewRecipePage(authenticatedPage);
       const recipeDetailPage = new RecipeDetailPage(authenticatedPage);
       const recipeModifyPage = new RecipeModifyPage(authenticatedPage);
@@ -37,9 +35,7 @@ test.describe("AI Recipe Modification", () => {
       expect(await recipeModifyPage.isComparisonVisible()).toBe(true);
     });
 
-    test("TC3.2: AI warning is always visible on modification page", async ({
-      authenticatedPage,
-    }) => {
+    test("TC3.2: AI warning is always visible on modification page", async ({ authenticatedPage }) => {
       const newRecipePage = new NewRecipePage(authenticatedPage);
       const recipeDetailPage = new RecipeDetailPage(authenticatedPage);
       const recipeModifyPage = new RecipeModifyPage(authenticatedPage);
@@ -63,9 +59,7 @@ test.describe("AI Recipe Modification", () => {
   });
 
   test.describe("Save and Discard", () => {
-    test("TC3.3: User can save modified recipe creating new AI-Modified entry", async ({
-      authenticatedPage,
-    }) => {
+    test("TC3.3: User can save modified recipe creating new AI-Modified entry", async ({ authenticatedPage }) => {
       const newRecipePage = new NewRecipePage(authenticatedPage);
       const recipeDetailPage = new RecipeDetailPage(authenticatedPage);
       const recipeModifyPage = new RecipeModifyPage(authenticatedPage);
@@ -108,9 +102,7 @@ test.describe("AI Recipe Modification", () => {
       expect(recipeCount).toBeGreaterThanOrEqual(2);
     });
 
-    test("TC3.4: Original recipe remains unchanged after saving AI-modified version", async ({
-      authenticatedPage,
-    }) => {
+    test("TC3.4: Original recipe remains unchanged after saving AI-modified version", async ({ authenticatedPage }) => {
       const newRecipePage = new NewRecipePage(authenticatedPage);
       const recipeDetailPage = new RecipeDetailPage(authenticatedPage);
       const recipeModifyPage = new RecipeModifyPage(authenticatedPage);
@@ -145,9 +137,7 @@ test.describe("AI Recipe Modification", () => {
       expect(currentTitle).toBe(originalTitleDisplayed);
     });
 
-    test("TC3.5: User can discard changes and return to original recipe", async ({
-      authenticatedPage,
-    }) => {
+    test("TC3.5: User can discard changes and return to original recipe", async ({ authenticatedPage }) => {
       const newRecipePage = new NewRecipePage(authenticatedPage);
       const recipeDetailPage = new RecipeDetailPage(authenticatedPage);
       const recipeModifyPage = new RecipeModifyPage(authenticatedPage);
@@ -178,9 +168,7 @@ test.describe("AI Recipe Modification", () => {
   });
 
   test.describe("Error Handling", () => {
-    test("TC3.6: When AI service is unavailable, user sees error with retry option", async ({
-      authenticatedPage,
-    }) => {
+    test("TC3.6: When AI service is unavailable, user sees error with retry option", async ({ authenticatedPage }) => {
       const newRecipePage = new NewRecipePage(authenticatedPage);
       const recipeModifyPage = new RecipeModifyPage(authenticatedPage);
 
@@ -217,9 +205,7 @@ test.describe("AI Recipe Modification", () => {
       expect(hasRetry).toBe(true);
     });
 
-    test("TC3.7: Attempting to modify non-existent recipe shows error page", async ({
-      authenticatedPage,
-    }) => {
+    test("TC3.7: Attempting to modify non-existent recipe shows error page", async ({ authenticatedPage }) => {
       const recipeModifyPage = new RecipeModifyPage(authenticatedPage);
 
       // Try to modify non-existent recipe
@@ -240,9 +226,7 @@ test.describe("AI Recipe Modification", () => {
   });
 
   test.describe("Edge Cases", () => {
-    test("Multiple modifications: User can modify a recipe multiple times", async ({
-      authenticatedPage,
-    }) => {
+    test("Multiple modifications: User can modify a recipe multiple times", async ({ authenticatedPage }) => {
       const newRecipePage = new NewRecipePage(authenticatedPage);
       const recipeDetailPage = new RecipeDetailPage(authenticatedPage);
       const recipeModifyPage = new RecipeModifyPage(authenticatedPage);

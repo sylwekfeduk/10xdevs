@@ -48,7 +48,10 @@ export class RegisterPage {
 
   async isErrorVisible() {
     const alertVisible = await this.errorMessage.isVisible().catch(() => false);
-    const validationVisible = await this.validationError.first().isVisible().catch(() => false);
+    const validationVisible = await this.validationError
+      .first()
+      .isVisible()
+      .catch(() => false);
     return alertVisible || validationVisible;
   }
 

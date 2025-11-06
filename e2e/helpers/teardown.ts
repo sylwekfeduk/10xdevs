@@ -50,11 +50,7 @@ export async function deleteAllRecipesForUser(userId: string): Promise<number> {
 
   // Delete all recipes for the user
   // This will cascade delete to ai_modifications_log due to foreign key constraints
-  const { data, error } = await supabase
-    .from("recipes")
-    .delete()
-    .eq("user_id", userId)
-    .select();
+  const { data, error } = await supabase.from("recipes").delete().eq("user_id", userId).select();
 
   if (error) {
     console.error("Error deleting recipes:", error);
@@ -71,10 +67,7 @@ export async function deleteAllRecipesForUser(userId: string): Promise<number> {
  * @param createdAfter - ISO timestamp, recipes created after this will be deleted
  * @returns The number of recipes deleted
  */
-export async function deleteRecentRecipesForUser(
-  userId: string,
-  createdAfter: string
-): Promise<number> {
+export async function deleteRecentRecipesForUser(userId: string, createdAfter: string): Promise<number> {
   const supabase = await createAuthenticatedClient();
 
   const { data, error } = await supabase

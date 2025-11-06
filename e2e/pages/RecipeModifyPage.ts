@@ -16,11 +16,15 @@ export class RecipeModifyPage {
   constructor(page: Page) {
     this.page = page;
     this.heading = page.getByRole("heading", { name: /modify|modyfikacja|comparison|porównanie/i });
-    this.loadingSpinner = page.locator('[data-testid="loading"], .loading, [role="status"]').filter({ hasText: /loading|ładowanie/i });
+    this.loadingSpinner = page
+      .locator('[data-testid="loading"], .loading, [role="status"]')
+      .filter({ hasText: /loading|ładowanie/i });
     this.originalRecipe = page.locator('[data-testid="original-recipe"], .original-recipe');
     this.modifiedRecipe = page.locator('[data-testid="modified-recipe"], .modified-recipe');
     this.changesSummary = page.locator('[data-testid="changes-summary"], .changes-summary');
-    this.aiWarning = page.locator('[data-testid="ai-warning"], .ai-warning, [role="alert"]').filter({ hasText: /ai|generated|generowane/i });
+    this.aiWarning = page
+      .locator('[data-testid="ai-warning"], .ai-warning, [role="alert"]')
+      .filter({ hasText: /ai|generated|generowane/i });
     this.saveButton = page.getByRole("button", { name: /save|accept|zapisz|akceptuj/i });
     this.discardButton = page.getByRole("button", { name: /discard|reject|odrzuć|anuluj/i });
     this.retryButton = page.getByRole("button", { name: /retry|spróbuj ponownie/i });

@@ -5,9 +5,7 @@ import { RecipeDetailPage } from "./pages/RecipeDetailPage";
 
 test.describe("Recipe Management (CRUD)", () => {
   test.describe("Create Recipe", () => {
-    test("TC2.1: Authenticated user can create new recipe with all required fields", async ({
-      authenticatedPage,
-    }) => {
+    test("TC2.1: Authenticated user can create new recipe with all required fields", async ({ authenticatedPage }) => {
       const newRecipePage = new NewRecipePage(authenticatedPage);
       const recipeDetailPage = new RecipeDetailPage(authenticatedPage);
 
@@ -29,12 +27,12 @@ test.describe("Recipe Management (CRUD)", () => {
       await newRecipePage.waitForRedirect();
 
       // Ensure we've left the /recipes/new page
-      await authenticatedPage.waitForURL((url) => !url.pathname.includes('/new'), { timeout: 10000 });
+      await authenticatedPage.waitForURL((url) => !url.pathname.includes("/new"), { timeout: 10000 });
 
       // Verify we're on recipe detail page (not on /recipes/new anymore)
       const currentUrl = authenticatedPage.url();
       expect(currentUrl).toMatch(/\/recipes\/[^/]+$/);
-      expect(currentUrl).not.toContain('/new');
+      expect(currentUrl).not.toContain("/new");
 
       // Verify recipe title is displayed on the detail page
       const displayedTitle = await recipeDetailPage.getTitle();
@@ -78,9 +76,7 @@ test.describe("Recipe Management (CRUD)", () => {
       expect(recipeCount).toBeGreaterThan(0);
     });
 
-    test("TC2.4: Sorting and pagination functionality works correctly", async ({
-      authenticatedPage,
-    }) => {
+    test("TC2.4: Sorting and pagination functionality works correctly", async ({ authenticatedPage }) => {
       const recipesPage = new RecipesPage(authenticatedPage);
       const newRecipePage = new NewRecipePage(authenticatedPage);
 
@@ -118,8 +114,7 @@ test.describe("Recipe Management (CRUD)", () => {
       }
 
       // Pagination check - if pagination exists
-      const paginationVisible =
-        await recipesPage.paginationNext.isVisible().catch(() => false);
+      const paginationVisible = await recipesPage.paginationNext.isVisible().catch(() => false);
 
       if (paginationVisible) {
         const urlBefore = authenticatedPage.url();
@@ -132,9 +127,7 @@ test.describe("Recipe Management (CRUD)", () => {
       }
     });
 
-    test("TC2.5: User can open recipe details by clicking on card", async ({
-      authenticatedPage,
-    }) => {
+    test("TC2.5: User can open recipe details by clicking on card", async ({ authenticatedPage }) => {
       const recipesPage = new RecipesPage(authenticatedPage);
       const newRecipePage = new NewRecipePage(authenticatedPage);
       const recipeDetailPage = new RecipeDetailPage(authenticatedPage);
@@ -168,9 +161,7 @@ test.describe("Recipe Management (CRUD)", () => {
   });
 
   test.describe("Delete Recipe", () => {
-    test("TC2.6: User can permanently delete their recipe after confirmation", async ({
-      authenticatedPage,
-    }) => {
+    test("TC2.6: User can permanently delete their recipe after confirmation", async ({ authenticatedPage }) => {
       const newRecipePage = new NewRecipePage(authenticatedPage);
       const recipeDetailPage = new RecipeDetailPage(authenticatedPage);
       const recipesPage = new RecipesPage(authenticatedPage);
@@ -210,7 +201,10 @@ test.describe("Recipe Management (CRUD)", () => {
         // Should see error page or be redirected
         const is404 =
           authenticatedPage.url().includes("404") ||
-          (await authenticatedPage.locator("text=/not found|404/i").isVisible().catch(() => false));
+          (await authenticatedPage
+            .locator("text=/not found|404/i")
+            .isVisible()
+            .catch(() => false));
 
         expect(is404 || authenticatedPage.url().includes("/recipes")).toBe(true);
       }
