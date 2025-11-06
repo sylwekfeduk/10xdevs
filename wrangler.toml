@@ -1,0 +1,19 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "10xdevs"
+compatibility_date = "2025-01-06"
+
+# Pages configuration
+pages_build_output_dir = "dist"
+
+# KV namespace bindings for sessions (optional, uncomment if needed)
+# [[kv_namespaces]]
+# binding = "SESSION"
+# id = "your-kv-namespace-id"
+# preview_id = "your-preview-kv-namespace-id"
+
+# Environment variables that should be available at runtime
+# Configure these in your Cloudflare Pages settings
+[vars]
+# SUPABASE_URL will be set in Cloudflare Pages environment variables
+# SUPABASE_KEY will be set in Cloudflare Pages environment variables
+# OPENROUTER_API_KEY will be set in Cloudflare Pages environment variables

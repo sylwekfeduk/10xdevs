@@ -43,4 +43,4 @@ CI/CD i Hosting:
 - Github Actions do tworzenia pipeline'ów CI/CD
   - Automatyczne uruchamianie testów jednostkowych i integracyjnych przy każdym pushu
   - Testy E2E przed wdrożeniem na produkcję
-- DigitalOcean do hostowania aplikacji za pośrednictwem obrazu docker
+- Cloudflare Pages jako hosting aplikacji Astro
