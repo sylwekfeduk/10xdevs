@@ -23,12 +23,17 @@ Object.defineProperty(window, "matchMedia", {
 });
 
 // Mock IntersectionObserver
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 global.IntersectionObserver = class IntersectionObserver {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor, @typescript-eslint/no-empty-function
   constructor() {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   disconnect() {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   observe() {}
   takeRecords() {
     return [];
   }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   unobserve() {}
-} as any;
+} as unknown as typeof IntersectionObserver;
