@@ -84,7 +84,7 @@ export function PasswordUpdateForm() {
       <Card className="bg-white shadow-2xl border-0">
         <CardContent className="pt-12 pb-12">
           <div className="flex items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-[#2d5f4f]" />
+            <Loader2 className="h-8 w-8 animate-spin text-[#3F8C4F]" />
           </div>
         </CardContent>
       </Card>
@@ -107,7 +107,7 @@ export function PasswordUpdateForm() {
           </Alert>
           <div className="flex justify-center">
             <a href="/password-recovery">
-              <Button className="bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium">
+              <Button className="bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium">
                 Request New Reset Link
               </Button>
             </a>
@@ -167,7 +167,7 @@ export function PasswordUpdateForm() {
             <Button
               type="submit"
               disabled={form.formState.isSubmitting}
-              className="w-full bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium"
+              className="w-full bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium"
             >
               {form.formState.isSubmitting ? (
                 <>

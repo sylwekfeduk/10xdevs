@@ -26,21 +26,21 @@ const { title = "HealthyMeal" } = Astro.props;
 
     <!-- Content -->
     <div class="relative z-10 min-h-screen flex flex-col">
-      <header class="bg-[#2d5f4f] shadow-lg">
+      <header class="bg-[#3F8C4F] shadow-lg">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex h-16 items-center justify-between">
             <div class="flex items-center gap-8">
-              <a href="/dashboard" class="flex items-center gap-2 text-white hover:text-gray-200 transition-colors">
+              <a href="/dashboard" class="flex items-center gap-2 text-white hover:text-white/90 transition-colors">
                 <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
                   <path d="M7 2v20"></path>
                   <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
                 </svg>
-                <span class="text-xl font-bold">HealthyMeal</span>
+                <span class="text-xl font-bold tracking-tight">HealthyMeal</span>
               </a>
               <nav class="hidden md:flex gap-6">
-                <a href="/dashboard" class="text-sm font-medium text-white/90 hover:text-white transition-colors">Dashboard</a>
-                <a href="/recipes" class="text-sm font-medium text-white/90 hover:text-white transition-colors">Recipes</a>
+                <a href="/dashboard" class="text-sm font-medium text-white hover:text-white transition-colors border-b-2 border-transparent hover:border-white/50">Dashboard</a>
+                <a href="/recipes" class="text-sm font-medium text-white/90 hover:text-white transition-colors border-b-2 border-transparent hover:border-white/50">Recipes</a>
               </nav>
             </div>
             <UserNav client:load />

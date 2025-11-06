@@ -36,7 +36,7 @@ export function RegisterForm() {
       footer={
         <div className="text-sm text-gray-600 text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-[#2d5f4f] hover:text-[#234a3d] font-medium">
+          <a href="/login" className="text-[#3F8C4F] hover:text-[#234a3d] font-medium">
             Sign in
           </a>
         </div>
@@ -56,7 +56,7 @@ export function RegisterForm() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium"
+            className="w-full bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium"
           >
             {isLoading ? (
               <>

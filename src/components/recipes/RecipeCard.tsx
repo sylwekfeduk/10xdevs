@@ -10,12 +10,12 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
   return (
     <a
       href={recipe.linkPath}
-      className="block transition-transform hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2d5f4f] focus-visible:ring-offset-2 rounded-lg"
+      className="block transition-transform hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3F8C4F] focus-visible:ring-offset-2 rounded-lg"
     >
       <Card
         className={
           recipe.isOriginal
-            ? "border-l-4 border-l-[#2d5f4f] bg-white/95 backdrop-blur-sm hover:shadow-lg transition-shadow"
+            ? "border-l-4 border-l-[#3F8C4F] bg-white/95 backdrop-blur-sm hover:shadow-lg transition-shadow"
             : "border-l-4 border-l-[#4a8070] bg-white/95 backdrop-blur-sm hover:shadow-lg transition-shadow"
         }
       >
@@ -26,8 +26,8 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
               variant={recipe.isOriginal ? "default" : "secondary"}
               className={
                 recipe.isOriginal
-                  ? "shrink-0 bg-[#2d5f4f] hover:bg-[#234a3d] text-white"
-                  : "shrink-0 bg-[#2d5f4f]/10 text-[#2d5f4f] hover:bg-[#2d5f4f]/20"
+                  ? "shrink-0 bg-[#3F8C4F] hover:bg-[#234a3d] text-white"
+                  : "shrink-0 bg-[#3F8C4F]/10 text-[#3F8C4F] hover:bg-[#3F8C4F]/20"
               }
             >
               {recipe.statusLabel}

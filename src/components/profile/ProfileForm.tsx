@@ -126,7 +126,7 @@ export function ProfileForm({ initialData, onSave, isSaving }: ProfileFormProps)
             <Button
               type="submit"
               disabled={!isDirty || isSaving}
-              className="bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium"
+              className="bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium"
             >
               {isSaving ? (
                 <>

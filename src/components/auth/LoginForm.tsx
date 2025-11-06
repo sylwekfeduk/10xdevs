@@ -36,13 +36,13 @@ export function LoginForm() {
         <div className="flex flex-col space-y-2 text-center">
           <a
             href="/password-recovery"
-            className="text-sm text-gray-600 hover:text-[#2d5f4f] transition-colors"
+            className="text-sm text-gray-600 hover:text-[#3F8C4F] transition-colors"
           >
             Forgot your password?
           </a>
           <div className="text-sm text-gray-600">
             Don't have an account?{" "}
-            <a href="/register" className="text-[#2d5f4f] hover:text-[#234a3d] font-medium">
+            <a href="/register" className="text-[#3F8C4F] hover:text-[#234a3d] font-medium">
               Sign up
             </a>
           </div>
@@ -63,7 +63,7 @@ export function LoginForm() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium"
+            className="w-full bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium"
           >
             {isLoading ? (
               <>

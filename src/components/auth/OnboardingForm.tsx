@@ -144,7 +144,7 @@ export function OnboardingForm() {
           <Button
             type="submit"
             disabled={!isValid || isSubmitting}
-            className="w-full bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium"
+            className="w-full bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium"
           >
             {isSubmitting ? (
               <>

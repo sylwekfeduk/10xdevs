@@ -11,7 +11,7 @@ interface RecipeActionsBarProps {
 export function RecipeActionsBar({ recipe, onDeleteClick, isDeleting }: RecipeActionsBarProps) {
   return (
     <div className="flex items-center gap-3">
-      <Button asChild className="bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium">
+      <Button asChild className="bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium">
         <a href={`/recipes/${recipe.id}/modify`}>
           <Sparkles className="mr-2 h-4 w-4" />
           Modify with AI

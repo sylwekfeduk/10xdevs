@@ -71,7 +71,7 @@ export function NewRecipeForm() {
             <Button
               type="submit"
               disabled={form.formState.isSubmitting || !form.formState.isValid}
-              className="bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium"
+              className="bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium"
             >
               {form.formState.isSubmitting ? "Creating..." : "Create Recipe"}
             </Button>

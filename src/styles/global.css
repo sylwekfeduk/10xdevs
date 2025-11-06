@@ -36,6 +36,14 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* HealthyMeal Brand Colors */
+  --brand-green: #3F8C4F;
+  --brand-green-dark: #2d5f4f;
+  --brand-text-primary: #333333;
+  --brand-text-secondary: #666666;
+  --brand-text-light: #999999;
+  --brand-background-light: #F8F8F8;
 }
 
 .dark {

@@ -76,16 +76,16 @@ export function PasswordRecoveryForm() {
           <CardDescription className="text-gray-600">We've sent you a password reset link</CardDescription>
         </CardHeader>
         <CardContent className="px-8 pb-6">
-          <Alert className="border-[#2d5f4f] bg-[#2d5f4f]/10">
-            <CheckCircle2 className="h-4 w-4 text-[#2d5f4f]" />
+          <Alert className="border-[#3F8C4F] bg-[#3F8C4F]/10">
+            <CheckCircle2 className="h-4 w-4 text-[#3F8C4F]" />
             <AlertTitle className="text-[#234a3d]">Email sent</AlertTitle>
-            <AlertDescription className="text-[#2d5f4f]">
+            <AlertDescription className="text-[#3F8C4F]">
               Please check your email inbox and click the link to reset your password. The link will expire in 1 hour.
             </AlertDescription>
           </Alert>
         </CardContent>
         <CardFooter className="flex justify-center pb-8 px-8">
-          <a href="/login" className="text-sm text-gray-600 hover:text-[#2d5f4f] transition-colors">
+          <a href="/login" className="text-sm text-gray-600 hover:text-[#3F8C4F] transition-colors">
             Return to sign in
           </a>
         </CardFooter>
@@ -130,7 +130,7 @@ export function PasswordRecoveryForm() {
             <Button
               type="submit"
               disabled={form.formState.isSubmitting}
-              className="w-full bg-[#2d5f4f] hover:bg-[#234a3d] text-white font-medium"
+              className="w-full bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium"
             >
               {form.formState.isSubmitting ? (
                 <>
@@ -145,7 +145,7 @@ export function PasswordRecoveryForm() {
         </Form>
       </CardContent>
       <CardFooter className="flex justify-center pb-8 px-8">
-        <a href="/login" className="text-sm text-gray-600 hover:text-[#2d5f4f] transition-colors">
+        <a href="/login" className="text-sm text-gray-600 hover:text-[#3F8C4F] transition-colors">
           Return to sign in
         </a>
       </CardFooter>

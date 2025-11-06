@@ -11,62 +11,67 @@ if (!Astro.locals.user) {
 <AppLayout title="Dashboard - HealthyMeal">
   <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
     <div class="space-y-8">
-      <div class="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-md">
-        <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p class="text-gray-600 mt-2">Welcome to your personalized recipe dashboard</p>
+      <!-- Dashboard Title Area -->
+      <div class="bg-[#F8F8F8] rounded-[12px] p-6 shadow-sm">
+        <h1 class="text-2xl font-bold text-[#333333]">Dashboard</h1>
+        <p class="text-[#666666] mt-2 text-base font-light">Welcome to your personalized recipe dashboard</p>
       </div>
 
+      <!-- Main Content Cards -->
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-xl bg-white/95 backdrop-blur-sm border-0 shadow-md p-6 hover:shadow-lg transition-shadow">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-lg bg-[#2d5f4f]/10 flex items-center justify-center">
-              <svg class="w-5 h-5 text-[#2d5f4f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+        <!-- My Recipes Card -->
+        <div class="rounded-[12px] bg-white shadow-md p-6 hover:shadow-lg transition-shadow">
+          <div class="mb-4">
+            <div class="w-12 h-12 rounded-lg bg-[#3F8C4F]/10 flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-[#3F8C4F]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
               </svg>
             </div>
-            <h2 class="text-xl font-semibold text-gray-900">My Recipes</h2>
+            <h2 class="text-lg font-semibold text-[#333333] mb-2">My Recipes</h2>
+            <p class="text-[#666666] text-sm mb-4">View and manage your saved recipes</p>
           </div>
-          <p class="text-gray-600 mb-4">View and manage your saved recipes</p>
-          <a href="/recipes" class="inline-flex items-center text-[#2d5f4f] hover:text-[#234a3d] font-medium transition-colors">
+          <a href="/recipes" class="inline-flex items-center text-[#3F8C4F] hover:text-[#2d5f4f] font-medium transition-colors text-sm">
             View recipes
-            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
             </svg>
           </a>
         </div>
 
-        <div class="rounded-xl bg-white/95 backdrop-blur-sm border-0 shadow-md p-6 hover:shadow-lg transition-shadow">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-lg bg-[#2d5f4f]/10 flex items-center justify-center">
-              <svg class="w-5 h-5 text-[#2d5f4f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+        <!-- Profile Settings Card -->
+        <div class="rounded-[12px] bg-white shadow-md p-6 hover:shadow-lg transition-shadow">
+          <div class="mb-4">
+            <div class="w-12 h-12 rounded-lg bg-[#3F8C4F]/10 flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-[#3F8C4F]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
               </svg>
             </div>
-            <h2 class="text-xl font-semibold text-gray-900">Profile Settings</h2>
+            <h2 class="text-lg font-semibold text-[#333333] mb-2">Profile Settings</h2>
+            <p class="text-[#666666] text-sm mb-4">Update your dietary preferences and allergies</p>
           </div>
-          <p class="text-gray-600 mb-4">Update your dietary preferences and allergies</p>
-          <a href="/profile" class="inline-flex items-center text-[#2d5f4f] hover:text-[#234a3d] font-medium transition-colors">
+          <a href="/profile" class="inline-flex items-center text-[#3F8C4F] hover:text-[#2d5f4f] font-medium transition-colors text-sm">
             Edit profile
-            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
             </svg>
           </a>
         </div>
 
-        <div class="rounded-xl bg-white/95 backdrop-blur-sm border-0 shadow-md p-6 hover:shadow-lg transition-shadow">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-lg bg-[#2d5f4f]/10 flex items-center justify-center">
-              <svg class="w-5 h-5 text-[#2d5f4f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        <!-- Create Recipe Card -->
+        <div class="rounded-[12px] bg-white shadow-md p-6 hover:shadow-lg transition-shadow">
+          <div class="mb-4">
+            <div class="w-12 h-12 rounded-lg bg-[#3F8C4F]/10 flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-[#3F8C4F]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
               </svg>
             </div>
-            <h2 class="text-xl font-semibold text-gray-900">Create Recipe</h2>
+            <h2 class="text-lg font-semibold text-[#333333] mb-2">Create Recipe</h2>
+            <p class="text-[#666666] text-sm mb-4">Add a new recipe to your collection</p>
           </div>
-          <p class="text-gray-600 mb-4">Add a new recipe to your collection</p>
-          <a href="/recipes/new" class="inline-flex items-center text-[#2d5f4f] hover:text-[#234a3d] font-medium transition-colors">
+          <a href="/recipes/new" class="inline-flex items-center text-[#3F8C4F] hover:text-[#2d5f4f] font-medium transition-colors text-sm">
             Create recipe
-            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
             </svg>
           </a>
         </div>
