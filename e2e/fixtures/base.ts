@@ -9,14 +9,13 @@ interface AuthFixtures {
 
 // Define custom fixtures
 export const test = base.extend<AuthFixtures>({
-  testUser: async (_unusedContext, use) => {
-    // Use existing test user from .env.test
+  testUser: async ({}, use) => {
+    // Use existing test user from .env.test (or GitHub secrets in CI)
     const user = {
       email: process.env.E2E_USERNAME || "testuser@wavestone.com",
       password: process.env.E2E_PASSWORD || "Test123!",
       userId: process.env.E2E_USERNAME_ID || "cf5abe4a-c633-4a0e-ae51-2a79c480f577",
     };
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(user);
   },
 
@@ -37,7 +36,6 @@ export const test = base.extend<AuthFixtures>({
       await onboardingPage.waitForRedirect();
     }
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(page);
   },
 });
