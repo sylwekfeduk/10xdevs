@@ -1,5 +1,7 @@
 name: Pull Request CI
 
+# This workflow runs on pull requests to main
+# It performs linting, unit tests, e2e tests, and posts a status comment
 on:
   pull_request:
     branches:
