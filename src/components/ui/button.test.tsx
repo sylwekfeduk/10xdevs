@@ -340,7 +340,10 @@ describe("Button", () => {
 
     it("should work with asChild and custom components", () => {
       // Arrange
-      const CustomLink = ({ children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { children: React.ReactNode }) => (
+      const CustomLink = ({
+        children,
+        ...props
+      }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { children: React.ReactNode }) => (
         <a {...props} data-custom="true">
           {children}
         </a>

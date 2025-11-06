@@ -8,28 +8,6 @@ interface AuthFixtures {
   testUser: { email: string; password: string; userId: string };
 }
 
-// Helper function to register and complete onboarding
-async function _registerAndOnboard(page: Page, email: string, password: string) {
-  const registerPage = new RegisterPage(page);
-  const onboardingPage = new OnboardingPage(page);
-
-  await registerPage.goto();
-  await registerPage.register(email, password, password);
-  await registerPage.waitForRedirect();
-
-  await onboardingPage.selectMultiplePreferences(2);
-  await onboardingPage.clickContinue();
-  await onboardingPage.waitForRedirect();
-}
-
-// Helper function to login
-async function _login(page: Page, email: string, password: string) {
-  const loginPage = new LoginPage(page);
-  await loginPage.goto();
-  await loginPage.login(email, password);
-  await loginPage.waitForRedirect();
-}
-
 // Define custom fixtures
 export const test = base.extend<AuthFixtures>({
   testUser: async (_unusedContext, use) => {

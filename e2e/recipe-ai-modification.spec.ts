@@ -92,7 +92,7 @@ test.describe("AI Recipe Modification", () => {
       expect(newRecipeUrl).toMatch(/\/recipes\/[^/]+$/);
 
       // New recipe should have AI-Modified badge (if implemented)
-      const _hasBadge = await recipeDetailPage.isAIModifiedBadgeVisible().catch(() => false);
+      await recipeDetailPage.isAIModifiedBadgeVisible().catch(() => false);
 
       // Go to recipes list and verify we have 2 recipes now
       await recipesPage.goto();
