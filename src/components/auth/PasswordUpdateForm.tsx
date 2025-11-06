@@ -73,6 +73,7 @@ export function PasswordUpdateForm() {
       }
 
       // Redirect to login on success
+      // eslint-disable-next-line react-compiler/react-compiler
       window.location.href = "/login";
     } catch {
       setGlobalError("A network error occurred. Please check your connection.");
