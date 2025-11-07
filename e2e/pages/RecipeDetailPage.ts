@@ -6,14 +6,12 @@ export class RecipeDetailPage {
   readonly description: Locator;
   readonly ingredients: Locator;
   readonly instructions: Locator;
-  readonly modifyWithAIButton: Locator;
   readonly deleteButton: Locator;
   readonly editButton: Locator;
   readonly backButton: Locator;
   readonly deleteConfirmModal: Locator;
   readonly deleteConfirmButton: Locator;
   readonly deleteCancelButton: Locator;
-  readonly aiModifiedBadge: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -30,7 +28,6 @@ export class RecipeDetailPage {
       .locator("..")
       .locator("..");
     // Buttons from RecipeActionsBar component
-    this.modifyWithAIButton = page.getByRole("link", { name: /modify with ai/i });
     this.deleteButton = page.getByRole("button", { name: /delete recipe|deleting/i });
     this.editButton = page.getByRole("button", { name: /edit|edytuj/i });
     this.backButton = page.getByRole("link", { name: /back to recipes/i });
@@ -42,9 +39,6 @@ export class RecipeDetailPage {
     this.deleteCancelButton = page
       .locator('[role="dialog"] button, .modal button')
       .filter({ hasText: /cancel|anuluj/i });
-    this.aiModifiedBadge = page
-      .locator('[data-testid="ai-badge"], .ai-modified-badge')
-      .filter({ hasText: /ai-modified|zmodyfikowany przez ai/i });
   }
 
   async goto(recipeId: string) {
@@ -55,10 +49,6 @@ export class RecipeDetailPage {
     // Wait for the title to be visible before getting its content
     await this.title.waitFor({ state: "visible" });
     return await this.title.textContent();
-  }
-
-  async clickModifyWithAI() {
-    await this.modifyWithAIButton.click();
   }
 
   async clickDelete() {
@@ -82,10 +72,6 @@ export class RecipeDetailPage {
 
   async waitForRedirectAfterDelete() {
     await this.page.waitForURL(/\/recipes$/);
-  }
-
-  async isAIModifiedBadgeVisible() {
-    return await this.aiModifiedBadge.isVisible();
   }
 
   async clickBack() {

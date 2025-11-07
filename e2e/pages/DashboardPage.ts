@@ -18,9 +18,8 @@ export class DashboardPage {
     this.recipesLink = page.getByRole("link", { name: /recipes|przepisy/i });
     this.profileLink = page.getByRole("link", { name: /profile|profil/i });
     // User avatar button to open dropdown menu (UserNav component)
-    this.userMenuButton = page
-      .getByRole("button", { name: /user menu|open user menu/i })
-      .or(page.locator("button.rounded-full").first());
+    // The button is a rounded-full button with ghost variant in the header
+    this.userMenuButton = page.locator("button.rounded-full").first();
     // Logout button is in a dropdown menu (UserNav component)
     this.logoutButton = page.getByRole("menuitem", { name: /log out|logging out/i });
     this.newRecipeButton = page.getByRole("link", { name: /new recipe|nowy przepis|add recipe|dodaj/i });
@@ -40,9 +39,12 @@ export class DashboardPage {
 
   async logout() {
     // First, open the user dropdown menu
+    await this.userMenuButton.waitFor({ state: "visible" });
     await this.userMenuButton.click();
-    // Wait for menu to be visible
-    await this.page.waitForTimeout(500);
+    // Wait for menu to open and dropdown items to be visible
+    await this.page.waitForTimeout(800);
+    // Wait for the logout button to be visible
+    await this.logoutButton.waitFor({ state: "visible", timeout: 5000 });
     // Then click logout
     await this.logoutButton.click();
   }

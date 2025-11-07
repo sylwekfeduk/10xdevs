@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 
 export class NewRecipePage {
   readonly page: Page;
@@ -45,21 +45,47 @@ export class NewRecipePage {
     cookTime?: string;
     servings?: string;
   }) {
+    // Wait for form to be fully loaded
+    await this.titleInput.waitFor({ state: "visible", timeout: 10000 });
+
     // Only fill the 3 required fields that actually exist in the form
     await this.titleInput.fill(recipe.title);
+    await this.page.waitForTimeout(100);
 
     if (recipe.ingredients) {
       await this.ingredientsInput.fill(recipe.ingredients);
+      await this.page.waitForTimeout(100);
     }
 
     if (recipe.instructions) {
       await this.instructionsInput.fill(recipe.instructions);
+      await this.page.waitForTimeout(100);
     }
+
+    // Wait for React Hook Form to complete validation
+    // React Hook Form with mode:"onChange" needs time to validate all fields
+    await this.page.waitForTimeout(500);
 
     // Skip description, prepTime, cookTime, servings - these fields don't exist in the actual form
   }
 
   async submitRecipe() {
+    // Wait for the button to be visible
+    await this.submitButton.waitFor({ state: "visible" });
+
+    // Wait for the button to be enabled (form validation must complete)
+    await this.page.waitForFunction(
+      () => {
+        const button = document.querySelector('button[type="submit"]');
+        return button && !button.hasAttribute('disabled');
+      },
+      { timeout: 5000 }
+    );
+
+    // Additional small wait to ensure React has finished updating
+    await this.page.waitForTimeout(300);
+
+    // Click the submit button
     await this.submitButton.click();
   }
 

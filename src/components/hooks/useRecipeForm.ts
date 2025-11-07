@@ -34,6 +34,7 @@ export function useRecipeForm(): UseRecipeFormReturn {
   const form = useForm<CreateRecipeFormData>({
     resolver: zodResolver(createRecipeFormSchema),
     mode: "onChange",
+    reValidateMode: "onChange",
     defaultValues: {
       title: "",
       ingredients: "",

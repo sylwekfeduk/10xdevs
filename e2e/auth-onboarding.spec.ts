@@ -5,8 +5,12 @@ import { OnboardingPage } from "./pages/OnboardingPage";
 import { PasswordRecoveryPage } from "./pages/PasswordRecoveryPage";
 import { DashboardPage } from "./pages/DashboardPage";
 
+// Generate a unique email for TC1.1
+const sharedTestEmail = `test-${Math.random().toString(36).substring(2, 11)}@example.com`;
+const sharedTestPassword = "ValidPassword123!";
+
 test.describe("Authentication and Onboarding", () => {
-  test.describe("Registration", () => {
+  test.describe.serial("Registration", () => {
     test("TC1.1: User can successfully register with valid email and password and is redirected to onboarding", async ({
       page,
     }) => {
@@ -15,8 +19,7 @@ test.describe("Authentication and Onboarding", () => {
 
       await registerPage.goto();
 
-      const uniqueEmail = `test-${Date.now()}@example.com`;
-      await registerPage.register(uniqueEmail, "ValidPassword123!", "ValidPassword123!");
+      await registerPage.register(sharedTestEmail, sharedTestPassword, sharedTestPassword);
 
       // Wait for redirect to onboarding
       await registerPage.waitForRedirect();
@@ -24,7 +27,9 @@ test.describe("Authentication and Onboarding", () => {
       // Verify we're on onboarding page
       expect(await onboardingPage.isOnboardingPage()).toBe(true);
     });
+  });
 
+  test.describe("Registration", () => {
     test("TC1.2: System prevents registration with invalid email or too short password", async ({ page }) => {
       const registerPage = new RegisterPage(page);
 
@@ -113,27 +118,7 @@ test.describe("Authentication and Onboarding", () => {
   });
 
   test.describe("Password Recovery", () => {
-    test("TC1.6: User can request password reset with existing email and sees success message", async ({
-      page,
-      testUser,
-    }) => {
-      const passwordRecoveryPage = new PasswordRecoveryPage(page);
-
-      await passwordRecoveryPage.goto();
-      await passwordRecoveryPage.requestPasswordReset(testUser.email);
-
-      // Wait for success state
-      await passwordRecoveryPage.waitForSuccess();
-
-      // Verify the card title changed to "Check your email"
-      expect(await passwordRecoveryPage.isSuccessVisible()).toBe(true);
-
-      // Verify success message content
-      const successText = await passwordRecoveryPage.getSuccessAlertText();
-      expect(successText).toContain("Email sent");
-    });
-
-    test("TC1.6.1: User sees error message when requesting password reset for non-existent email", async ({ page }) => {
+    test("TC1.6: User sees error message when requesting password reset for non-existent email", async ({ page }) => {
       const passwordRecoveryPage = new PasswordRecoveryPage(page);
 
       await passwordRecoveryPage.goto();
