@@ -130,7 +130,7 @@ export function OnboardingForm() {
               onChange={setDislikedIngredients}
               placeholder="Type an ingredient and press Enter"
             />
-            <p className="text-sm text-gray-600">Enter ingredients you don't like</p>
+            <p className="text-sm text-gray-600">Enter ingredients you don&apos;t like</p>
           </div>
 
           {/* Validation message */}

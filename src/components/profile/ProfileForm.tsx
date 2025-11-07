@@ -118,7 +118,7 @@ export function ProfileForm({ initialData, onSave, isSaving }: ProfileFormProps)
               onChange={(newValue) => setFormData((prev) => ({ ...prev, disliked_ingredients: newValue }))}
               placeholder="Type an ingredient and press Enter"
             />
-            <p className="text-sm text-gray-600">Enter ingredients you don't like</p>
+            <p className="text-sm text-gray-600">Enter ingredients you don&apos;t like</p>
           </div>
 
           {/* Submit Button */}

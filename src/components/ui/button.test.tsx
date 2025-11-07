@@ -340,7 +340,10 @@ describe("Button", () => {
 
     it("should work with asChild and custom components", () => {
       // Arrange
-      const CustomLink = ({ children, ...props }: any) => (
+      const CustomLink = ({
+        children,
+        ...props
+      }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { children: React.ReactNode }) => (
         <a {...props} data-custom="true">
           {children}
         </a>
@@ -407,7 +410,7 @@ describe("Button", () => {
 
     it("should support data attributes", () => {
       // Arrange & Act
-      const { container } = render(<Button data-testid="custom-button">Test</Button>);
+      render(<Button data-testid="custom-button">Test</Button>);
 
       // Assert
       expect(screen.getByTestId("custom-button")).toBeInTheDocument();

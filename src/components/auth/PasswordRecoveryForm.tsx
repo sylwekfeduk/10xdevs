@@ -73,7 +73,7 @@ export function PasswordRecoveryForm() {
       <Card className="bg-white shadow-2xl border-0">
         <CardHeader className="space-y-2 px-8 pt-8">
           <CardTitle className="text-2xl font-bold text-gray-900">Check your email</CardTitle>
-          <CardDescription className="text-gray-600">We've sent you a password reset link</CardDescription>
+          <CardDescription className="text-gray-600">We&apos;ve sent you a password reset link</CardDescription>
         </CardHeader>
         <CardContent className="px-8 pb-6">
           <Alert className="border-[#3F8C4F] bg-[#3F8C4F]/10">
@@ -98,7 +98,7 @@ export function PasswordRecoveryForm() {
       <CardHeader className="space-y-2 px-8 pt-8">
         <CardTitle className="text-2xl font-bold text-gray-900">Reset your password</CardTitle>
         <CardDescription className="text-gray-600">
-          Enter your email address and we'll send you a reset link
+          Enter your email address and we&apos;ll send you a reset link
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4 px-8 pb-6">

@@ -42,24 +42,41 @@ export class OnboardingPage {
     // The onboarding form uses MultiSelectCombobox for diets and allergies
     // And TagInput for disliked ingredients
 
-    // Try to add some dietary preferences via the TagInput
-    const dislikedInput = this.page.locator('input[placeholder*="ingredient"]');
+    // Try to select an allergy from the MultiSelectCombobox
+    // Find the button by role combobox since it has role="combobox"
+    const allergiesButton = this.page
+      .getByRole("combobox")
+      .filter({ hasText: /Select your allergies/i })
+      .first();
 
-    if (await dislikedInput.isVisible().catch(() => false)) {
-      // Add a disliked ingredient
-      await dislikedInput.click();
-      // Wait a moment to ensure focus
-      await this.page.waitForTimeout(100);
-      // Use pressSequentially with a slight delay to simulate real typing
-      await dislikedInput.pressSequentially("onions", { delay: 50 });
-      // Wait a moment before pressing Enter
-      await this.page.waitForTimeout(100);
-      // Press Enter on the focused input to add the tag
-      await this.page.keyboard.press("Enter");
-      // Wait for the tag badge to appear (confirms the tag was added)
-      // Look for badge with aria-label or the badge component
-      const tagBadge = this.page.locator('[data-slot="badge"]:has-text("onions"), .badge:has-text("onions")').first();
-      await tagBadge.waitFor({ state: "visible", timeout: 3000 });
+    if (await allergiesButton.isVisible().catch(() => false)) {
+      // Click the allergies combobox button to open dropdown
+      await allergiesButton.click();
+
+      // Wait for popover to open and populate
+      await this.page.waitForTimeout(500);
+
+      // Wait for the popover content to be visible (command list appears)
+      // The CommandList is inside a Popover, so it should be visible after the popover opens
+      const commandList = this.page.locator('[data-slot="command-list"]');
+      await commandList.waitFor({ state: "visible", timeout: 5000 });
+
+      // Wait a bit more for options to render
+      await this.page.waitForTimeout(300);
+
+      // Select "Peanuts" from the dropdown using CommandItem selector
+      // CommandItem renders as div with data-slot="command-item" containing the label text
+      const peanutsOption = this.page.locator('[data-slot="command-item"]').filter({ hasText: "Peanuts" }).first();
+      await peanutsOption.waitFor({ state: "visible", timeout: 3000 });
+      await peanutsOption.click();
+
+      // Wait for selection to be registered
+      await this.page.waitForTimeout(300);
+
+      // Close the dropdown by pressing Escape
+      await this.page.keyboard.press("Escape");
+      // Wait for dropdown to close
+      await this.page.waitForTimeout(200);
     } else {
       // Fallback: try to interact with any checkboxes or comboboxes
       const anyCheckboxes = await this.page.locator('input[type="checkbox"]').all();

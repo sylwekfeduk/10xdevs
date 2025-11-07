@@ -29,7 +29,7 @@ export class PasswordRecoveryPage {
 
   async waitForSuccess() {
     // Wait for the success card to appear
-    await this.page.waitForSelector('h2:has-text("Check your email")', { timeout: 10000 });
+    await this.page.getByRole("heading", { name: /check your email/i }).waitFor({ timeout: 10000 });
   }
 
   async isSuccessVisible() {

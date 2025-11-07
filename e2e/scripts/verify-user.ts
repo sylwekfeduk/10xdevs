@@ -25,9 +25,13 @@ async function verifyUser() {
 
   try {
     // Sign in to get the actual user ID
+    if (!email || !password) {
+      console.error("Email and password are required");
+      return;
+    }
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email: email!,
-      password: password!,
+      email,
+      password,
     });
 
     if (authError) {
@@ -49,6 +53,10 @@ async function verifyUser() {
     }
 
     // Now check recipes using the ACTUAL user ID
+    if (!actualUserId) {
+      console.error("Actual user ID not found");
+      return;
+    }
     const {
       data: recipes,
       error: recipeError,
@@ -56,7 +64,7 @@ async function verifyUser() {
     } = await supabase
       .from("recipes")
       .select("id, title, user_id, created_at", { count: "exact" })
-      .eq("user_id", actualUserId!);
+      .eq("user_id", actualUserId);
 
     if (recipeError) {
       console.error("\nError querying recipes:", recipeError);
@@ -74,10 +82,14 @@ async function verifyUser() {
     }
 
     // Check using the expected (wrong) user ID
+    if (!expectedUserId) {
+      console.error("Expected user ID not found");
+      return;
+    }
     const { count: wrongCount } = await supabase
       .from("recipes")
       .select("*", { count: "exact", head: true })
-      .eq("user_id", expectedUserId!);
+      .eq("user_id", expectedUserId);
 
     console.log(`\nRecipes for expected user ID (${expectedUserId}): ${wrongCount}`);
   } catch (error) {

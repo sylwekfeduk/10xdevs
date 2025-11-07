@@ -73,6 +73,7 @@ export function PasswordUpdateForm() {
       }
 
       // Redirect to login on success
+      // eslint-disable-next-line react-compiler/react-compiler
       window.location.href = "/login";
     } catch {
       setGlobalError("A network error occurred. Please check your connection.");
@@ -107,9 +108,7 @@ export function PasswordUpdateForm() {
           </Alert>
           <div className="flex justify-center">
             <a href="/password-recovery">
-              <Button className="bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium">
-                Request New Reset Link
-              </Button>
+              <Button className="bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium">Request New Reset Link</Button>
             </a>
           </div>
         </CardContent>

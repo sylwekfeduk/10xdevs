@@ -311,7 +311,7 @@ describe("ActionButtonsBar", () => {
       };
 
       // Act
-      const { container } = render(<ActionButtonsBar {...props} />);
+      render(<ActionButtonsBar {...props} />);
 
       // Assert - Check for Save icon (lucide-react adds specific attributes)
       const saveButton = screen.getByRole("button", { name: /save modified recipe/i });
@@ -329,7 +329,7 @@ describe("ActionButtonsBar", () => {
       };
 
       // Act
-      const { container } = render(<ActionButtonsBar {...props} />);
+      render(<ActionButtonsBar {...props} />);
 
       // Assert - Check for X icon
       const discardButton = screen.getByRole("button", { name: /discard changes/i });
@@ -347,7 +347,7 @@ describe("ActionButtonsBar", () => {
       };
 
       // Act
-      const { container } = render(<ActionButtonsBar {...props} />);
+      render(<ActionButtonsBar {...props} />);
 
       // Assert - Check for outline variant classes
       const discardButton = screen.getByRole("button", { name: /discard changes/i });

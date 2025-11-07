@@ -46,8 +46,12 @@ describe("utils", () => {
 
   describe("cn - Conditional Classes", () => {
     it("should handle conditional classes with logical AND", () => {
-      // Arrange & Act
-      const result = cn("base-class", false && "hidden", true && "visible");
+      // Arrange
+      const isHidden = false;
+      const isVisible = true;
+
+      // Act
+      const result = cn("base-class", isHidden && "hidden", isVisible && "visible");
 
       // Assert
       expect(result).toBe("base-class visible");
