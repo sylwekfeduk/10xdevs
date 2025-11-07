@@ -9,10 +9,10 @@ dotenv.config({ path: path.resolve(process.cwd(), ".env.test") });
  */
 export default defineConfig({
   testDir: "./e2e",
-  fullyParallel: true,
+  fullyParallel: false, // Run tests synchronously (sequentially)
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1, // Use single worker to ensure synchronous execution
   reporter: "html",
 
   // Global setup and teardown
@@ -27,7 +27,19 @@ export default defineConfig({
 
   projects: [
     {
-      name: "chromium",
+      name: "auth-onboarding",
+      testMatch: /auth-onboarding\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "recipe-crud",
+      testMatch: /recipe-crud\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"] },
+      dependencies: ["auth-onboarding"], // Wait for auth-onboarding to pass
+    },
+    {
+      name: "smoke",
+      testMatch: /smoke\.spec\.ts/,
       use: { ...devices["Desktop Chrome"] },
     },
   ],
