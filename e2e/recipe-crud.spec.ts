@@ -24,7 +24,10 @@ test.describe.serial("Recipe Management (CRUD)", () => {
       await newRecipePage.createRecipe(recipe);
 
       // Wait for navigation away from the new recipe page to detail page
-      await authenticatedPage.waitForURL((url) => !url.pathname.includes("/new") && url.pathname.includes("/recipes/"), { timeout: 15000 });
+      await authenticatedPage.waitForURL(
+        (url) => !url.pathname.includes("/new") && url.pathname.includes("/recipes/"),
+        { timeout: 15000 }
+      );
 
       // Wait for the page to be fully loaded
       await authenticatedPage.waitForLoadState("networkidle");
@@ -71,7 +74,10 @@ test.describe.serial("Recipe Management (CRUD)", () => {
       });
 
       // Wait for redirect to recipe detail page
-      await authenticatedPage.waitForURL((url) => !url.pathname.includes("/new") && url.pathname.includes("/recipes/"), { timeout: 15000 });
+      await authenticatedPage.waitForURL(
+        (url) => !url.pathname.includes("/new") && url.pathname.includes("/recipes/"),
+        { timeout: 15000 }
+      );
       await authenticatedPage.waitForLoadState("networkidle");
 
       // Now go to recipes list
@@ -94,9 +100,18 @@ test.describe.serial("Recipe Management (CRUD)", () => {
 
       // Create 12 recipes to ensure pagination (10 per page, so 12 will create 2 pages)
       const recipeNames = [
-        "A Recipe", "B Recipe", "C Recipe", "D Recipe",
-        "E Recipe", "F Recipe", "G Recipe", "H Recipe",
-        "I Recipe", "J Recipe", "K Recipe", "L Recipe"
+        "A Recipe",
+        "B Recipe",
+        "C Recipe",
+        "D Recipe",
+        "E Recipe",
+        "F Recipe",
+        "G Recipe",
+        "H Recipe",
+        "I Recipe",
+        "J Recipe",
+        "K Recipe",
+        "L Recipe",
       ];
 
       for (const name of recipeNames) {
@@ -111,7 +126,10 @@ test.describe.serial("Recipe Management (CRUD)", () => {
         });
 
         // Wait for redirect to recipe detail page after each creation
-        await authenticatedPage.waitForURL((url) => !url.pathname.includes("/new") && url.pathname.includes("/recipes/"), { timeout: 10000 });
+        await authenticatedPage.waitForURL(
+          (url) => !url.pathname.includes("/new") && url.pathname.includes("/recipes/"),
+          { timeout: 10000 }
+        );
         await authenticatedPage.waitForLoadState("domcontentloaded");
       }
 
@@ -121,7 +139,7 @@ test.describe.serial("Recipe Management (CRUD)", () => {
 
       // Wait for recipes to load - should see at least 10 on first page
       await authenticatedPage.waitForTimeout(1500);
-      let recipeCount = await recipesPage.getRecipeCount();
+      const recipeCount = await recipesPage.getRecipeCount();
       expect(recipeCount).toBeGreaterThanOrEqual(10);
 
       // Test sorting (if dropdown exists)
@@ -146,9 +164,6 @@ test.describe.serial("Recipe Management (CRUD)", () => {
       if (paginationVisible) {
         // Wait for pagination button to be enabled (not disabled)
         await authenticatedPage.waitForTimeout(500);
-
-        // Get first page content for comparison
-        const firstPageFirstTitle = await recipesPage.getFirstRecipeTitle();
 
         await recipesPage.clickNextPage();
 
@@ -182,7 +197,10 @@ test.describe.serial("Recipe Management (CRUD)", () => {
       });
 
       // Wait for redirect to recipe detail page
-      await authenticatedPage.waitForURL((url) => !url.pathname.includes("/new") && url.pathname.includes("/recipes/"), { timeout: 15000 });
+      await authenticatedPage.waitForURL(
+        (url) => !url.pathname.includes("/new") && url.pathname.includes("/recipes/"),
+        { timeout: 15000 }
+      );
       await authenticatedPage.waitForLoadState("networkidle");
 
       // Go back to list
@@ -219,7 +237,10 @@ test.describe.serial("Recipe Management (CRUD)", () => {
       });
 
       // Wait for redirect to recipe detail page
-      await authenticatedPage.waitForURL((url) => !url.pathname.includes("/new") && url.pathname.includes("/recipes/"), { timeout: 15000 });
+      await authenticatedPage.waitForURL(
+        (url) => !url.pathname.includes("/new") && url.pathname.includes("/recipes/"),
+        { timeout: 15000 }
+      );
       await authenticatedPage.waitForLoadState("networkidle");
 
       // Delete the recipe

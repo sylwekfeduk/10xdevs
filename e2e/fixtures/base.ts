@@ -35,11 +35,16 @@ export const test = base.extend<AuthFixtures>({
 
     // Wait for navigation after login with multiple possible destinations
     try {
-      await page.waitForURL((url) => {
-        return url.pathname.includes("/dashboard") ||
-               url.pathname.includes("/recipes") ||
-               url.pathname.includes("/onboarding");
-      }, { timeout: 10000 });
+      await page.waitForURL(
+        (url) => {
+          return (
+            url.pathname.includes("/dashboard") ||
+            url.pathname.includes("/recipes") ||
+            url.pathname.includes("/onboarding")
+          );
+        },
+        { timeout: 10000 }
+      );
     } catch {
       // If we timeout, just continue with current URL
       console.log("Login redirect timeout, continuing with current URL:", page.url());

@@ -44,7 +44,10 @@ export class OnboardingPage {
 
     // Try to select an allergy from the MultiSelectCombobox
     // Find the button by role combobox since it has role="combobox"
-    const allergiesButton = this.page.getByRole('combobox').filter({ hasText: /Select your allergies/i }).first();
+    const allergiesButton = this.page
+      .getByRole("combobox")
+      .filter({ hasText: /Select your allergies/i })
+      .first();
 
     if (await allergiesButton.isVisible().catch(() => false)) {
       // Click the allergies combobox button to open dropdown
@@ -56,7 +59,7 @@ export class OnboardingPage {
       // Wait for the popover content to be visible (command list appears)
       // The CommandList is inside a Popover, so it should be visible after the popover opens
       const commandList = this.page.locator('[data-slot="command-list"]');
-      await commandList.waitFor({ state: 'visible', timeout: 5000 });
+      await commandList.waitFor({ state: "visible", timeout: 5000 });
 
       // Wait a bit more for options to render
       await this.page.waitForTimeout(300);
@@ -64,7 +67,7 @@ export class OnboardingPage {
       // Select "Peanuts" from the dropdown using CommandItem selector
       // CommandItem renders as div with data-slot="command-item" containing the label text
       const peanutsOption = this.page.locator('[data-slot="command-item"]').filter({ hasText: "Peanuts" }).first();
-      await peanutsOption.waitFor({ state: 'visible', timeout: 3000 });
+      await peanutsOption.waitFor({ state: "visible", timeout: 3000 });
       await peanutsOption.click();
 
       // Wait for selection to be registered

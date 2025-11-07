@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 export class NewRecipePage {
   readonly page: Page;
@@ -77,7 +77,7 @@ export class NewRecipePage {
     await this.page.waitForFunction(
       () => {
         const button = document.querySelector('button[type="submit"]');
-        return button && !button.hasAttribute('disabled');
+        return button && !button.hasAttribute("disabled");
       },
       { timeout: 5000 }
     );
