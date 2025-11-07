@@ -18,10 +18,6 @@ export default defineConfig({
     platformProxy: {
       enabled: true,
     },
-    runtime: {
-      mode: "local",
-      type: "pages",
-    },
     routes: {
       strategy: "auto",
     },

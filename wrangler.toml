@@ -1,7 +1,7 @@
 #:schema node_modules/wrangler/config-schema.json
 name = "10xdevs"
 compatibility_date = "2025-01-06"
-compatibility_flags = ["nodejs_compat"]
+compatibility_flags = ["nodejs_compat_v2"]
 
 # Pages configuration
 pages_build_output_dir = "dist"
