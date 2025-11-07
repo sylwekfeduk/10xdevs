@@ -21,14 +21,33 @@ export const test = base.extend<AuthFixtures>({
     await use(user);
   },
 
-  authenticatedPage: async ({ page, testUser }, use) => {
+  authenticatedPage: async ({ browser, testUser }, use) => {
+    // Create a new browser context for better isolation between tests
+    const context = await browser.newContext();
+    const page = await context.newPage();
+
     // Login with existing test user (don't register)
     const loginPage = new LoginPage(page);
     await loginPage.goto();
+    await page.waitForLoadState("networkidle");
+
     await loginPage.login(testUser.email, testUser.password);
 
-    // Wait to see where we land
-    await page.waitForTimeout(2000);
+    // Wait for navigation after login with multiple possible destinations
+    try {
+      await page.waitForURL((url) => {
+        return url.pathname.includes("/dashboard") ||
+               url.pathname.includes("/recipes") ||
+               url.pathname.includes("/onboarding");
+      }, { timeout: 10000 });
+    } catch {
+      // If we timeout, just continue with current URL
+      console.log("Login redirect timeout, continuing with current URL:", page.url());
+    }
+
+    // Wait for page to stabilize
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(1000);
 
     // If redirected to onboarding, complete it
     if (page.url().includes("/onboarding")) {
@@ -36,10 +55,19 @@ export const test = base.extend<AuthFixtures>({
       await onboardingPage.selectMultiplePreferences(2);
       await onboardingPage.clickContinue();
       await onboardingPage.waitForRedirect();
+      await page.waitForLoadState("networkidle");
+    }
+
+    // Ensure we're not on login page
+    if (page.url().includes("/login") || page.url().includes("/register")) {
+      throw new Error("Authentication failed: still on login/register page");
     }
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(page);
+
+    // Clean up: close context after test
+    await context.close();
   },
 });
 
