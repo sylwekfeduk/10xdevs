@@ -1,0 +1,12 @@
+---
+// Import the main dashboard page
+import Dashboard from "../dashboard.astro";
+
+// Re-export everything from the main page
+export const prerender = false;
+
+// Forward all props
+const props = Astro.props;
+---
+
+<Dashboard {...props} />

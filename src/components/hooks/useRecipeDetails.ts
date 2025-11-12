@@ -1,5 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
+import { getLocaleFromUrl, localizedUrl } from "@/lib/i18n";
 import type { RecipeDetailDto, RecipeDetailsViewModel } from "@/types";
+
+/**
+ * Get the current locale from the browser URL
+ */
+function getCurrentLocale() {
+  if (typeof window !== "undefined") {
+    return getLocaleFromUrl(new URL(window.location.href));
+  }
+  return "en";
+}
 
 interface UseRecipeDetailsReturn {
   recipe: RecipeDetailsViewModel | null;
@@ -48,7 +59,8 @@ export function useRecipeDetails(recipeId: string): UseRecipeDetailsReturn {
 
         // Handle 401 Unauthorized - redirect to login
         if (response.status === 401) {
-          window.location.href = "/login";
+          const locale = getCurrentLocale();
+          window.location.href = localizedUrl("/login", locale);
           return;
         }
 
@@ -87,7 +99,8 @@ export function useRecipeDetails(recipeId: string): UseRecipeDetailsReturn {
 
       // Handle 401 Unauthorized - redirect to login
       if (response.status === 401) {
-        window.location.href = "/login";
+        const locale = getCurrentLocale();
+        window.location.href = localizedUrl("/login", locale);
         return;
       }
 
@@ -95,7 +108,8 @@ export function useRecipeDetails(recipeId: string): UseRecipeDetailsReturn {
       if (response.status === 404) {
         // Recipe already deleted, redirect to list
 
-        window.location.href = "/recipes";
+        const locale = getCurrentLocale();
+        window.location.href = localizedUrl("/recipes", locale);
         return;
       }
 
@@ -103,7 +117,8 @@ export function useRecipeDetails(recipeId: string): UseRecipeDetailsReturn {
       if (response.status === 204) {
         // Redirect to recipe list
 
-        window.location.href = "/recipes";
+        const locale = getCurrentLocale();
+        window.location.href = localizedUrl("/recipes", locale);
         return;
       }
 

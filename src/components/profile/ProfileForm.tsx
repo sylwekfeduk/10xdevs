@@ -16,13 +16,32 @@ interface ProfileFormProps {
   initialData: ProfileFormViewModel;
   onSave: (data: UpdateProfileCommand) => void;
   isSaving: boolean;
+  translations?: {
+    fullName: string;
+    fullNamePlaceholder: string;
+    avatarUrl: string;
+    avatarUrlPlaceholder: string;
+    avatarUrlDescription: string;
+    allergies: string;
+    allergiesPlaceholder: string;
+    allergiesDescription: string;
+    dietaryPreferences: string;
+    dietaryPreferencesPlaceholder: string;
+    dietaryPreferencesDescription: string;
+    dislikedIngredients: string;
+    dislikedIngredientsPlaceholder: string;
+    dislikedIngredientsDescription: string;
+    saveChanges: string;
+    saving: string;
+    cancel: string;
+  };
 }
 
 /**
  * Form component for editing user profile.
  * Manages local form state and tracks changes to enable/disable save button.
  */
-export function ProfileForm({ initialData, onSave, isSaving }: ProfileFormProps) {
+export function ProfileForm({ initialData, onSave, isSaving, translations }: ProfileFormProps) {
   const [formData, setFormData] = React.useState<ProfileFormViewModel>(initialData);
 
   // Track if form is dirty (has unsaved changes)
@@ -60,65 +79,73 @@ export function ProfileForm({ initialData, onSave, isSaving }: ProfileFormProps)
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Full Name */}
           <div className="space-y-2">
-            <Label htmlFor="full_name">Full Name</Label>
+            <Label htmlFor="full_name">{translations?.fullName || "Full Name"}</Label>
             <Input
               id="full_name"
               type="text"
               value={formData.full_name}
               onChange={(e) => setFormData((prev) => ({ ...prev, full_name: e.target.value }))}
-              placeholder="Enter your full name"
+              placeholder={translations?.fullNamePlaceholder || "Enter your full name"}
               disabled={isSaving}
             />
           </div>
 
           {/* Avatar URL */}
           <div className="space-y-2">
-            <Label htmlFor="avatar_url">Avatar URL</Label>
+            <Label htmlFor="avatar_url">{translations?.avatarUrl || "Avatar URL"}</Label>
             <Input
               id="avatar_url"
               type="url"
               value={formData.avatar_url}
               onChange={(e) => setFormData((prev) => ({ ...prev, avatar_url: e.target.value }))}
-              placeholder="https://example.com/avatar.jpg"
+              placeholder={translations?.avatarUrlPlaceholder || "https://example.com/avatar.jpg"}
               disabled={isSaving}
               pattern="https?://.+"
             />
-            <p className="text-sm text-gray-600">Optional: Enter a URL to your profile picture</p>
+            <p className="text-sm text-gray-600">
+              {translations?.avatarUrlDescription || "Optional: Enter a URL to your profile picture"}
+            </p>
           </div>
 
           {/* Allergies */}
           <div className="space-y-2">
-            <Label htmlFor="allergies">Allergies</Label>
+            <Label htmlFor="allergies">{translations?.allergies || "Allergies"}</Label>
             <MultiSelectCombobox
               options={ALLERGY_OPTIONS}
               value={formData.allergies}
               onChange={(newValue) => setFormData((prev) => ({ ...prev, allergies: newValue }))}
-              placeholder="Select your allergies"
+              placeholder={translations?.allergiesPlaceholder || "Select your allergies"}
             />
-            <p className="text-sm text-gray-600">Select any food allergies you have</p>
+            <p className="text-sm text-gray-600">
+              {translations?.allergiesDescription || "Select any food allergies you have"}
+            </p>
           </div>
 
           {/* Diets */}
           <div className="space-y-2">
-            <Label htmlFor="diets">Dietary Preferences</Label>
+            <Label htmlFor="diets">{translations?.dietaryPreferences || "Dietary Preferences"}</Label>
             <MultiSelectCombobox
               options={DIET_OPTIONS}
               value={formData.diets}
               onChange={(newValue) => setFormData((prev) => ({ ...prev, diets: newValue }))}
-              placeholder="Select your dietary preferences"
+              placeholder={translations?.dietaryPreferencesPlaceholder || "Select your dietary preferences"}
             />
-            <p className="text-sm text-gray-600">Select any dietary preferences you follow</p>
+            <p className="text-sm text-gray-600">
+              {translations?.dietaryPreferencesDescription || "Select any dietary preferences you follow"}
+            </p>
           </div>
 
           {/* Disliked Ingredients */}
           <div className="space-y-2">
-            <Label htmlFor="disliked_ingredients">Disliked Ingredients</Label>
+            <Label htmlFor="disliked_ingredients">{translations?.dislikedIngredients || "Disliked Ingredients"}</Label>
             <TagInput
               value={formData.disliked_ingredients}
               onChange={(newValue) => setFormData((prev) => ({ ...prev, disliked_ingredients: newValue }))}
-              placeholder="Type an ingredient and press Enter"
+              placeholder={translations?.dislikedIngredientsPlaceholder || "Type an ingredient and press Enter"}
             />
-            <p className="text-sm text-gray-600">Enter ingredients you don&apos;t like</p>
+            <p className="text-sm text-gray-600">
+              {translations?.dislikedIngredientsDescription || "Enter ingredients you don't like"}
+            </p>
           </div>
 
           {/* Submit Button */}
@@ -131,10 +158,10 @@ export function ProfileForm({ initialData, onSave, isSaving }: ProfileFormProps)
               {isSaving ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
+                  {translations?.saving || "Saving..."}
                 </>
               ) : (
-                "Save Changes"
+                translations?.saveChanges || "Save Changes"
               )}
             </Button>
             {isDirty && !isSaving && (
@@ -144,7 +171,7 @@ export function ProfileForm({ initialData, onSave, isSaving }: ProfileFormProps)
                 onClick={() => setFormData(initialData)}
                 className="border-gray-300 text-gray-700 hover:bg-gray-50"
               >
-                Cancel
+                {translations?.cancel || "Cancel"}
               </Button>
             )}
           </div>

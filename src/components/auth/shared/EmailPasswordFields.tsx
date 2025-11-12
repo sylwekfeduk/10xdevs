@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useTranslation } from "@/components/hooks/useTranslation";
 import type { Control, FieldPath, FieldValues } from "react-hook-form";
 
 interface EmailPasswordFieldsProps<TFieldValues extends FieldValues> {
@@ -21,6 +22,8 @@ export function EmailPasswordFields<TFieldValues extends FieldValues>({
   passwordName = "password" as FieldPath<TFieldValues>,
   confirmPasswordName = "confirmPassword" as FieldPath<TFieldValues>,
 }: EmailPasswordFieldsProps<TFieldValues>) {
+  const { t } = useTranslation();
+
   return (
     <>
       {/* Email Field - Only show if emailName is provided */}
@@ -30,7 +33,7 @@ export function EmailPasswordFields<TFieldValues extends FieldValues>({
           name={emailName}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t("auth.email")}</FormLabel>
               <FormControl>
                 <Input placeholder="name@example.com" type="email" {...field} />
               </FormControl>
@@ -46,7 +49,7 @@ export function EmailPasswordFields<TFieldValues extends FieldValues>({
         name={passwordName}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{showConfirmPassword ? "New Password" : "Password"}</FormLabel>
+            <FormLabel>{showConfirmPassword ? t("auth.newPassword") : t("auth.password")}</FormLabel>
             <FormControl>
               <Input
                 placeholder={`Enter your ${showConfirmPassword ? "new " : ""}password`}
@@ -66,7 +69,7 @@ export function EmailPasswordFields<TFieldValues extends FieldValues>({
           name={confirmPasswordName}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirm {showConfirmPassword ? "New " : ""}Password</FormLabel>
+              <FormLabel>{t("auth.confirmPassword")}</FormLabel>
               <FormControl>
                 <Input
                   placeholder={`Confirm your ${showConfirmPassword ? "new " : ""}password`}

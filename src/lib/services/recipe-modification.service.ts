@@ -1,4 +1,15 @@
+import { getLocaleFromUrl, localizedUrl } from "@/lib/i18n";
 import type { RecipeDetailDto, ModifiedRecipeDto, CreateRecipeCommand } from "@/types";
+
+/**
+ * Get the current locale from the browser URL
+ */
+function getCurrentLocale() {
+  if (typeof window !== "undefined") {
+    return getLocaleFromUrl(new URL(window.location.href));
+  }
+  return "en";
+}
 
 /**
  * Result type for type-safe error handling
@@ -27,7 +38,8 @@ export class RecipeModificationService {
 
       // Handle 401 Unauthorized - redirect to login
       if (response.status === 401) {
-        window.location.href = "/login";
+        const locale = getCurrentLocale();
+        window.location.href = localizedUrl("/login", locale);
         return {
           success: false,
           error: new Error("Unauthorized"),
@@ -83,7 +95,8 @@ export class RecipeModificationService {
 
       // Handle 401 Unauthorized
       if (response.status === 401) {
-        window.location.href = "/login";
+        const locale = getCurrentLocale();
+        window.location.href = localizedUrl("/login", locale);
         return {
           success: false,
           error: new Error("Unauthorized"),
@@ -133,7 +146,8 @@ export class RecipeModificationService {
 
       // Handle 401 Unauthorized
       if (response.status === 401) {
-        window.location.href = "/login";
+        const locale = getCurrentLocale();
+        window.location.href = localizedUrl("/login", locale);
         return {
           success: false,
           error: new Error("Unauthorized"),

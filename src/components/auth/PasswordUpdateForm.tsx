@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +10,17 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabaseClient } from "@/db/supabase.client";
+import { getLocaleFromUrl, localizedUrl } from "@/lib/i18n";
+
+/**
+ * Get the current locale from the browser URL
+ */
+function getCurrentLocale() {
+  if (typeof window !== "undefined") {
+    return getLocaleFromUrl(new URL(window.location.href));
+  }
+  return "en";
+}
 
 // Zod schema for client-side validation
 export const PasswordUpdateFormSchema = z
@@ -31,6 +43,12 @@ export type PasswordUpdateFormViewModel = z.infer<typeof PasswordUpdateFormSchem
 export function PasswordUpdateForm() {
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [isValidToken, setIsValidToken] = useState<boolean | null>(null);
+
+  // Create locale-aware URL for password recovery
+  const passwordRecoveryUrl = React.useMemo(() => {
+    const locale = getCurrentLocale();
+    return localizedUrl("/password-recovery", locale);
+  }, []);
 
   // Initialize form with react-hook-form and zod resolver
   const form = useForm<PasswordUpdateFormViewModel>({
@@ -73,8 +91,9 @@ export function PasswordUpdateForm() {
       }
 
       // Redirect to login on success
-      // eslint-disable-next-line react-compiler/react-compiler
-      window.location.href = "/login";
+
+      const locale = getCurrentLocale();
+      window.location.href = localizedUrl("/login", locale);
     } catch {
       setGlobalError("A network error occurred. Please check your connection.");
     }
@@ -107,7 +126,7 @@ export function PasswordUpdateForm() {
             <AlertDescription>{globalError}</AlertDescription>
           </Alert>
           <div className="flex justify-center">
-            <a href="/password-recovery">
+            <a href={passwordRecoveryUrl}>
               <Button className="bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium">Request New Reset Link</Button>
             </a>
           </div>

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslation } from "@/components/hooks/useTranslation";
+import { localizedUrl } from "@/lib/i18n";
 
 // Zod schema for client-side validation
 export const PasswordRecoveryFormSchema = z.object({
@@ -22,8 +25,12 @@ export type PasswordRecoveryFormViewModel = z.infer<typeof PasswordRecoveryFormS
  * Sends a password reset email to the user.
  */
 export function PasswordRecoveryForm() {
+  const { t, locale } = useTranslation();
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // Create locale-aware URL
+  const loginUrl = React.useMemo(() => localizedUrl("/login", locale), [locale]);
 
   // Initialize form with react-hook-form and zod resolver
   const form = useForm<PasswordRecoveryFormViewModel>({
@@ -85,7 +92,7 @@ export function PasswordRecoveryForm() {
           </Alert>
         </CardContent>
         <CardFooter className="flex justify-center pb-8 px-8">
-          <a href="/login" className="text-sm text-gray-600 hover:text-[#3F8C4F] transition-colors">
+          <a href={loginUrl} className="text-sm text-gray-600 hover:text-[#3F8C4F] transition-colors">
             Return to sign in
           </a>
         </CardFooter>
@@ -96,7 +103,7 @@ export function PasswordRecoveryForm() {
   return (
     <Card className="bg-white shadow-2xl border-0">
       <CardHeader className="space-y-2 px-8 pt-8">
-        <CardTitle className="text-2xl font-bold text-gray-900">Reset your password</CardTitle>
+        <CardTitle className="text-2xl font-bold text-gray-900">{t("auth.passwordRecovery")}</CardTitle>
         <CardDescription className="text-gray-600">
           Enter your email address and we&apos;ll send you a reset link
         </CardDescription>
@@ -104,7 +111,7 @@ export function PasswordRecoveryForm() {
       <CardContent className="space-y-4 px-8 pb-6">
         {globalError && (
           <Alert variant="destructive">
-            <AlertTitle>Error</AlertTitle>
+            <AlertTitle>{t("common.error")}</AlertTitle>
             <AlertDescription>{globalError}</AlertDescription>
           </Alert>
         )}
@@ -117,7 +124,7 @@ export function PasswordRecoveryForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("auth.email")}</FormLabel>
                   <FormControl>
                     <Input placeholder="name@example.com" type="email" {...field} />
                   </FormControl>
@@ -135,17 +142,17 @@ export function PasswordRecoveryForm() {
               {form.formState.isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Sending...
+                  {t("common.loading")}
                 </>
               ) : (
-                "Send reset link"
+                t("auth.sendRecoveryEmail")
               )}
             </Button>
           </form>
         </Form>
       </CardContent>
       <CardFooter className="flex justify-center pb-8 px-8">
-        <a href="/login" className="text-sm text-gray-600 hover:text-[#3F8C4F] transition-colors">
+        <a href={loginUrl} className="text-sm text-gray-600 hover:text-[#3F8C4F] transition-colors">
           Return to sign in
         </a>
       </CardFooter>
