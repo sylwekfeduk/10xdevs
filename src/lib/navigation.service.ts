@@ -1,54 +1,74 @@
+import { getLocaleFromUrl, localizedUrl } from "./i18n";
+
+/**
+ * Get the current locale from the browser URL
+ */
+function getCurrentLocale() {
+  if (typeof window !== "undefined") {
+    return getLocaleFromUrl(new URL(window.location.href));
+  }
+  return "en"; // Default to English if window is not available
+}
+
 /**
  * Navigation service for client-side redirects
  * Centralizes navigation logic to avoid spreading window.location calls throughout components
+ * All navigation methods are locale-aware and will preserve the current locale
  */
 export const navigate = {
   /**
    * Navigate to a specific recipe detail page
    */
   toRecipe: (id: string) => {
-    window.location.href = `/recipes/${id}`;
+    const locale = getCurrentLocale();
+    window.location.href = localizedUrl(`/recipes/${id}`, locale);
   },
 
   /**
    * Navigate to the recipes list page
    */
   toRecipes: () => {
-    window.location.href = "/recipes";
+    const locale = getCurrentLocale();
+    window.location.href = localizedUrl("/recipes", locale);
   },
 
   /**
    * Navigate to the login page
    */
   toLogin: () => {
-    window.location.href = "/login";
+    const locale = getCurrentLocale();
+    window.location.href = localizedUrl("/login", locale);
   },
 
   /**
    * Navigate to the dashboard
    */
   toDashboard: () => {
-    window.location.href = "/dashboard";
+    const locale = getCurrentLocale();
+    window.location.href = localizedUrl("/dashboard", locale);
   },
 
   /**
    * Navigate to the onboarding page
    */
   toOnboarding: () => {
-    window.location.href = "/onboarding";
+    const locale = getCurrentLocale();
+    window.location.href = localizedUrl("/onboarding", locale);
   },
 
   /**
    * Navigate to the new recipe creation page
    */
   toNewRecipe: () => {
-    window.location.href = "/recipes/new";
+    const locale = getCurrentLocale();
+    window.location.href = localizedUrl("/recipes/new", locale);
   },
 
   /**
    * Navigate to the password recovery page
    */
   toPasswordRecovery: () => {
-    window.location.href = "/password-recovery";
+    const locale = getCurrentLocale();
+    window.location.href = localizedUrl("/password-recovery", locale);
   },
 };

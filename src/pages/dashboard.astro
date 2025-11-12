@@ -1,5 +1,9 @@
 ---
 import AppLayout from "@/layouts/AppLayout.astro";
+import { getLocaleFromUrl, localizedUrl, t } from "@/lib/i18n";
+
+// Get locale from URL
+const locale = getLocaleFromUrl(Astro.url);
 
 // Check if user is authenticated
 if (!Astro.locals.user) {
@@ -8,13 +12,13 @@ if (!Astro.locals.user) {
 }
 ---
 
-<AppLayout title="Dashboard - HealthyMeal">
+<AppLayout title={t(locale, "dashboard.pageTitle")}>
   <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
     <div class="space-y-8">
       <!-- Dashboard Title Area -->
       <div class="bg-[#F8F8F8] rounded-[12px] p-6 shadow-sm">
-        <h1 class="text-2xl font-bold text-[#333333]">Dashboard</h1>
-        <p class="text-[#666666] mt-2 text-base font-light">Welcome to your personalized recipe dashboard</p>
+        <h1 class="text-2xl font-bold text-[#333333]">{t(locale, "dashboard.title")}</h1>
+        <p class="text-[#666666] mt-2 text-base font-light">{t(locale, "dashboard.welcome")}</p>
       </div>
 
       <!-- Main Content Cards -->
@@ -37,14 +41,14 @@ if (!Astro.locals.user) {
                 ></path>
               </svg>
             </div>
-            <h2 class="text-lg font-semibold text-[#333333] mb-2">My Recipes</h2>
-            <p class="text-[#666666] text-sm mb-4">View and manage your saved recipes</p>
+            <h2 class="text-lg font-semibold text-[#333333] mb-2">{t(locale, "dashboard.myRecipes")}</h2>
+            <p class="text-[#666666] text-sm mb-4">{t(locale, "dashboard.myRecipesDescription")}</p>
           </div>
           <a
-            href="/recipes"
+            href={localizedUrl("/recipes", locale)}
             class="inline-flex items-center text-[#3F8C4F] hover:text-[#2d5f4f] font-medium transition-colors text-sm"
           >
-            View recipes
+            {t(locale, "dashboard.viewRecipes")}
             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
             </svg>
@@ -68,14 +72,14 @@ if (!Astro.locals.user) {
                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
               </svg>
             </div>
-            <h2 class="text-lg font-semibold text-[#333333] mb-2">Profile Settings</h2>
-            <p class="text-[#666666] text-sm mb-4">Update your dietary preferences and allergies</p>
+            <h2 class="text-lg font-semibold text-[#333333] mb-2">{t(locale, "dashboard.profileSettings")}</h2>
+            <p class="text-[#666666] text-sm mb-4">{t(locale, "dashboard.profileSettingsDescription")}</p>
           </div>
           <a
-            href="/profile"
+            href={localizedUrl("/profile", locale)}
             class="inline-flex items-center text-[#3F8C4F] hover:text-[#2d5f4f] font-medium transition-colors text-sm"
           >
-            Edit profile
+            {t(locale, "dashboard.editProfile")}
             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
             </svg>
@@ -96,14 +100,14 @@ if (!Astro.locals.user) {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
               </svg>
             </div>
-            <h2 class="text-lg font-semibold text-[#333333] mb-2">Create Recipe</h2>
-            <p class="text-[#666666] text-sm mb-4">Add a new recipe to your collection</p>
+            <h2 class="text-lg font-semibold text-[#333333] mb-2">{t(locale, "dashboard.createRecipeCard")}</h2>
+            <p class="text-[#666666] text-sm mb-4">{t(locale, "dashboard.createRecipeDescription")}</p>
           </div>
           <a
-            href="/recipes/new"
+            href={localizedUrl("/recipes/new", locale)}
             class="inline-flex items-center text-[#3F8C4F] hover:text-[#2d5f4f] font-medium transition-colors text-sm"
           >
-            Create recipe
+            {t(locale, "dashboard.createRecipeAction")}
             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
             </svg>

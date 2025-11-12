@@ -14,6 +14,13 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "pl"],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   adapter: cloudflare({
     platformProxy: {
       enabled: true,

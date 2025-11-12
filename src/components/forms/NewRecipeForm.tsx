@@ -6,7 +6,22 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent } from "@/components/ui/card";
 
-export function NewRecipeForm() {
+interface NewRecipeFormProps {
+  translations?: {
+    formTitle: string;
+    formTitlePlaceholder: string;
+    formIngredients: string;
+    formIngredientsPlaceholder: string;
+    formInstructions: string;
+    formInstructionsPlaceholder: string;
+    createRecipe: string;
+    creating: string;
+    reset: string;
+    error: string;
+  };
+}
+
+export function NewRecipeForm({ translations }: NewRecipeFormProps = {}) {
   const { form, globalError, onSubmit, onReset } = useRecipeForm();
 
   return (
@@ -14,7 +29,7 @@ export function NewRecipeForm() {
       <CardContent className="pt-6">
         {globalError && (
           <Alert variant="destructive" className="mb-6">
-            <AlertTitle>Error</AlertTitle>
+            <AlertTitle>{translations?.error || "Error"}</AlertTitle>
             <AlertDescription>{globalError}</AlertDescription>
           </Alert>
         )}
@@ -27,9 +42,9 @@ export function NewRecipeForm() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel>{translations?.formTitle || "Title"}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter recipe title" {...field} />
+                    <Input placeholder={translations?.formTitlePlaceholder || "Enter recipe title"} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -42,9 +57,13 @@ export function NewRecipeForm() {
               name="ingredients"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Ingredients</FormLabel>
+                  <FormLabel>{translations?.formIngredients || "Ingredients"}</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Enter ingredients (one per line)" className="min-h-32" {...field} />
+                    <Textarea
+                      placeholder={translations?.formIngredientsPlaceholder || "Enter ingredients (one per line)"}
+                      className="min-h-32"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -57,9 +76,13 @@ export function NewRecipeForm() {
               name="instructions"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Instructions</FormLabel>
+                  <FormLabel>{translations?.formInstructions || "Instructions"}</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Enter cooking instructions" className="min-h-32" {...field} />
+                    <Textarea
+                      placeholder={translations?.formInstructionsPlaceholder || "Enter cooking instructions"}
+                      className="min-h-32"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -73,7 +96,9 @@ export function NewRecipeForm() {
                 disabled={form.formState.isSubmitting || !form.formState.isValid}
                 className="bg-[#3F8C4F] hover:bg-[#234a3d] text-white font-medium"
               >
-                {form.formState.isSubmitting ? "Creating..." : "Create Recipe"}
+                {form.formState.isSubmitting
+                  ? translations?.creating || "Creating..."
+                  : translations?.createRecipe || "Create Recipe"}
               </Button>
               <Button
                 type="button"
@@ -82,7 +107,7 @@ export function NewRecipeForm() {
                 disabled={form.formState.isSubmitting}
                 className="border-gray-300 text-gray-700 hover:bg-gray-50"
               >
-                Reset
+                {translations?.reset || "Reset"}
               </Button>
             </div>
           </form>

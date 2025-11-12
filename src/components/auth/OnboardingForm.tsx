@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,13 +7,26 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MultiSelectCombobox } from "@/components/ui/multi-select-combobox";
 import { TagInput } from "@/components/ui/tag-input";
+import { useTranslation } from "@/components/hooks/useTranslation";
+import { getLocaleFromUrl, localizedUrl } from "@/lib/i18n";
 import { ALLERGY_OPTIONS, DIET_OPTIONS } from "@/lib/constants";
+
+/**
+ * Get the current locale from the browser URL
+ */
+function getCurrentLocale() {
+  if (typeof window !== "undefined") {
+    return getLocaleFromUrl(new URL(window.location.href));
+  }
+  return "en";
+}
 
 /**
  * Onboarding form component for setting user preferences.
  * Collects allergens, diets, and disliked ingredients on first login.
  */
 export function OnboardingForm() {
+  const { t } = useTranslation();
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [allergies, setAllergies] = useState<string[]>([]);
@@ -47,7 +61,8 @@ export function OnboardingForm() {
 
       // Handle 401 Unauthorized - session expired
       if (response.status === 401) {
-        window.location.href = "/login";
+        const locale = getCurrentLocale();
+        window.location.href = localizedUrl("/login", locale);
         return;
       }
 
@@ -68,7 +83,8 @@ export function OnboardingForm() {
 
       // Handle success (200 OK)
       if (response.ok) {
-        window.location.href = "/dashboard";
+        const locale = getCurrentLocale();
+        window.location.href = localizedUrl("/dashboard", locale);
         return;
       }
 
@@ -84,7 +100,7 @@ export function OnboardingForm() {
   return (
     <Card className="bg-white shadow-2xl border-0">
       <CardHeader className="space-y-2 px-8 pt-8">
-        <CardTitle className="text-2xl font-bold text-gray-900">Welcome to HealthyMeal</CardTitle>
+        <CardTitle className="text-2xl font-bold text-gray-900">{t("onboarding.title")}</CardTitle>
         <CardDescription className="text-gray-600">
           Tell us about your dietary preferences to personalize your experience
         </CardDescription>
@@ -92,7 +108,7 @@ export function OnboardingForm() {
       <CardContent className="px-8 pb-8">
         {globalError && (
           <Alert variant="destructive" className="mb-4">
-            <AlertTitle>Error</AlertTitle>
+            <AlertTitle>{t("common.error")}</AlertTitle>
             <AlertDescription>{globalError}</AlertDescription>
           </Alert>
         )}
@@ -149,10 +165,10 @@ export function OnboardingForm() {
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving preferences...
+                {t("common.loading")}
               </>
             ) : (
-              "Complete setup"
+              t("onboarding.complete")
             )}
           </Button>
         </form>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { getLocaleFromUrl, localizedUrl } from "@/lib/i18n";
 import type { GetRecipesQueryParams, PaginatedRecipesResponse, RecipeListItemDto, RecipeViewModel } from "@/types";
 
 interface UseRecipeLibraryReturn {
@@ -17,6 +18,16 @@ const DEFAULT_QUERY_STATE: GetRecipesQueryParams = {
   order: "desc",
 };
 
+/**
+ * Get the current locale from the browser URL
+ */
+function getCurrentLocale() {
+  if (typeof window !== "undefined") {
+    return getLocaleFromUrl(new URL(window.location.href));
+  }
+  return "en"; // Default to English if window is not available
+}
+
 function transformToViewModel(dto: RecipeListItemDto): RecipeViewModel {
   const isOriginal = dto.original_recipe_id === null;
   const statusLabel = isOriginal ? "Original" : "AI-Modified";
@@ -29,7 +40,9 @@ function transformToViewModel(dto: RecipeListItemDto): RecipeViewModel {
     day: "numeric",
   }).format(date);
 
-  const linkPath = `/recipes/${dto.id}`;
+  // Generate locale-aware link path
+  const locale = getCurrentLocale();
+  const linkPath = localizedUrl(`/recipes/${dto.id}`, locale);
 
   return {
     id: dto.id,
@@ -87,7 +100,8 @@ export function useRecipeLibrary(initialState?: Partial<GetRecipesQueryParams>):
 
         // Handle 401 Unauthorized - redirect to login
         if (response.status === 401) {
-          window.location.href = "/login";
+          const locale = getCurrentLocale();
+          window.location.href = localizedUrl("/login", locale);
           return;
         }
 

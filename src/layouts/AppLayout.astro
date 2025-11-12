@@ -1,16 +1,23 @@
 ---
 import "../styles/global.css";
 import { UserNav } from "@/components/layout/UserNav";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { t, getLocaleFromUrl, localizedUrl } from "@/lib/i18n";
 
 interface Props {
   title?: string;
 }
 
-const { title = "HealthyMeal" } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const { title = t(locale, "common.appName") } = Astro.props;
+
+// Create locale-aware URLs for navigation
+const dashboardUrl = localizedUrl("/dashboard", locale);
+const recipesUrl = localizedUrl("/recipes", locale);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -32,7 +39,7 @@ const { title = "HealthyMeal" } = Astro.props;
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex h-16 items-center justify-between">
             <div class="flex items-center gap-8">
-              <a href="/dashboard" class="flex items-center gap-2 text-white hover:text-white/90 transition-colors">
+              <a href={dashboardUrl} class="flex items-center gap-2 text-white hover:text-white/90 transition-colors">
                 <svg
                   class="w-8 h-8"
                   viewBox="0 0 24 24"
@@ -46,22 +53,25 @@ const { title = "HealthyMeal" } = Astro.props;
                   <path d="M7 2v20"></path>
                   <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
                 </svg>
-                <span class="text-xl font-bold tracking-tight">HealthyMeal</span>
+                <span class="text-xl font-bold tracking-tight">{t(locale, "common.appName")}</span>
               </a>
               <nav class="hidden md:flex gap-6">
                 <a
-                  href="/dashboard"
+                  href={dashboardUrl}
                   class="text-sm font-medium text-white hover:text-white transition-colors border-b-2 border-transparent hover:border-white/50"
-                  >Dashboard</a
+                  >{t(locale, "nav.dashboard")}</a
                 >
                 <a
-                  href="/recipes"
+                  href={recipesUrl}
                   class="text-sm font-medium text-white/90 hover:text-white transition-colors border-b-2 border-transparent hover:border-white/50"
-                  >Recipes</a
+                  >{t(locale, "nav.recipes")}</a
                 >
               </nav>
             </div>
-            <UserNav client:load />
+            <div class="flex items-center gap-2">
+              <LanguageSwitcher client:load />
+              <UserNav client:load />
+            </div>
           </div>
         </div>
       </header>
