@@ -4,12 +4,34 @@ import { createServerClient, type CookieOptionsWithName } from "@supabase/ssr";
 
 import type { Database } from "./database.types.ts";
 
-const supabaseUrl = import.meta.env.SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.SUPABASE_KEY;
-const supabaseServiceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+// Lazy initialization for Cloudflare Workers runtime compatibility
+let _supabaseClient: SupabaseClientBase<Database> | null = null;
 
-// Client-side Supabase client (for use in React components if needed)
-export const supabaseClient = createClient<Database>(supabaseUrl, supabaseAnonKey);
+/**
+ * Get or create the client-side Supabase client.
+ * This uses lazy initialization to ensure environment variables are available
+ * in both Node.js and Cloudflare Workers runtimes.
+ */
+export function getSupabaseClient(): SupabaseClientBase<Database> {
+  if (!_supabaseClient) {
+    const supabaseUrl = import.meta.env.SUPABASE_URL;
+    const supabaseAnonKey = import.meta.env.SUPABASE_KEY;
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      throw new Error("SUPABASE_URL and SUPABASE_KEY environment variables are required");
+    }
+
+    _supabaseClient = createClient<Database>(supabaseUrl, supabaseAnonKey);
+  }
+  return _supabaseClient;
+}
+
+// Legacy export for backward compatibility - use getSupabaseClient() instead
+export const supabaseClient = new Proxy({} as SupabaseClientBase<Database>, {
+  get(_target, prop) {
+    return getSupabaseClient()[prop as keyof SupabaseClientBase<Database>];
+  },
+});
 
 /**
  * Create an admin Supabase client with service role key.
@@ -17,9 +39,13 @@ export const supabaseClient = createClient<Database>(supabaseUrl, supabaseAnonKe
  * Never expose this client to the client side.
  */
 export const createSupabaseAdminClient = () => {
-  if (!supabaseServiceRoleKey) {
-    throw new Error("SUPABASE_SERVICE_ROLE_KEY is not configured");
+  const supabaseUrl = import.meta.env.SUPABASE_URL;
+  const supabaseServiceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl || !supabaseServiceRoleKey) {
+    throw new Error("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required for admin client");
   }
+
   return createClient<Database>(supabaseUrl, supabaseServiceRoleKey, {
     auth: {
       autoRefreshToken: false,
@@ -54,6 +80,13 @@ function parseCookieHeader(cookieHeader: string): { name: string; value: string 
  * Use this in middleware and API routes for authentication.
  */
 export const createSupabaseServerInstance = (context: { headers: Headers; cookies: AstroCookies }) => {
+  const supabaseUrl = import.meta.env.SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.SUPABASE_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error("SUPABASE_URL and SUPABASE_KEY environment variables are required");
+  }
+
   const supabase = createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
     cookieOptions,
     cookies: {
