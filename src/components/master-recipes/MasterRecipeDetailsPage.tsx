@@ -39,11 +39,7 @@ export function MasterRecipeDetailsPage({ recipeId }: MasterRecipeDetailsPagePro
           <AlertTitle>{t("masterRecipes.error")}</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
-        <Button
-          className="mt-6"
-          variant="outline"
-          onClick={() => window.location.href = backUrl}
-        >
+        <Button className="mt-6" variant="outline" onClick={() => (window.location.href = backUrl)}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("masterRecipes.backToCatalog")}
         </Button>
@@ -58,15 +54,9 @@ export function MasterRecipeDetailsPage({ recipeId }: MasterRecipeDetailsPagePro
         <Alert variant="destructive" className="max-w-2xl">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>{t("masterRecipes.recipeNotFound")}</AlertTitle>
-          <AlertDescription>
-            {t("masterRecipes.recipeNotFoundDescription")}
-          </AlertDescription>
+          <AlertDescription>{t("masterRecipes.recipeNotFoundDescription")}</AlertDescription>
         </Alert>
-        <Button
-          className="mt-6"
-          variant="outline"
-          onClick={() => window.location.href = backUrl}
-        >
+        <Button className="mt-6" variant="outline" onClick={() => (window.location.href = backUrl)}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("masterRecipes.backToCatalog")}
         </Button>
@@ -79,11 +69,7 @@ export function MasterRecipeDetailsPage({ recipeId }: MasterRecipeDetailsPagePro
     <div className="space-y-8">
       {/* Back button and Actions */}
       <div className="flex items-center justify-between">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => window.location.href = backUrl}
-        >
+        <Button variant="ghost" size="sm" onClick={() => (window.location.href = backUrl)}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("masterRecipes.backToCatalog")}
         </Button>
@@ -113,16 +99,16 @@ export function MasterRecipeDetailsPage({ recipeId }: MasterRecipeDetailsPagePro
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 mb-2">{recipe.title}</h1>
             {recipe.description && <p className="text-gray-600 mt-2">{recipe.description}</p>}
           </div>
-          <Badge className="shrink-0 bg-[#9b5de5] hover:bg-[#7b3ec7] text-white">{t("masterRecipes.masterRecipeBadge")}</Badge>
+          <Badge className="shrink-0 bg-[#9b5de5] hover:bg-[#7b3ec7] text-white">
+            {t("masterRecipes.masterRecipeBadge")}
+          </Badge>
         </div>
       </div>
 
       {/* Copy Info Alert */}
       <Alert className="border-[#9b5de5] bg-[#9b5de5]/5">
         <AlertTitle className="text-[#7b3ec7]">{t("masterRecipes.aboutTitle")}</AlertTitle>
-        <AlertDescription>
-          {t("masterRecipes.aboutDescription")}
-        </AlertDescription>
+        <AlertDescription>{t("masterRecipes.aboutDescription")}</AlertDescription>
       </Alert>
 
       {/* Ingredients Section */}

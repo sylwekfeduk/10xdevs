@@ -1,6 +1,6 @@
 ---
 import AppLayout from "@/layouts/AppLayout.astro";
-import { ToasterStandalone} from "@/components/ui/toaster-standalone";
+import { ToasterStandalone } from "@/components/ui/toaster-standalone";
 import { getLocaleFromUrl, localizedUrl, t } from "@/lib/i18n";
 
 // Get locale from URL
@@ -44,7 +44,8 @@ const adminUrl = localizedUrl("/admin/master-recipes", locale);
               for="title"
               class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              {t(locale, "admin.title")} <span class="text-red-500">{t(locale, "admin.required")}</span>
+              {t(locale, "admin.title")}
+              <span class="text-red-500">{t(locale, "admin.required")}</span>
             </label>
             <input
               type="text"
@@ -79,7 +80,8 @@ const adminUrl = localizedUrl("/admin/master-recipes", locale);
               for="ingredients"
               class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              {t(locale, "admin.ingredients")} <span class="text-red-500">{t(locale, "admin.required")}</span>
+              {t(locale, "admin.ingredients")}
+              <span class="text-red-500">{t(locale, "admin.required")}</span>
             </label>
             <textarea
               id="ingredients"
@@ -96,7 +98,8 @@ const adminUrl = localizedUrl("/admin/master-recipes", locale);
               for="instructions"
               class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              {t(locale, "admin.instructions")} <span class="text-red-500">{t(locale, "admin.required")}</span>
+              {t(locale, "admin.instructions")}
+              <span class="text-red-500">{t(locale, "admin.required")}</span>
             </label>
             <textarea
               id="instructions"
@@ -134,7 +137,18 @@ const adminUrl = localizedUrl("/admin/master-recipes", locale);
   </div>
   <ToasterStandalone client:load />
 
-  <script define:vars={{ locale, translations: { creating: t(locale, "admin.creating"), createMasterRecipe: t(locale, "admin.createMasterRecipe"), noPermission: t(locale, "admin.noPermission"), failedToCreate: t(locale, "admin.failedToCreate"), unexpectedError: t(locale, "admin.unexpectedError") } }}>
+  <script
+    define:vars={{
+      locale,
+      translations: {
+        creating: t(locale, "admin.creating"),
+        createMasterRecipe: t(locale, "admin.createMasterRecipe"),
+        noPermission: t(locale, "admin.noPermission"),
+        failedToCreate: t(locale, "admin.failedToCreate"),
+        unexpectedError: t(locale, "admin.unexpectedError"),
+      },
+    }}
+  >
     document.getElementById("create-master-recipe-form")?.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -182,9 +196,9 @@ const adminUrl = localizedUrl("/admin/master-recipes", locale);
 
         const newRecipe = await response.json();
         // Redirect to the new master recipe
-        const localePrefix = locale !== 'en' ? `/${locale}` : '';
+        const localePrefix = locale !== "en" ? `/${locale}` : "";
         window.location.href = `${localePrefix}/master-recipes/${newRecipe.id}`;
-      } catch (error) {
+      } catch {
         errorMessage.querySelector("p").textContent = translations.unexpectedError;
         errorMessage.classList.remove("hidden");
         submitButton.disabled = false;

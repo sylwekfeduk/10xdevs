@@ -62,9 +62,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
             <p className="text-sm text-gray-600">{recipe.displayDate}</p>
             {recipe.kcal !== null && recipe.kcal !== undefined && (
               <div className="px-3 py-1 bg-[#3F8C4F] rounded-md shrink-0">
-                <span className="text-sm font-semibold text-white whitespace-nowrap">
-                  {String(recipe.kcal)} kcal
-                </span>
+                <span className="text-sm font-semibold text-white whitespace-nowrap">{String(recipe.kcal)} kcal</span>
               </div>
             )}
           </div>

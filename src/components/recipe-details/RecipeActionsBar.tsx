@@ -31,7 +31,7 @@ export function RecipeActionsBar({ recipe, onDeleteClick, isDeleting }: RecipeAc
 
       // Success - reload the page to show updated calories
       window.location.reload();
-    } catch (error) {
+    } catch {
       alert(t("errors.network"));
       setIsCountingCalories(false);
     }

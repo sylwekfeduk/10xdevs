@@ -33,7 +33,11 @@ export function LanguageSwitcher() {
 
     // Preserve search params and hash
     const newUrl = `${newPath}${currentUrl.search}${currentUrl.hash}`;
-    window.location.href = newUrl;
+
+    // Use a transition to navigate
+    React.startTransition(() => {
+      window.location.href = newUrl;
+    });
   }, []);
 
   return (

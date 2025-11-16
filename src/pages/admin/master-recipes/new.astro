@@ -177,7 +177,7 @@ if (!profile || !profile.is_admin) {
         const newRecipe = await response.json();
         // Redirect to the new master recipe
         window.location.href = `/master-recipes/${newRecipe.id}`;
-      } catch (error) {
+      } catch {
         errorMessage.textContent = "An unexpected error occurred. Please try again.";
         errorMessage.classList.remove("hidden");
         submitButton.disabled = false;
@@ -186,3 +186,4 @@ if (!profile || !profile.is_admin) {
     });
   </script>
 </AppLayout>
+

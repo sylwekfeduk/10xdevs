@@ -30,9 +30,7 @@ export function AIHighlights({ recipe }: AIHighlightsProps) {
       <Alert variant="destructive">
         <AlertTriangle className="h-4 w-4" />
         <AlertTitle>{t("recipes.aiGeneratedNotice")}</AlertTitle>
-        <AlertDescription>
-          {t("recipes.aiGeneratedDescription")}
-        </AlertDescription>
+        <AlertDescription>{t("recipes.aiGeneratedDescription")}</AlertDescription>
       </Alert>
     </div>
   );

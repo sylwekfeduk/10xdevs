@@ -40,9 +40,7 @@ export async function countCaloriesWithBedrock(
     const region = import.meta.env.AWS_BEDROCK_REGION || "eu-central-1";
 
     if (!accessKeyId || !secretAccessKey) {
-      throw new BedrockServiceError(
-        "AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables are required"
-      );
+      throw new BedrockServiceError("AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables are required");
     }
 
     // Initialize AWS client for signing requests with SigV4

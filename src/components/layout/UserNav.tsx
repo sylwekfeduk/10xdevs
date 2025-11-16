@@ -31,10 +31,13 @@ export function UserNav() {
     return localizedUrl("/admin/master-recipes", locale);
   }, [locale]);
 
-  const handleAdminClick = React.useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    window.location.href = adminUrl;
-  }, [adminUrl]);
+  const handleAdminClick = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      window.location.href = adminUrl;
+    },
+    [adminUrl]
+  );
 
   // Fetch user profile to check admin status
   React.useEffect(() => {
@@ -46,6 +49,7 @@ export function UserNav() {
           setIsAdmin(profile.is_admin === true);
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error fetching profile:", error);
       }
     };
@@ -61,6 +65,7 @@ export function UserNav() {
       });
 
       if (!response.ok) {
+        // eslint-disable-next-line no-console
         console.error("Logout failed");
         setIsLoggingOut(false);
         return;
@@ -69,6 +74,7 @@ export function UserNav() {
       // Redirect to home with locale awareness
       window.location.href = localizedUrl("/", locale);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error logging out:", error);
       setIsLoggingOut(false);
     }

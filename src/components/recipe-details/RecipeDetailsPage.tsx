@@ -43,11 +43,7 @@ export function RecipeDetailsPage({ recipeId }: RecipeDetailsPageProps) {
           <AlertTitle>{t("common.error")}</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
-        <Button
-          className="mt-6"
-          variant="outline"
-          onClick={() => window.location.href = backUrl}
-        >
+        <Button className="mt-6" variant="outline" onClick={() => (window.location.href = backUrl)}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("common.back")}
         </Button>
@@ -62,15 +58,9 @@ export function RecipeDetailsPage({ recipeId }: RecipeDetailsPageProps) {
         <Alert variant="destructive" className="max-w-2xl">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>{t("recipes.recipeNotFoundTitle")}</AlertTitle>
-          <AlertDescription>
-            {t("recipes.recipeNotFoundDescription")}
-          </AlertDescription>
+          <AlertDescription>{t("recipes.recipeNotFoundDescription")}</AlertDescription>
         </Alert>
-        <Button
-          className="mt-6"
-          variant="outline"
-          onClick={() => window.location.href = backUrl}
-        >
+        <Button className="mt-6" variant="outline" onClick={() => (window.location.href = backUrl)}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("common.back")}
         </Button>
@@ -83,11 +73,7 @@ export function RecipeDetailsPage({ recipeId }: RecipeDetailsPageProps) {
     <div className="space-y-8">
       {/* Back button and Actions */}
       <div className="flex items-center justify-between">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => window.location.href = backUrl}
-        >
+        <Button variant="ghost" size="sm" onClick={() => (window.location.href = backUrl)}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("common.back")}
         </Button>
