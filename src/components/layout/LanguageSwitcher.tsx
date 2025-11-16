@@ -20,24 +20,25 @@ const LANGUAGES = {
  */
 export function LanguageSwitcher() {
   const [currentLocale, setCurrentLocale] = React.useState<Locale>("en");
+  const [pendingLocale, setPendingLocale] = React.useState<Locale | null>(null);
 
   React.useEffect(() => {
     const locale = getLocaleFromUrl(new URL(window.location.href));
     setCurrentLocale(locale);
   }, []);
 
-  const handleLanguageChange = React.useCallback((newLocale: Locale) => {
-    const currentUrl = new URL(window.location.href);
-    const pathWithoutLocale = removeLocaleFromPath(currentUrl.pathname);
-    const newPath = localizedUrl(pathWithoutLocale, newLocale);
-
-    // Preserve search params and hash
-    const newUrl = `${newPath}${currentUrl.search}${currentUrl.hash}`;
-
-    // Use a transition to navigate
-    React.startTransition(() => {
+  React.useEffect(() => {
+    if (pendingLocale) {
+      const currentUrl = new URL(window.location.href);
+      const pathWithoutLocale = removeLocaleFromPath(currentUrl.pathname);
+      const newPath = localizedUrl(pathWithoutLocale, pendingLocale);
+      const newUrl = `${newPath}${currentUrl.search}${currentUrl.hash}`;
       window.location.href = newUrl;
-    });
+    }
+  }, [pendingLocale]);
+
+  const handleLanguageChange = React.useCallback((newLocale: Locale) => {
+    setPendingLocale(newLocale);
   }, []);
 
   return (

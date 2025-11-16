@@ -1,12 +1,15 @@
 # SSR Fix Summary
 
 ## Issue
+
 The application was throwing a `ReferenceError: window is not defined` error when running because the `useTranslation` hook was trying to access `window.location` during server-side rendering (SSR).
 
 ## Root Cause
+
 React components in Astro are rendered on the server first (SSR), and then hydrated on the client. The `useTranslation` hook was directly accessing `window.location.href` in `useMemo`, which doesn't exist during SSR.
 
 ## Solution
+
 Updated `src/components/hooks/useTranslation.ts` to properly handle SSR by:
 
 1. **Using `useState` instead of `useMemo`** for locale management
@@ -17,6 +20,7 @@ Updated `src/components/hooks/useTranslation.ts` to properly handle SSR by:
 ## Code Changes
 
 ### Before (Causing Error)
+
 ```typescript
 export function useTranslation() {
   const locale = useMemo(() => {
@@ -27,6 +31,7 @@ export function useTranslation() {
 ```
 
 ### After (Fixed)
+
 ```typescript
 export function useTranslation() {
   // Start with default locale for SSR
@@ -46,11 +51,13 @@ export function useTranslation() {
 ## How It Works
 
 ### 1. Server-Side Rendering (SSR)
+
 - Component renders on the server with default locale: "en"
 - No attempt to access `window` object
 - No errors during SSR
 
 ### 2. Client-Side Hydration
+
 - Component hydrates on the client
 - `useEffect` runs after hydration
 - Locale is detected from URL (`/pl/login` → "pl", `/login` → "en")
@@ -60,12 +67,14 @@ export function useTranslation() {
 ## Testing
 
 Build and run the application:
+
 ```bash
 npm run build  # ✅ Builds successfully
 npm run dev    # ✅ Runs without errors
 ```
 
 Visit the application:
+
 - **English**: http://localhost:3000/login
 - **Polish**: http://localhost:3000/pl/login
 

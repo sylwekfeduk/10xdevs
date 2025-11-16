@@ -1,96 +1,107 @@
 # i18n Testing Checklist
 
 ## Test Setup
+
 Server is running on: **http://localhost:3001**
 
 ## Test 1: English Routes (No Authentication Required)
+
 Visit these URLs and check if they work:
 
 - [ ] http://localhost:3001/login
   - **Expected**: Login form in English
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 - [ ] http://localhost:3001/register
   - **Expected**: Registration form in English
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 ## Test 2: Polish Routes (No Authentication Required)
+
 Visit these URLs and check if they work:
 
 - [ ] http://localhost:3001/pl/login
   - **Expected**: Login form in Polish (Polski)
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 - [ ] http://localhost:3001/pl/register
   - **Expected**: Registration form in Polish
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 ## Test 3: Protected Routes (Requires Login)
 
 ### Step 1: Log in first
+
 1. Go to http://localhost:3001/login
 2. Log in with your credentials
 3. You should be redirected to `/dashboard`
 
 ### Step 2: Test English protected routes
+
 - [ ] http://localhost:3001/dashboard
   - **Expected**: Dashboard page in English
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 - [ ] http://localhost:3001/recipes
   - **Expected**: Recipes page in English
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 ### Step 3: Test Polish protected routes
+
 - [ ] http://localhost:3001/pl/dashboard
   - **Expected**: Dashboard page in Polish
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 - [ ] http://localhost:3001/pl/recipes
   - **Expected**: Recipes page in Polish
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 ## Test 4: Language Switcher
 
 ### While logged in on English dashboard:
+
 1. Visit http://localhost:3001/dashboard
 2. Click the globe icon (🌐) in the header
 3. Select "Polski"
    - **Expected**: Redirect to http://localhost:3001/pl/dashboard
-   - **Actual**: _____________________
+   - **Actual**: **********\_**********
 
 ### While logged in on Polish dashboard:
+
 1. Visit http://localhost:3001/pl/dashboard
 2. Click the globe icon (🌐) in the header
 3. Select "English"
    - **Expected**: Redirect to http://localhost:3001/dashboard
-   - **Actual**: _____________________
+   - **Actual**: **********\_**********
 
 ## Test 5: Middleware Redirects
 
 ### Test unauthenticated access:
+
 - [ ] Visit http://localhost:3001/dashboard (without logging in)
   - **Expected**: Redirect to `/login`
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 - [ ] Visit http://localhost:3001/pl/dashboard (without logging in)
   - **Expected**: Redirect to `/pl/login`
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 ### Test authenticated access to auth pages:
+
 - [ ] Visit http://localhost:3001/login (while logged in)
   - **Expected**: Redirect to `/dashboard`
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 - [ ] Visit http://localhost:3001/pl/login (while logged in)
   - **Expected**: Redirect to `/pl/dashboard`
-  - **Actual**: _____________________
+  - **Actual**: **********\_**********
 
 ## Common Issues & Solutions
 
 ### Issue: 404 Not Found on `/pl/dashboard`
 
 **Possible causes:**
+
 1. **Not logged in**: Middleware redirects to `/pl/login`
    - Solution: Log in first, then visit the page
 
@@ -113,21 +124,25 @@ Visit these URLs and check if they work:
 ## Debug Commands
 
 ### Check if server is running:
+
 ```bash
 curl http://localhost:3001/
 ```
 
 ### Check if English login works:
+
 ```bash
 curl -I http://localhost:3001/login
 ```
 
 ### Check if Polish login works:
+
 ```bash
 curl -I http://localhost:3001/pl/login
 ```
 
 ### Check browser console:
+
 1. Open browser DevTools (F12)
 2. Go to Console tab
 3. Look for errors
@@ -138,11 +153,12 @@ curl -I http://localhost:3001/pl/login
 ## Reporting Issues
 
 If something doesn't work, please provide:
-1. **URL you visited**: _____________________
+
+1. **URL you visited**: **********\_**********
 2. **Are you logged in?**: Yes / No
-3. **What you see**: _____________________
-4. **HTTP status code** (from Network tab): _____________________
-5. **Any console errors**: _____________________
+3. **What you see**: **********\_**********
+4. **HTTP status code** (from Network tab): **********\_**********
+5. **Any console errors**: **********\_**********
 6. **Screenshot** (if possible)
 
 This will help diagnose the exact issue!

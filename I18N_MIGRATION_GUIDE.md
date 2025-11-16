@@ -26,11 +26,13 @@ The following has been implemented:
 ### For React Components (.tsx)
 
 1. Import the `useTranslation` hook:
+
    ```typescript
    import { useTranslation } from "@/components/hooks/useTranslation";
    ```
 
 2. Use the hook in your component:
+
    ```typescript
    export function YourComponent() {
      const { t } = useTranslation();
@@ -41,6 +43,7 @@ The following has been implemented:
    ```
 
 3. Replace hardcoded strings with translation keys:
+
    ```typescript
    // Before:
    <button>Save</button>
@@ -50,6 +53,7 @@ The following has been implemented:
    ```
 
 4. For strings with placeholders:
+
    ```typescript
    // Translation file:
    "showingResults": "Showing {start}-{end} of {total} recipes"
@@ -61,6 +65,7 @@ The following has been implemented:
 ### For Astro Components (.astro)
 
 1. Import translation utilities in the frontmatter:
+
    ```astro
    ---
    import { t, getLocaleFromUrl } from "@/lib/i18n";
@@ -70,6 +75,7 @@ The following has been implemented:
    ```
 
 2. Use the `t()` function in your template:
+
    ```astro
    <h1>{t(locale, "common.title")}</h1>
    ```
@@ -80,6 +86,7 @@ The following has been implemented:
    const locale = getLocaleFromUrl(Astro.url);
    const title = t(locale, "recipes.pageTitle");
    ---
+
    <Layout title={title}>
      <!-- content -->
    </Layout>
@@ -88,6 +95,7 @@ The following has been implemented:
 ## 📋 Components That Need Translation
 
 ### Auth Components
+
 - [ ] `src/components/auth/RegisterForm.tsx`
 - [ ] `src/components/auth/PasswordRecoveryForm.tsx`
 - [ ] `src/components/auth/PasswordUpdateForm.tsx`
@@ -96,6 +104,7 @@ The following has been implemented:
 - [ ] `src/components/auth/shared/EmailPasswordFields.tsx`
 
 ### Recipe Components
+
 - [ ] `src/components/recipes/RecipeCard.tsx`
 - [ ] `src/components/recipes/RecipeList.tsx`
 - [ ] `src/components/recipes/FilterAndSortBar.tsx`
@@ -103,6 +112,7 @@ The following has been implemented:
 - [ ] `src/components/forms/NewRecipeForm.tsx`
 
 ### Recipe Details Components
+
 - [ ] `src/components/recipe-details/RecipeDetailsPage.tsx`
 - [ ] `src/components/recipe-details/RecipeContentDisplay.tsx`
 - [ ] `src/components/recipe-details/RecipeActionsBar.tsx`
@@ -110,6 +120,7 @@ The following has been implemented:
 - [ ] `src/components/recipe-details/AIHighlights.tsx`
 
 ### AI Modification Components
+
 - [ ] `src/components/ai-modification/AIModificationPage.tsx`
 - [ ] `src/components/ai-modification/ActionButtonsBar.tsx`
 - [ ] `src/components/ai-modification/AIDisclaimerAlert.tsx`
@@ -118,10 +129,12 @@ The following has been implemented:
 - [ ] `src/components/ai-modification/SaveConfirmationModal.tsx`
 
 ### Profile Components
+
 - [ ] `src/components/profile/ProfileView.tsx`
 - [ ] `src/components/profile/ProfileForm.tsx`
 
 ### Astro Pages
+
 - [ ] `src/pages/dashboard.astro`
 - [ ] `src/pages/register.astro`
 - [ ] `src/pages/onboarding.astro`
@@ -145,26 +158,39 @@ When users switch languages using the LanguageSwitcher component, they are redir
 ## 🔍 Finding Translation Keys
 
 All translation keys are defined in:
+
 - `src/i18n/en.json` - English translations
 - `src/i18n/pl.json` - Polish translations
 
 Translation structure:
+
 ```json
 {
-  "common": { /* Common UI elements */ },
-  "nav": { /* Navigation items */ },
-  "auth": { /* Authentication pages */ },
-  "recipes": { /* Recipe-related content */ },
-  "profile": { /* Profile pages */ },
+  "common": {
+    /* Common UI elements */
+  },
+  "nav": {
+    /* Navigation items */
+  },
+  "auth": {
+    /* Authentication pages */
+  },
+  "recipes": {
+    /* Recipe-related content */
+  },
+  "profile": {
+    /* Profile pages */
+  }
   // ... and more
 }
 ```
 
 To access nested keys, use dot notation:
+
 ```typescript
-t("recipes.title")        // "My Recipes" or "Moje przepisy"
-t("auth.login")           // "Sign in" or "Zaloguj się"
-t("common.save")          // "Save" or "Zapisz"
+t("recipes.title"); // "My Recipes" or "Moje przepisy"
+t("auth.login"); // "Sign in" or "Zaloguj się"
+t("common.save"); // "Save" or "Zapisz"
 ```
 
 ## 📝 Adding New Translations
@@ -172,6 +198,7 @@ t("common.save")          // "Save" or "Zapisz"
 If you need to add new translation keys:
 
 1. Add the key to BOTH language files:
+
    ```json
    // en.json
    {
@@ -190,12 +217,15 @@ If you need to add new translation keys:
 
 2. Use the new key in your component:
    ```typescript
-   {t("common.newKey")}
+   {
+     t("common.newKey");
+   }
    ```
 
 ## ✨ Example: Complete Component Migration
 
 Before:
+
 ```typescript
 export function MyComponent() {
   return (
@@ -209,6 +239,7 @@ export function MyComponent() {
 ```
 
 After:
+
 ```typescript
 import { useTranslation } from "@/components/hooks/useTranslation";
 
@@ -228,11 +259,13 @@ export function MyComponent() {
 ## 🧪 Testing Translations
 
 1. Start the dev server:
+
    ```bash
    npm run dev
    ```
 
 2. Visit the default (English) version:
+
    ```
    http://localhost:3000/login
    ```
@@ -242,6 +275,7 @@ export function MyComponent() {
 4. Select "Polski" to switch to Polish
 
 5. You should be redirected to:
+
    ```
    http://localhost:3000/pl/login
    ```
@@ -250,12 +284,12 @@ export function MyComponent() {
 
 ## 🎯 Quick Reference
 
-| Task | React Component | Astro Component |
-|------|----------------|-----------------|
-| Import | `import { useTranslation } from "@/components/hooks/useTranslation"` | `import { t, getLocaleFromUrl } from "@/lib/i18n"` |
-| Setup | `const { t } = useTranslation()` | `const locale = getLocaleFromUrl(Astro.url)` |
-| Translate | `{t("key.path")}` | `{t(locale, "key.path")}` |
-| With params | `{t("key", { param: value })}` | `{t(locale, "key", { param: value })}` |
+| Task        | React Component                                                      | Astro Component                                    |
+| ----------- | -------------------------------------------------------------------- | -------------------------------------------------- |
+| Import      | `import { useTranslation } from "@/components/hooks/useTranslation"` | `import { t, getLocaleFromUrl } from "@/lib/i18n"` |
+| Setup       | `const { t } = useTranslation()`                                     | `const locale = getLocaleFromUrl(Astro.url)`       |
+| Translate   | `{t("key.path")}`                                                    | `{t(locale, "key.path")}`                          |
+| With params | `{t("key", { param: value })}`                                       | `{t(locale, "key", { param: value })}`             |
 
 ## 📚 Additional Resources
 

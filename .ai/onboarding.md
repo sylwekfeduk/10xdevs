@@ -14,9 +14,9 @@ The core functionality revolves around providing users with the ability to manag
 
 - **Role:** This directory contains all Playwright end-to-end tests, which are a major focus of recent development.
 - **Key Files/Areas:**
-    - **Fixtures:** `e2e/fixtures/base.ts` (This is the most-changed file in the project, indicating it's a critical base for the test suite).
-    - **Page Objects:** `e2e/pages` (This directory is also highly active, defining helpers for interacting with app pages).
-    - **Tests:** `e2e/recipe-crud.spec.ts` (A key test file for the core "recipe" functionality).
+  - **Fixtures:** `e2e/fixtures/base.ts` (This is the most-changed file in the project, indicating it's a critical base for the test suite).
+  - **Page Objects:** `e2e/pages` (This directory is also highly active, defining helpers for interacting with app pages).
+  - **Tests:** `e2e/recipe-crud.spec.ts` (A key test file for the core "recipe" functionality).
 - **Top Contributed Files:** `e2e/fixtures/base.ts`, `e2e/recipe-crud.spec.ts`
 - **Recent Focus:** There is a significant, ongoing effort to build and stabilize the E2E test suite, particularly around core recipe CRUD operations and test setup.
 
@@ -24,7 +24,7 @@ The core functionality revolves around providing users with the ability to manag
 
 - **Role:** This module contains all React components related to user authentication.
 - **Key Files/Areas:**
-    - **Forms:** `src/components/auth/LoginForm.tsx`, `src/components/auth/PasswordRecoveryForm.tsx`, `src/components/auth/PasswordUpdateForm.tsx`.
+  - **Forms:** `src/components/auth/LoginForm.tsx`, `src/components/auth/PasswordRecoveryForm.tsx`, `src/components/auth/PasswordUpdateForm.tsx`.
 - **Top Contributed Files:** All the files listed above are among the most frequently changed, indicating this module is a key area of development.
 - **Recent Focus:** Actively building and refining the user authentication flow, including login, password recovery, and password updates.
 
@@ -38,8 +38,8 @@ The core functionality revolves around providing users with the ability to manag
 
 - **Role:** These directories contain the top-level Astro pages and the layouts that wrap them.
 - **Key Files/Areas:**
-    - **Pages:** `src/pages/dashboard.astro`
-    - **Layouts:** `src/layouts/AppLayout.astro`
+  - **Pages:** `src/pages/dashboard.astro`
+  - **Layouts:** `src/layouts/AppLayout.astro`
 - **Top Contributed Files:** `src/pages/dashboard.astro`, `src/layouts/AppLayout.astro`
 - **Recent Focus:** Development of the main user dashboard and the primary application layout/shell.
 

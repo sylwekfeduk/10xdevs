@@ -32,6 +32,7 @@ Enhanced fixtures for authentication:
 ### 3. Test Suites (3 files)
 
 #### auth-onboarding.spec.ts
+
 Covers Test Cases TC1.1 - TC1.8:
 
 - ✅ TC1.1: Successful registration and redirect to onboarding
@@ -46,6 +47,7 @@ Covers Test Cases TC1.1 - TC1.8:
 **Total: 8 test cases**
 
 #### recipe-crud.spec.ts
+
 Covers Test Cases TC2.1 - TC2.6:
 
 - ✅ TC2.1: Create recipe with all required fields
@@ -58,6 +60,7 @@ Covers Test Cases TC2.1 - TC2.6:
 **Total: 6 test cases**
 
 #### recipe-ai-modification.spec.ts
+
 Covers Test Cases TC3.1 - TC3.7 + extras:
 
 - ✅ TC3.1: Modify recipe with AI (happy path with loading)
@@ -108,31 +111,38 @@ Covers Test Cases TC3.1 - TC3.7 + extras:
 ## Key Features
 
 ### 1. Page Object Model Pattern
+
 All tests use POM for:
+
 - Better maintainability
 - Reusable page interactions
 - Clear separation of concerns
 - Type-safe locators
 
 ### 2. Custom Fixtures
+
 - Automatic test user generation
 - Pre-authenticated browser contexts
 - Reduced boilerplate in tests
 
 ### 3. Resilient Locators
+
 Using semantic selectors:
+
 - `getByRole()` for buttons, links
 - `getByLabel()` for form inputs
 - Regular expressions for text matching (case-insensitive, multilingual)
 - Data-testid as fallback
 
 ### 4. Error Handling
+
 - API mocking for error scenarios
 - Network failure simulation
 - Timeout handling
 - Retry mechanisms
 
 ### 5. Test Isolation
+
 - Each test is independent
 - Unique test data per test
 - No shared state between tests
@@ -141,6 +151,7 @@ Using semantic selectors:
 ## Configuration
 
 ### Playwright Config
+
 - **Browser**: Chromium/Desktop Chrome only (as per requirements)
 - **Base URL**: http://localhost:3000
 - **Retry**: 2 retries in CI, 0 locally
@@ -151,7 +162,9 @@ Using semantic selectors:
 - **Web Server**: Auto-starts dev server
 
 ### Environment
+
 Tests use `.env.test` for:
+
 - Supabase test instance
 - OpenRouter API key
 - Test-specific configuration
@@ -224,11 +237,13 @@ Total: ~1,342 lines of test code
 ## Next Steps
 
 ### For Immediate Use:
+
 1. Ensure `.env.test` is configured with test Supabase instance
 2. Run `npm run test:e2e:ui` to see tests in action
 3. Fix any failing tests based on actual implementation
 
 ### For Future Enhancement:
+
 1. Add visual regression tests with screenshots
 2. Implement API contract tests
 3. Add performance/load testing for critical paths
@@ -237,6 +252,7 @@ Total: ~1,342 lines of test code
 6. Implement test result analytics
 
 ### Known Limitations:
+
 1. Tests assume specific UI text (English/Polish) - may need adjustment
 2. Some locators use fallbacks - verify with actual implementation
 3. AI modification timeout is generous (30s) - adjust based on actual performance
@@ -246,11 +262,11 @@ Total: ~1,342 lines of test code
 
 All requirements from `.ai/test-plan.md` section 4 (Test Scenarios) have been implemented:
 
-| Section | Test Cases | Status |
-|---------|-----------|--------|
+| Section                         | Test Cases    | Status            |
+| ------------------------------- | ------------- | ----------------- |
 | 4.1 Authentication & Onboarding | TC1.1 - TC1.8 | ✅ Complete (8/8) |
-| 4.2 Recipe CRUD | TC2.1 - TC2.6 | ✅ Complete (6/6) |
-| 4.3 AI Modification | TC3.1 - TC3.7 | ✅ Complete (7/7) |
+| 4.2 Recipe CRUD                 | TC2.1 - TC2.6 | ✅ Complete (6/6) |
+| 4.3 AI Modification             | TC3.1 - TC3.7 | ✅ Complete (7/7) |
 
 **Total Coverage: 100% of specified test cases**
 

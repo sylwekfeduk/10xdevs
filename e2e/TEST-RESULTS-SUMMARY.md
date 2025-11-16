@@ -9,18 +9,21 @@
 **Root Cause:** Astro uses `client:load` directive for React components, which means they hydrate after page load. Playwright was too fast and interacted with static HTML before React took over.
 
 **Solution:** Wait for React hydration by:
+
 1. `waitForLoadState("networkidle")`
 2. Additional `waitForTimeout(2000)` to ensure React event handlers are attached
 
 ### Evidence of Fix
 
 **Before Fix:**
+
 ```
 URL: http://localhost:3000/register?email=test@example.com&password=...
 (Form submitted as GET request - React not working)
 ```
 
 **After Fix:**
+
 ```
 URL: http://localhost:3000/register
 Alert: "ErrorEmail address 'test-...@example.com' is invalid"
@@ -33,12 +36,12 @@ Alert: "ErrorEmail address 'test-...@example.com' is invalid"
 
 All Page Objects have been updated with correct locators:
 
-| Page | Old Locator | New Locator | Status |
-|------|-------------|-------------|--------|
-| RegisterPage | `/register\|sign up/i` | `/create account/i` | ✅ Fixed |
-| LoginPage | `/log in\|sign in/i` | `/sign in/i` | ✅ Fixed |
-| OnboardingPage | `/continue\|next/i` | `/complete setup/i` | ✅ Fixed |
-| All Forms | Various error selectors | `[role="alert"]` | ✅ Fixed |
+| Page           | Old Locator             | New Locator         | Status   |
+| -------------- | ----------------------- | ------------------- | -------- |
+| RegisterPage   | `/register\|sign up/i`  | `/create account/i` | ✅ Fixed |
+| LoginPage      | `/log in\|sign in/i`    | `/sign in/i`        | ✅ Fixed |
+| OnboardingPage | `/continue\|next/i`     | `/complete setup/i` | ✅ Fixed |
+| All Forms      | Various error selectors | `[role="alert"]`    | ✅ Fixed |
 
 ---
 
@@ -51,6 +54,7 @@ All Page Objects have been updated with correct locators:
 **Cause:** Supabase might have specific email validation rules or require verified domains in test environment.
 
 **Potential Solutions:**
+
 - Use the existing test user from `.env.test`: `testuser@wavestone.com`
 - Configure Supabase to accept test email domains
 - Use email addresses that match Supabase validation rules
@@ -58,6 +62,7 @@ All Page Objects have been updated with correct locators:
 ### 2. Onboarding Form Interactions
 
 The onboarding form uses `MultiSelectCombobox` and `TagInput` components, not simple checkboxes. Need to update interaction methods to:
+
 - Click combobox trigger
 - Select options from dropdown
 - Add tags to TagInput
@@ -65,6 +70,7 @@ The onboarding form uses `MultiSelectCombobox` and `TagInput` components, not si
 ### 3. Error Message Visibility
 
 Some tests expect error messages but they're not appearing. This might be because:
+
 - Client-side validation (react-hook-form) shows errors inline, not in Alert
 - Need to check `FormMessage` components, not just `[role="alert"]`
 
@@ -82,16 +88,19 @@ Some tests expect error messages but they're not appearing. This might be becaus
 ## 🔧 Action Items
 
 ### High Priority
+
 - [ ] Update test fixtures to use real test user from `.env.test`
 - [ ] Update OnboardingPage to interact with MultiSelectCombobox
 - [ ] Test with existing user instead of creating new ones
 
 ### Medium Priority
+
 - [ ] Add hydration wait to all Page Objects
 - [ ] Update error checking to look for FormMessage validation errors
 - [ ] Test password recovery with correct email format
 
 ### Low Priority
+
 - [ ] Remove old homepage test files (examples only)
 - [ ] Add visual regression tests once core tests pass
 - [ ] Document Supabase email requirements

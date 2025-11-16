@@ -1,9 +1,11 @@
 # i18n Routing Fix - 404 Error Resolution
 
 ## Problem
+
 When users selected Polish language and navigated to `/pl/dashboard`, they received a **404 Not Found** error.
 
 ## Root Cause
+
 The middleware was checking authentication paths without accounting for locale prefixes. When checking if `/pl/dashboard` was a public or protected path, it didn't match any rules because:
 
 - `PUBLIC_PATHS` contained `/login` but not `/pl/login`
@@ -11,6 +13,7 @@ The middleware was checking authentication paths without accounting for locale p
 - The path comparison was exact match without locale stripping
 
 ## Solution
+
 Updated `src/middleware/index.ts` to be locale-aware:
 
 ### 1. Added Locale Helper Functions
@@ -55,6 +58,7 @@ function addLocalePrefix(path: string, locale: string | null): string {
 ### 2. Updated Path Checking Logic
 
 **Before (Broken):**
+
 ```typescript
 // Checked against full path including locale
 if (user && AUTH_PAGES.includes(pathname)) {
@@ -63,6 +67,7 @@ if (user && AUTH_PAGES.includes(pathname)) {
 ```
 
 **After (Fixed):**
+
 ```typescript
 // Extract locale and path without locale
 const locale = getLocaleFromPath(pathname);
@@ -78,6 +83,7 @@ if (user && AUTH_PAGES.includes(pathnameWithoutLocale)) {
 ### 3. Updated All Middleware Checks
 
 Now the middleware:
+
 1. **Extracts locale** from the URL (`/pl/dashboard` → locale: `"pl"`)
 2. **Strips locale** for path checking (`/pl/dashboard` → `/dashboard`)
 3. **Checks against non-localized paths** (`/dashboard` matches `AUTH_PAGES`)
@@ -112,6 +118,7 @@ Now the middleware:
 All routes now work with both locales:
 
 ### English (Default) `/`
+
 ```
 /login
 /register
@@ -124,6 +131,7 @@ All routes now work with both locales:
 ```
 
 ### Polish `/pl`
+
 ```
 /pl/login
 /pl/register
@@ -138,22 +146,27 @@ All routes now work with both locales:
 ## Testing
 
 ### 1. Test English Routes (Default)
+
 ```bash
 npm run dev
 ```
 
 Visit:
+
 - http://localhost:3000/login ✅
 - http://localhost:3000/dashboard ✅ (if authenticated)
 - http://localhost:3000/recipes ✅ (if authenticated)
 
 ### 2. Test Polish Routes
+
 Visit:
+
 - http://localhost:3000/pl/login ✅
 - http://localhost:3000/pl/dashboard ✅ (if authenticated)
 - http://localhost:3000/pl/recipes ✅ (if authenticated)
 
 ### 3. Test Language Switching
+
 1. Log in at `/login`
 2. Navigate to `/dashboard`
 3. Click language switcher (🌐)
@@ -162,7 +175,9 @@ Visit:
 6. All navigation links preserve `/pl` prefix ✅
 
 ## API Routes
+
 API routes are **not** locale-prefixed and work the same for all languages:
+
 ```
 /api/auth/login      ✅ Works for both EN and PL
 /api/auth/register   ✅ Works for both EN and PL
@@ -170,6 +185,7 @@ API routes are **not** locale-prefixed and work the same for all languages:
 ```
 
 The middleware skips locale handling for API routes using:
+
 ```typescript
 if (!pathname.startsWith("/api/")) {
   // Apply locale logic
@@ -179,23 +195,28 @@ if (!pathname.startsWith("/api/")) {
 ## Configuration
 
 The supported locales are defined in the middleware:
+
 ```typescript
 const LOCALES = ["en", "pl"];
 ```
 
 To add more languages (e.g., German):
+
 1. Add `"de"` to `LOCALES` array in middleware
 2. Update `astro.config.mjs` to include `"de"` in locales
 3. Create `src/i18n/de.json` translation file
 4. All routing will automatically work for `/de/*` URLs
 
 ## Build Status
+
 ✅ Build successful with locale-aware middleware
 ✅ No errors or warnings
 ✅ All routes work correctly
 
 ## Summary
+
 The middleware now correctly handles locale-prefixed URLs by:
+
 - Stripping locale for path checking
 - Preserving locale in redirects
 - Supporting all authentication flows

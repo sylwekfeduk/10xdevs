@@ -91,6 +91,7 @@ Need to check these components...
    - `Alert` with `variant="destructive"` for errors
 
 2. **Error message structure:**
+
    ```html
    <Alert variant="destructive">
      <AlertTitle>Error</AlertTitle>

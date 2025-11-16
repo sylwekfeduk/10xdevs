@@ -7,6 +7,7 @@ Your HealthyMeal application now has a fully functional internationalization (i1
 ## ✅ What's Been Implemented
 
 ### 1. Core Infrastructure
+
 - ✅ **Astro i18n Configuration** (`astro.config.mjs`) - Routes configured for `/en` (default) and `/pl` prefixes
 - ✅ **Translation Files**:
   - `src/i18n/en.json` - Complete English translations (600+ strings)
@@ -21,6 +22,7 @@ Your HealthyMeal application now has a fully functional internationalization (i1
 ### 2. UI Components
 
 #### ✅ Language Switcher
+
 - **Component**: `src/components/layout/LanguageSwitcher.tsx`
 - **Features**:
   - Dropdown with language flags (🇬🇧 English, 🇵🇱 Polski)
@@ -29,6 +31,7 @@ Your HealthyMeal application now has a fully functional internationalization (i1
   - Integrated in both AppLayout and AuthLayout
 
 #### ✅ Layouts (Fully Translated)
+
 - **AppLayout.astro**:
   - Header navigation items (Dashboard, Recipes)
   - Language switcher in header
@@ -42,6 +45,7 @@ Your HealthyMeal application now has a fully functional internationalization (i1
 ### 3. Components (Translated)
 
 #### ✅ Authentication Components
+
 1. **LoginForm.tsx**
    - Sign in button and labels
    - Error messages
@@ -70,6 +74,7 @@ Your HealthyMeal application now has a fully functional internationalization (i1
    - New Password label
 
 #### ✅ Navigation Components
+
 1. **UserNav.tsx**
    - Profile link
    - Logout button
@@ -80,6 +85,7 @@ Your HealthyMeal application now has a fully functional internationalization (i1
    - Current language display
 
 #### ✅ Recipe Components
+
 1. **RecipeLibraryPage.tsx**
    - Page title: "My Recipes" / "Moje przepisy"
    - Page description
@@ -91,6 +97,7 @@ Your HealthyMeal application now has a fully functional internationalization (i1
 The i18n routing works as follows:
 
 ### English (Default Locale)
+
 ```
 /login              → Login page
 /register           → Registration page
@@ -101,6 +108,7 @@ The i18n routing works as follows:
 ```
 
 ### Polish
+
 ```
 /pl/login           → Strona logowania
 /pl/register        → Rejestracja
@@ -113,16 +121,19 @@ The i18n routing works as follows:
 ## 🧪 Testing the Implementation
 
 ### 1. Start Development Server
+
 ```bash
 npm run dev
 ```
 
 ### 2. Test English Version (Default)
+
 1. Visit: http://localhost:3000/login
 2. You should see the login page in English
 3. Check that all labels are in English
 
 ### 3. Test Polish Version
+
 1. Click the globe icon (🌐) in the top right header
 2. Select "Polski" from the dropdown
 3. You will be redirected to: http://localhost:3000/pl/login
@@ -134,11 +145,13 @@ npm run dev
    - "Log out" → "Wyloguj się"
 
 ### 4. Test Language Persistence
+
 1. Navigate to different pages (Dashboard, Recipes, Profile)
 2. The language should persist across pages
 3. The URL should maintain the `/pl` prefix
 
 ### 5. Build and Production Test
+
 ```bash
 npm run build
 npm run preview
@@ -147,6 +160,7 @@ npm run preview
 ## 📋 Translation Coverage
 
 ### ✅ Fully Translated (Ready to Use)
+
 - [x] AppLayout and navigation
 - [x] AuthLayout
 - [x] Language Switcher
@@ -159,6 +173,7 @@ npm run preview
 - [x] RecipeLibraryPage header
 
 ### ⏳ Partial Translation (Can Continue)
+
 The following components have translation infrastructure but may have some hardcoded strings:
 
 - [ ] RecipeCard
@@ -177,6 +192,7 @@ The following components have translation infrastructure but may have some hardc
 ## 🔧 How to Add More Translations
 
 ### For React Components (.tsx)
+
 ```typescript
 import { useTranslation } from "@/components/hooks/useTranslation";
 
@@ -193,6 +209,7 @@ export function MyComponent() {
 ```
 
 ### For Astro Components (.astro)
+
 ```astro
 ---
 import { t, getLocaleFromUrl } from "@/lib/i18n";
@@ -204,6 +221,7 @@ const locale = getLocaleFromUrl(Astro.url);
 ```
 
 ### Adding New Translation Keys
+
 Add to both `src/i18n/en.json` and `src/i18n/pl.json`:
 
 ```json
@@ -225,10 +243,12 @@ Add to both `src/i18n/en.json` and `src/i18n/pl.json`:
 ## 📊 Translation Statistics
 
 ### Translation Files
+
 - **English (`en.json`)**: ~600 strings across 10 categories
 - **Polish (`pl.json`)**: ~600 strings across 10 categories
 
 ### Categories Covered
+
 1. `common` - Common UI elements (buttons, labels, actions)
 2. `nav` - Navigation items
 3. `auth` - Authentication pages
@@ -243,18 +263,24 @@ Add to both `src/i18n/en.json` and `src/i18n/pl.json`:
 ## 🎯 Key Features
 
 ### 1. Automatic Locale Detection
+
 The system automatically detects the user's language from the URL:
+
 - `/login` → English (default)
 - `/pl/login` → Polish
 
 ### 2. Language Switching
+
 Users can switch languages at any time using the language switcher (globe icon), which:
+
 - Maintains the current page
 - Preserves query parameters
 - Updates the URL with the locale prefix
 
 ### 3. Dynamic Content
+
 All translated content updates instantly when switching languages:
+
 - Navigation items
 - Page titles
 - Button labels
@@ -263,22 +289,27 @@ All translated content updates instantly when switching languages:
 - Success messages
 
 ### 4. Type Safety
+
 The translation system is fully typed with TypeScript:
+
 - `Locale` type: `"en" | "pl"`
 - `Translations` type: Inferred from `en.json`
 - Autocomplete support in IDEs
 
 ### 5. Placeholder Support
+
 Translations support dynamic values:
+
 ```typescript
 // Translation: "Showing {start}-{end} of {total} recipes"
-t("recipes.showingResults", { start: 1, end: 10, total: 50 })
+t("recipes.showingResults", { start: 1, end: 10, total: 50 });
 // Result: "Showing 1-10 of 50 recipes"
 ```
 
 ## 📦 Build Information
 
 The application builds successfully with i18n enabled:
+
 - **Build time**: ~7-8 seconds
 - **No errors or warnings** related to i18n
 - **Bundle includes**: English and Polish translation files
@@ -296,6 +327,7 @@ If you want to complete 100% translation coverage:
    - Astro pages
 
 3. **Test Each Component** after translation:
+
    ```bash
    npm run dev
    ```
