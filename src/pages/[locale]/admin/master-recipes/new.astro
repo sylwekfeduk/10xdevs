@@ -1,0 +1,195 @@
+---
+import AppLayout from "@/layouts/AppLayout.astro";
+import { ToasterStandalone} from "@/components/ui/toaster-standalone";
+import { getLocaleFromUrl, localizedUrl, t } from "@/lib/i18n";
+
+// Get locale from URL
+const locale = getLocaleFromUrl(Astro.url);
+
+// Check if user is authenticated
+if (!Astro.locals.user) {
+  return Astro.redirect("/login");
+}
+
+// Check if user is admin
+const { data: profile } = await Astro.locals.supabase
+  .from("profiles")
+  .select("is_admin")
+  .eq("user_id", Astro.locals.user.id)
+  .single();
+
+if (!profile || !profile.is_admin) {
+  // Not an admin, redirect to dashboard
+  return Astro.redirect(localizedUrl("/dashboard", locale));
+}
+
+const adminUrl = localizedUrl("/admin/master-recipes", locale);
+---
+
+<AppLayout title={t(locale, "admin.createPageTitle")}>
+  <div class="container mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <div class="space-y-8">
+      <!-- Header -->
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-md border-l-4 border-l-[#9b5de5]">
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900">{t(locale, "admin.createNewMasterRecipe")}</h1>
+        <p class="text-gray-600 mt-2">{t(locale, "admin.addNewRecipe")}</p>
+      </div>
+
+      <!-- Form Card -->
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-md">
+        <form id="create-master-recipe-form" class="space-y-6">
+          <!-- Title -->
+          <div class="space-y-2">
+            <label
+              for="title"
+              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              {t(locale, "admin.title")} <span class="text-red-500">{t(locale, "admin.required")}</span>
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              required
+              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              placeholder={t(locale, "admin.titlePlaceholder")}
+            />
+          </div>
+
+          <!-- Description -->
+          <div class="space-y-2">
+            <label
+              for="description"
+              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              {t(locale, "admin.descriptionOptional")}
+            </label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              placeholder={t(locale, "admin.descriptionPlaceholder")}
+            />
+          </div>
+
+          <!-- Ingredients -->
+          <div class="space-y-2">
+            <label
+              for="ingredients"
+              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              {t(locale, "admin.ingredients")} <span class="text-red-500">{t(locale, "admin.required")}</span>
+            </label>
+            <textarea
+              id="ingredients"
+              name="ingredients"
+              required
+              rows="8"
+              class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-y"
+              placeholder={t(locale, "admin.ingredientsPlaceholder")}></textarea>
+          </div>
+
+          <!-- Instructions -->
+          <div class="space-y-2">
+            <label
+              for="instructions"
+              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              {t(locale, "admin.instructions")} <span class="text-red-500">{t(locale, "admin.required")}</span>
+            </label>
+            <textarea
+              id="instructions"
+              name="instructions"
+              required
+              rows="12"
+              class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-y"
+              placeholder={t(locale, "admin.instructionsPlaceholder")}></textarea>
+          </div>
+
+          <!-- Error message -->
+          <div id="error-message" class="hidden rounded-lg border border-red-500 bg-red-50 p-4 text-red-800">
+            <p class="text-sm font-medium"></p>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex gap-4 justify-end">
+            <a
+              href={adminUrl}
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            >
+              {t(locale, "admin.cancel")}
+            </a>
+            <button
+              type="submit"
+              id="submit-button"
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#9b5de5] text-white hover:bg-[#7b3ec7] h-10 px-4 py-2"
+            >
+              {t(locale, "admin.createMasterRecipe")}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <ToasterStandalone client:load />
+
+  <script define:vars={{ locale, translations: { creating: t(locale, "admin.creating"), createMasterRecipe: t(locale, "admin.createMasterRecipe"), noPermission: t(locale, "admin.noPermission"), failedToCreate: t(locale, "admin.failedToCreate"), unexpectedError: t(locale, "admin.unexpectedError") } }}>
+    document.getElementById("create-master-recipe-form")?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const submitButton = document.getElementById("submit-button");
+      const errorMessage = document.getElementById("error-message");
+
+      // Disable submit button
+      submitButton.disabled = true;
+      submitButton.textContent = translations.creating;
+      errorMessage.classList.add("hidden");
+
+      // Get form data
+      const formData = new FormData(form);
+      const data = {
+        title: formData.get("title"),
+        description: formData.get("description") || null,
+        ingredients: formData.get("ingredients"),
+        instructions: formData.get("instructions"),
+      };
+
+      try {
+        const response = await fetch("/api/master-recipes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        if (response.status === 403) {
+          errorMessage.querySelector("p").textContent = translations.noPermission;
+          errorMessage.classList.remove("hidden");
+          submitButton.disabled = false;
+          submitButton.textContent = translations.createMasterRecipe;
+          return;
+        }
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          errorMessage.querySelector("p").textContent = errorData.message || translations.failedToCreate;
+          errorMessage.classList.remove("hidden");
+          submitButton.disabled = false;
+          submitButton.textContent = translations.createMasterRecipe;
+          return;
+        }
+
+        const newRecipe = await response.json();
+        // Redirect to the new master recipe
+        const localePrefix = locale !== 'en' ? `/${locale}` : '';
+        window.location.href = `${localePrefix}/master-recipes/${newRecipe.id}`;
+      } catch (error) {
+        errorMessage.querySelector("p").textContent = translations.unexpectedError;
+        errorMessage.classList.remove("hidden");
+        submitButton.disabled = false;
+        submitButton.textContent = translations.createMasterRecipe;
+      }
+    });
+  </script>
+</AppLayout>

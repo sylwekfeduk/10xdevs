@@ -26,6 +26,16 @@ export function UserNav() {
     return localizedUrl("/profile", locale);
   }, [locale]);
 
+  // Create locale-aware admin URL
+  const adminUrl = React.useMemo(() => {
+    return localizedUrl("/admin/master-recipes", locale);
+  }, [locale]);
+
+  const handleAdminClick = React.useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    window.location.href = adminUrl;
+  }, [adminUrl]);
+
   // Fetch user profile to check admin status
   React.useEffect(() => {
     const checkAdminStatus = async () => {
@@ -83,11 +93,9 @@ export function UserNav() {
           </a>
         </DropdownMenuItem>
         {isAdmin && (
-          <DropdownMenuItem asChild>
-            <a href="/admin/master-recipes" className="cursor-pointer">
-              <Shield className="mr-2 h-4 w-4" />
-              <span>Admin Panel</span>
-            </a>
+          <DropdownMenuItem onClick={handleAdminClick} className="cursor-pointer">
+            <Shield className="mr-2 h-4 w-4" />
+            <span>{t("nav.adminPanel")}</span>
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />

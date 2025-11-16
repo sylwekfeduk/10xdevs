@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AlertCircle, ArrowLeft, Copy, CheckCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslation } from "@/components/hooks/useTranslation";
+import { localizedUrl } from "@/lib/i18n";
 
 interface MasterRecipeDetailsPageProps {
   recipeId: string;
@@ -12,6 +14,10 @@ interface MasterRecipeDetailsPageProps {
 
 export function MasterRecipeDetailsPage({ recipeId }: MasterRecipeDetailsPageProps) {
   const { recipe, isLoading, error, copyToMyRecipes, isCopying, copySuccess } = useMasterRecipeDetails(recipeId);
+  const { t, locale } = useTranslation();
+
+  // Create locale-aware back URL
+  const backUrl = localizedUrl("/master-recipes", locale);
 
   // Loading state
   if (isLoading) {
@@ -30,14 +36,16 @@ export function MasterRecipeDetailsPage({ recipeId }: MasterRecipeDetailsPagePro
       <div className="flex flex-col items-center justify-center py-12">
         <Alert variant="destructive" className="max-w-2xl">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error</AlertTitle>
+          <AlertTitle>{t("masterRecipes.error")}</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
-        <Button asChild className="mt-6" variant="outline">
-          <a href="/master-recipes">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Catalog
-          </a>
+        <Button
+          className="mt-6"
+          variant="outline"
+          onClick={() => window.location.href = backUrl}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {t("masterRecipes.backToCatalog")}
         </Button>
       </div>
     );
@@ -49,16 +57,18 @@ export function MasterRecipeDetailsPage({ recipeId }: MasterRecipeDetailsPagePro
       <div className="flex flex-col items-center justify-center py-12">
         <Alert variant="destructive" className="max-w-2xl">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Recipe Not Found</AlertTitle>
+          <AlertTitle>{t("masterRecipes.recipeNotFound")}</AlertTitle>
           <AlertDescription>
-            The recipe you&apos;re looking for doesn&apos;t exist or has been removed.
+            {t("masterRecipes.recipeNotFoundDescription")}
           </AlertDescription>
         </Alert>
-        <Button asChild className="mt-6" variant="outline">
-          <a href="/master-recipes">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Catalog
-          </a>
+        <Button
+          className="mt-6"
+          variant="outline"
+          onClick={() => window.location.href = backUrl}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {t("masterRecipes.backToCatalog")}
         </Button>
       </div>
     );
@@ -69,11 +79,13 @@ export function MasterRecipeDetailsPage({ recipeId }: MasterRecipeDetailsPagePro
     <div className="space-y-8">
       {/* Back button and Actions */}
       <div className="flex items-center justify-between">
-        <Button asChild variant="ghost" size="sm">
-          <a href="/master-recipes">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Catalog
-          </a>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => window.location.href = backUrl}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {t("masterRecipes.backToCatalog")}
         </Button>
         <Button
           onClick={copyToMyRecipes}
@@ -83,12 +95,12 @@ export function MasterRecipeDetailsPage({ recipeId }: MasterRecipeDetailsPagePro
           {copySuccess ? (
             <>
               <CheckCircle className="mr-2 h-4 w-4" />
-              Copied! Redirecting...
+              {t("masterRecipes.copiedRedirecting")}
             </>
           ) : (
             <>
               <Copy className="mr-2 h-4 w-4" />
-              {isCopying ? "Copying..." : "Copy to My Recipes"}
+              {isCopying ? t("masterRecipes.copying") : t("masterRecipes.copyToMyRecipes")}
             </>
           )}
         </Button>
@@ -101,23 +113,22 @@ export function MasterRecipeDetailsPage({ recipeId }: MasterRecipeDetailsPagePro
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 mb-2">{recipe.title}</h1>
             {recipe.description && <p className="text-gray-600 mt-2">{recipe.description}</p>}
           </div>
-          <Badge className="shrink-0 bg-[#9b5de5] hover:bg-[#7b3ec7] text-white">Master Recipe</Badge>
+          <Badge className="shrink-0 bg-[#9b5de5] hover:bg-[#7b3ec7] text-white">{t("masterRecipes.masterRecipeBadge")}</Badge>
         </div>
       </div>
 
       {/* Copy Info Alert */}
       <Alert className="border-[#9b5de5] bg-[#9b5de5]/5">
-        <AlertTitle className="text-[#7b3ec7]">About Master Recipes</AlertTitle>
+        <AlertTitle className="text-[#7b3ec7]">{t("masterRecipes.aboutTitle")}</AlertTitle>
         <AlertDescription>
-          This is a curated recipe from our catalog. Click &quot;Copy to My Recipes&quot; to add it to your personal
-          collection, where you can edit it and use AI to modify it to your preferences.
+          {t("masterRecipes.aboutDescription")}
         </AlertDescription>
       </Alert>
 
       {/* Ingredients Section */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Ingredients</CardTitle>
+          <CardTitle className="text-2xl">{t("masterRecipes.ingredients")}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="whitespace-pre-wrap text-gray-700">{recipe.ingredients}</div>
@@ -127,7 +138,7 @@ export function MasterRecipeDetailsPage({ recipeId }: MasterRecipeDetailsPagePro
       {/* Instructions Section */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Instructions</CardTitle>
+          <CardTitle className="text-2xl">{t("masterRecipes.instructions")}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="whitespace-pre-wrap text-gray-700">{recipe.instructions}</div>

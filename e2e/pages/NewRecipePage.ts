@@ -26,12 +26,7 @@ export class NewRecipePage {
     await this.page.goto("/recipes/new");
   }
 
-  async fillRecipeForm(recipe: {
-    title: string;
-    ingredients?: string;
-    instructions?: string;
-    kcal?: string;
-  }) {
+  async fillRecipeForm(recipe: { title: string; ingredients?: string; instructions?: string; kcal?: string }) {
     // Wait for form to be fully loaded
     await this.titleInput.waitFor({ state: "visible", timeout: 10000 });
 

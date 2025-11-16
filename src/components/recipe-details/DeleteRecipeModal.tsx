@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle } from "lucide-react";
+import { useTranslation } from "@/components/hooks/useTranslation";
 
 interface DeleteRecipeModalProps {
   isOpen: boolean;
@@ -17,25 +18,26 @@ interface DeleteRecipeModalProps {
 }
 
 export function DeleteRecipeModal({ isOpen, onOpenChange, onConfirmDelete, isDeleting }: DeleteRecipeModalProps) {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-destructive" />
-            <DialogTitle>Delete Recipe</DialogTitle>
+            <DialogTitle>{t("recipes.deleteRecipe")}</DialogTitle>
           </div>
           <DialogDescription>
-            Are you sure you want to delete this recipe? This action cannot be undone and the recipe will be permanently
-            removed from your collection.
+            {t("recipes.deleteConfirm")} {t("recipes.deleteConfirmDescription")}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="gap-2">
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isDeleting}>
-            Cancel
+            {t("common.cancel")}
           </Button>
           <Button variant="destructive" onClick={onConfirmDelete} disabled={isDeleting}>
-            {isDeleting ? "Deleting..." : "Delete Recipe"}
+            {isDeleting ? t("recipes.deleting") : t("recipes.deleteRecipe")}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -8,6 +8,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, ArrowLeft } from "lucide-react";
+import { useTranslation } from "@/components/hooks/useTranslation";
+import { localizedUrl } from "@/lib/i18n";
 
 interface RecipeDetailsPageProps {
   recipeId: string;
@@ -15,7 +17,11 @@ interface RecipeDetailsPageProps {
 
 export function RecipeDetailsPage({ recipeId }: RecipeDetailsPageProps) {
   const { recipe, isLoading, error, deleteRecipe, isDeleting } = useRecipeDetails(recipeId);
+  const { t, locale } = useTranslation();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  // Create locale-aware back URL
+  const backUrl = localizedUrl("/recipes", locale);
 
   // Loading state
   if (isLoading) {
@@ -34,14 +40,16 @@ export function RecipeDetailsPage({ recipeId }: RecipeDetailsPageProps) {
       <div className="flex flex-col items-center justify-center py-12">
         <Alert variant="destructive" className="max-w-2xl">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error</AlertTitle>
+          <AlertTitle>{t("common.error")}</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
-        <Button asChild className="mt-6" variant="outline">
-          <a href="/recipes">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Recipes
-          </a>
+        <Button
+          className="mt-6"
+          variant="outline"
+          onClick={() => window.location.href = backUrl}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {t("common.back")}
         </Button>
       </div>
     );
@@ -53,16 +61,18 @@ export function RecipeDetailsPage({ recipeId }: RecipeDetailsPageProps) {
       <div className="flex flex-col items-center justify-center py-12">
         <Alert variant="destructive" className="max-w-2xl">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Recipe Not Found</AlertTitle>
+          <AlertTitle>{t("recipes.recipeNotFoundTitle")}</AlertTitle>
           <AlertDescription>
-            The recipe you&apos;re looking for doesn&apos;t exist or has been deleted.
+            {t("recipes.recipeNotFoundDescription")}
           </AlertDescription>
         </Alert>
-        <Button asChild className="mt-6" variant="outline">
-          <a href="/recipes">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Recipes
-          </a>
+        <Button
+          className="mt-6"
+          variant="outline"
+          onClick={() => window.location.href = backUrl}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {t("common.back")}
         </Button>
       </div>
     );
@@ -73,11 +83,13 @@ export function RecipeDetailsPage({ recipeId }: RecipeDetailsPageProps) {
     <div className="space-y-8">
       {/* Back button and Actions */}
       <div className="flex items-center justify-between">
-        <Button asChild variant="ghost" size="sm">
-          <a href="/recipes">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Recipes
-          </a>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => window.location.href = backUrl}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {t("common.back")}
         </Button>
         <RecipeActionsBar recipe={recipe} onDeleteClick={() => setIsDeleteModalOpen(true)} isDeleting={isDeleting} />
       </div>

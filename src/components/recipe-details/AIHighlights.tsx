@@ -1,5 +1,6 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertTriangle, Sparkles } from "lucide-react";
+import { useTranslation } from "@/components/hooks/useTranslation";
 import type { RecipeDetailsViewModel } from "@/types";
 
 interface AIHighlightsProps {
@@ -7,6 +8,8 @@ interface AIHighlightsProps {
 }
 
 export function AIHighlights({ recipe }: AIHighlightsProps) {
+  const { t } = useTranslation();
+
   // Only render if the recipe is AI-modified
   if (!recipe.isAIModified) {
     return null;
@@ -18,7 +21,7 @@ export function AIHighlights({ recipe }: AIHighlightsProps) {
       {recipe.changesSummary && (
         <Alert>
           <Sparkles className="h-4 w-4" />
-          <AlertTitle>AI Modifications</AlertTitle>
+          <AlertTitle>{t("recipes.aiModifications")}</AlertTitle>
           <AlertDescription>{recipe.changesSummary}</AlertDescription>
         </Alert>
       )}
@@ -26,11 +29,9 @@ export function AIHighlights({ recipe }: AIHighlightsProps) {
       {/* Safety Disclaimer - Always shown for AI-modified recipes */}
       <Alert variant="destructive">
         <AlertTriangle className="h-4 w-4" />
-        <AlertTitle>AI-Generated Content Notice</AlertTitle>
+        <AlertTitle>{t("recipes.aiGeneratedNotice")}</AlertTitle>
         <AlertDescription>
-          This recipe has been modified by artificial intelligence. Please review all ingredients, measurements, and
-          instructions carefully before preparing. Always verify food safety practices and consider any dietary
-          restrictions or allergies.
+          {t("recipes.aiGeneratedDescription")}
         </AlertDescription>
       </Alert>
     </div>

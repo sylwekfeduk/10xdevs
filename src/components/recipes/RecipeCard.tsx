@@ -1,12 +1,28 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { RecipeViewModel } from "@/types";
+import { useTranslation } from "@/components/hooks/useTranslation";
 
 interface RecipeCardProps {
   recipe: RecipeViewModel;
 }
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
+  const { t } = useTranslation();
+
+  // Map status label to translation key
+  const getStatusLabelTranslation = (statusLabel: RecipeViewModel["statusLabel"]): string => {
+    switch (statusLabel) {
+      case "Original":
+        return t("status.original");
+      case "AI-Modified":
+        return t("status.aiModified");
+      case "From Catalog":
+        return t("status.fromCatalog");
+      default:
+        return statusLabel;
+    }
+  };
   // Determine card styling based on recipe source
   const getBorderColor = () => {
     if (recipe.isCopiedFromMaster) return "border-l-[#9b5de5]"; // Purple for catalog recipes
@@ -37,7 +53,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
               variant={recipe.isOriginal || recipe.isCopiedFromMaster ? "default" : "secondary"}
               className={getBadgeStyles()}
             >
-              {recipe.statusLabel}
+              {getStatusLabelTranslation(recipe.statusLabel)}
             </Badge>
           </div>
         </CardHeader>

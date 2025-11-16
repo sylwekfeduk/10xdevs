@@ -91,9 +91,8 @@ export function PasswordUpdateForm() {
       }
 
       // Redirect to login on success
-
       const locale = getCurrentLocale();
-      window.location.href = localizedUrl("/login", locale);
+      window.location.replace(localizedUrl("/login", locale));
     } catch {
       setGlobalError("A network error occurred. Please check your connection.");
     }

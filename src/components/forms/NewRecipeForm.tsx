@@ -14,6 +14,10 @@ interface NewRecipeFormProps {
     formIngredientsPlaceholder: string;
     formInstructions: string;
     formInstructionsPlaceholder: string;
+    formKcal: string;
+    formKcalOptional: string;
+    formKcalPlaceholder: string;
+    formKcalDescription: string;
     createRecipe: string;
     creating: string;
     reset: string;
@@ -96,20 +100,22 @@ export function NewRecipeForm({ translations }: NewRecipeFormProps = {}) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Calories (kcal){" "}
-                    <span className="text-sm text-gray-500 font-normal">(optional)</span>
+                    {translations?.formKcal || "Calories (kcal)"}{" "}
+                    <span className="text-sm text-gray-500 font-normal">
+                      ({translations?.formKcalOptional || "optional"})
+                    </span>
                   </FormLabel>
                   <FormControl>
                     <Input
                       type="number"
-                      placeholder="Enter calorie count (e.g., 450)"
+                      placeholder={translations?.formKcalPlaceholder || "Enter calorie count (e.g., 450)"}
                       min="1"
                       step="1"
                       {...field}
                     />
                   </FormControl>
                   <p className="text-sm text-gray-500">
-                    Leave empty to calculate with AI later
+                    {translations?.formKcalDescription || "Leave empty to calculate with AI later"}
                   </p>
                   <FormMessage />
                 </FormItem>

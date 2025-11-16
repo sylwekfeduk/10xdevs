@@ -56,11 +56,31 @@ const reactConfig = tseslint.config({
   },
 });
 
+const nodeScriptsConfig = tseslint.config({
+  files: ["scripts/**/*.js"],
+  languageOptions: {
+    globals: {
+      require: true,
+      process: true,
+      console: true,
+      Buffer: true,
+      __dirname: true,
+      __filename: true,
+    },
+  },
+  rules: {
+    "@typescript-eslint/no-require-imports": "off",
+    "no-console": "off",
+    "no-undef": "off",
+  },
+});
+
 export default tseslint.config(
   includeIgnoreFile(gitignorePath),
   baseConfig,
   jsxA11yConfig,
   reactConfig,
+  nodeScriptsConfig,
   eslintPluginAstro.configs["flat/recommended"],
   eslintPluginPrettier
 );
