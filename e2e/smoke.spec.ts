@@ -9,9 +9,9 @@ test.describe("Smoke Tests", () => {
 
     // Check form elements exist
     await expect(page.getByLabel(/^email$/i)).toBeVisible();
-    await expect(page.getByLabel(/^new password$|^password$/i)).toBeVisible();
-    await expect(page.getByLabel(/confirm new password/i)).toBeVisible();
-    await expect(page.getByRole("button", { name: /create account/i })).toBeVisible();
+    await expect(page.getByLabel(/^new password$/i)).toBeVisible();
+    await expect(page.getByLabel(/^confirm password$/i)).toBeVisible();
+    await expect(page.getByRole("button", { name: /sign up/i })).toBeVisible();
 
     console.log("✅ Register page loads correctly");
   });
@@ -75,7 +75,7 @@ test.describe("Smoke Tests", () => {
     await page.waitForLoadState("networkidle");
 
     // Wait for button to be interactive (React controlled)
-    const button = page.getByRole("button", { name: /create account/i });
+    const button = page.getByRole("button", { name: /sign up/i });
     await button.waitFor({ state: "visible" });
 
     // Extra wait to ensure React event handlers are attached
@@ -88,8 +88,8 @@ test.describe("Smoke Tests", () => {
 
     // Fill the form
     await page.getByLabel(/^email$/i).fill(email);
-    await page.getByLabel(/^new password$|^password$/i).fill(password);
-    await page.getByLabel(/confirm new password/i).fill(password);
+    await page.getByLabel(/^new password$/i).fill(password);
+    await page.getByLabel(/^confirm password$/i).fill(password);
 
     console.log("✅ Can fill form fields");
 
