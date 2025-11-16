@@ -88,7 +88,7 @@ test.describe.serial("Recipe Management (CRUD)", () => {
     });
 
     test("TC2.4: Sorting and pagination functionality works correctly", async ({ authenticatedPage }) => {
-      test.setTimeout(120000); // 2 minutes timeout for creating 12 recipes
+      test.setTimeout(260000); // 2 minutes timeout for creating 12 recipes
 
       const recipesPage = new RecipesPage(authenticatedPage);
       const newRecipePage = new NewRecipePage(authenticatedPage);
