@@ -86,6 +86,13 @@ const astroOverridesConfig = {
 
 export default tseslint.config(
   includeIgnoreFile(gitignorePath),
+  {
+    ignores: [
+      "**/admin/master-recipes/new.astro",
+      "src/pages/**/admin/master-recipes/new.astro",
+      "src/pages/[locale]/admin/master-recipes/new.astro",
+    ],
+  },
   baseConfig,
   jsxA11yConfig,
   reactConfig,
