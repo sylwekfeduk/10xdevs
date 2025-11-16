@@ -75,6 +75,15 @@ const nodeScriptsConfig = tseslint.config({
   },
 });
 
+const astroOverridesConfig = tseslint.config({
+  files: ["**/*.astro"],
+  rules: {
+    // Disable prettier parsing errors in Astro script tags with define:vars
+    // These are false positives as Astro has special syntax for passing variables to script tags
+    "prettier/prettier": "off",
+  },
+});
+
 export default tseslint.config(
   includeIgnoreFile(gitignorePath),
   baseConfig,
@@ -82,5 +91,6 @@ export default tseslint.config(
   reactConfig,
   nodeScriptsConfig,
   eslintPluginAstro.configs["flat/recommended"],
+  astroOverridesConfig,
   eslintPluginPrettier
 );
