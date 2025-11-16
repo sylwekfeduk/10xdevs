@@ -14,8 +14,8 @@ export class RegisterPage {
     this.page = page;
     this.emailInput = page.getByLabel(/^email$/i);
     this.passwordInput = page.getByLabel(/^new password$|^password$/i);
-    this.confirmPasswordInput = page.getByLabel(/confirm new password/i);
-    this.registerButton = page.getByRole("button", { name: /create account|creating account/i });
+    this.confirmPasswordInput = page.getByLabel(/confirm password/i);
+    this.registerButton = page.getByRole("button", { name: /sign up|creating account/i });
     // Server error (Alert component with role="alert")
     this.errorMessage = page.locator('[role="alert"]');
     // Inline validation errors (FormMessage component)

@@ -1,10 +1,15 @@
 import { useState, useEffect, useCallback } from "react";
 import { getLocaleFromUrl, localizedUrl } from "@/lib/i18n";
-import type { GetRecipesQueryParams, PaginatedRecipesResponse, RecipeListItemDto, RecipeViewModel } from "@/types";
+import type {
+  GetRecipesQueryParams,
+  PaginatedMasterRecipesResponse,
+  MasterRecipeListItemDto,
+  MasterRecipeViewModel,
+} from "@/types";
 
-interface UseRecipeLibraryReturn {
-  recipes: RecipeViewModel[];
-  paginationMeta: PaginatedRecipesResponse["pagination"];
+interface UseMasterRecipeCatalogReturn {
+  recipes: MasterRecipeViewModel[];
+  paginationMeta: PaginatedMasterRecipesResponse["pagination"];
   isLoading: boolean;
   error: string | null;
   setQueryState: (updates: Partial<GetRecipesQueryParams>) => void;
@@ -28,20 +33,7 @@ function getCurrentLocale() {
   return "en"; // Default to English if window is not available
 }
 
-function transformToViewModel(dto: RecipeListItemDto): RecipeViewModel {
-  const isCopiedFromMaster = dto.copied_from_master_id !== null;
-  const isOriginal = dto.original_recipe_id === null && !isCopiedFromMaster;
-
-  // Determine status label priority: From Catalog > AI-Modified > Original
-  let statusLabel: RecipeViewModel["statusLabel"];
-  if (isCopiedFromMaster) {
-    statusLabel = "From Catalog";
-  } else if (dto.original_recipe_id !== null) {
-    statusLabel = "AI-Modified";
-  } else {
-    statusLabel = "Original";
-  }
-
+function transformToViewModel(dto: MasterRecipeListItemDto): MasterRecipeViewModel {
   // Format date using Intl.DateTimeFormat for locale-aware display
   const date = new Date(dto.updated_at);
   const displayDate = new Intl.DateTimeFormat("en-US", {
@@ -50,30 +42,27 @@ function transformToViewModel(dto: RecipeListItemDto): RecipeViewModel {
     day: "numeric",
   }).format(date);
 
-  // Generate locale-aware link path
+  // Generate locale-aware link path to master recipes
   const locale = getCurrentLocale();
-  const linkPath = localizedUrl(`/recipes/${dto.id}`, locale);
+  const linkPath = localizedUrl(`/master-recipes/${dto.id}`, locale);
 
   return {
     id: dto.id,
     title: dto.title,
-    isOriginal,
-    isCopiedFromMaster,
-    statusLabel,
+    description: dto.description,
     displayDate,
     linkPath,
-    kcal: dto.kcal,
   };
 }
 
-export function useRecipeLibrary(initialState?: Partial<GetRecipesQueryParams>): UseRecipeLibraryReturn {
+export function useMasterRecipeCatalog(initialState?: Partial<GetRecipesQueryParams>): UseMasterRecipeCatalogReturn {
   const [queryState, setQueryStateInternal] = useState<GetRecipesQueryParams>({
     ...DEFAULT_QUERY_STATE,
     ...initialState,
   });
 
-  const [recipes, setRecipes] = useState<RecipeViewModel[]>([]);
-  const [paginationMeta, setPaginationMeta] = useState<PaginatedRecipesResponse["pagination"]>({
+  const [recipes, setRecipes] = useState<MasterRecipeViewModel[]>([]);
+  const [paginationMeta, setPaginationMeta] = useState<PaginatedMasterRecipesResponse["pagination"]>({
     page: 1,
     pageSize: 10,
     total: 0,
@@ -95,7 +84,7 @@ export function useRecipeLibrary(initialState?: Partial<GetRecipesQueryParams>):
   }, []);
 
   useEffect(() => {
-    const fetchRecipes = async () => {
+    const fetchMasterRecipes = async () => {
       setIsLoading(true);
       setError(null);
 
@@ -108,7 +97,7 @@ export function useRecipeLibrary(initialState?: Partial<GetRecipesQueryParams>):
           order: queryState.order,
         });
 
-        const response = await fetch(`/api/recipes?${params.toString()}`);
+        const response = await fetch(`/api/master-recipes?${params.toString()}`);
 
         // Handle 401 Unauthorized - redirect to login
         if (response.status === 401) {
@@ -122,13 +111,13 @@ export function useRecipeLibrary(initialState?: Partial<GetRecipesQueryParams>):
           if (response.status >= 500) {
             setError("An internal server error occurred. Please try again later.");
           } else {
-            setError("Could not load recipes. Please try again.");
+            setError("Could not load master recipes. Please try again.");
           }
           setIsLoading(false);
           return;
         }
 
-        const data: PaginatedRecipesResponse = await response.json();
+        const data: PaginatedMasterRecipesResponse = await response.json();
 
         // Transform DTOs to ViewModels
         const viewModels = data.data.map(transformToViewModel);
@@ -142,7 +131,7 @@ export function useRecipeLibrary(initialState?: Partial<GetRecipesQueryParams>):
       }
     };
 
-    fetchRecipes();
+    fetchMasterRecipes();
   }, [queryState]);
 
   return {

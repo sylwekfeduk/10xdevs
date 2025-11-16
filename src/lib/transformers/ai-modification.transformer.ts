@@ -57,6 +57,7 @@ export function transformToAIModificationViewModel(
     ingredients: modifiedRecipe.ingredients,
     instructions: modifiedRecipe.instructions,
     original_recipe_id: originalRecipeId,
+    copied_from_master_id: null,
   };
 
   return {

@@ -7,7 +7,6 @@ export class LoginPage {
   readonly loginButton: Locator;
   readonly errorMessage: Locator;
   readonly registerLink: Locator;
-  readonly forgotPasswordLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -16,7 +15,6 @@ export class LoginPage {
     this.loginButton = page.getByRole("button", { name: /sign in|signing in/i });
     this.errorMessage = page.locator('[role="alert"]');
     this.registerLink = page.getByRole("link", { name: /sign up/i });
-    this.forgotPasswordLink = page.getByRole("link", { name: /forgot.*password/i });
   }
 
   async goto() {
@@ -46,10 +44,6 @@ export class LoginPage {
 
   async clickRegisterLink() {
     await this.registerLink.click();
-  }
-
-  async clickForgotPasswordLink() {
-    await this.forgotPasswordLink.click();
   }
 
   async isOnLoginPage() {

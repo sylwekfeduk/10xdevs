@@ -89,6 +89,33 @@ export function NewRecipeForm({ translations }: NewRecipeFormProps = {}) {
               )}
             />
 
+            {/* Calories Field (Optional) */}
+            <FormField
+              control={form.control}
+              name="kcal"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Calories (kcal){" "}
+                    <span className="text-sm text-gray-500 font-normal">(optional)</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Enter calorie count (e.g., 450)"
+                      min="1"
+                      step="1"
+                      {...field}
+                    />
+                  </FormControl>
+                  <p className="text-sm text-gray-500">
+                    Leave empty to calculate with AI later
+                  </p>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* Action Buttons */}
             <div className="flex gap-4">
               <Button

@@ -2,7 +2,6 @@ import { test, expect } from "./fixtures/base";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { OnboardingPage } from "./pages/OnboardingPage";
-import { PasswordRecoveryPage } from "./pages/PasswordRecoveryPage";
 import { DashboardPage } from "./pages/DashboardPage";
 
 // Generate a unique email for TC1.1
@@ -114,35 +113,6 @@ test.describe("Authentication and Onboarding", () => {
       // Verify we're still on login page (redirected from protected route)
       expect(await loginPage.isOnLoginPage()).toBe(true);
       expect(authenticatedPage.url()).toContain("/login");
-    });
-  });
-
-  test.describe("Password Recovery", () => {
-    test("TC1.6: User sees error message when requesting password reset for non-existent email", async ({ page }) => {
-      const passwordRecoveryPage = new PasswordRecoveryPage(page);
-
-      await passwordRecoveryPage.goto();
-
-      // Use a unique non-existent email to avoid any caching issues
-      const nonExistentEmail = `nonexistent-${Date.now()}@example.com`;
-      await passwordRecoveryPage.requestPasswordReset(nonExistentEmail);
-
-      // Wait for error state
-      await passwordRecoveryPage.waitForError();
-
-      // Verify error message is visible
-      expect(await passwordRecoveryPage.isErrorVisible()).toBe(true);
-
-      // Verify error message content
-      const errorText = await passwordRecoveryPage.getErrorText();
-      expect(errorText?.toLowerCase()).toMatch(/no account found|not found|doesn't exist|no account/);
-
-      // Verify we're still on the password recovery page (not redirected)
-      expect(page.url()).toContain("/password-recovery");
-
-      // Verify the form is still visible (not replaced with success card)
-      const formHeading = page.getByRole("heading", { name: /reset your password/i });
-      expect(await formHeading.isVisible()).toBe(true);
     });
   });
 

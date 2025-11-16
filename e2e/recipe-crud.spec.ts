@@ -13,12 +13,8 @@ test.describe.serial("Recipe Management (CRUD)", () => {
 
       const recipe = {
         title: `Test Recipe ${Date.now()}`,
-        description: "A delicious test recipe",
         ingredients: "1 cup flour\n2 eggs\n1 cup milk",
         instructions: "Mix all ingredients\nBake at 350F for 30 minutes",
-        prepTime: "15",
-        cookTime: "30",
-        servings: "4",
       };
 
       await newRecipePage.createRecipe(recipe);
@@ -68,7 +64,6 @@ test.describe.serial("Recipe Management (CRUD)", () => {
       await newRecipePage.goto();
       await newRecipePage.createRecipe({
         title: `My Recipe ${Date.now()}`,
-        description: "Test description",
         ingredients: "Test ingredients",
         instructions: "Test instructions",
       });
@@ -125,9 +120,8 @@ test.describe.serial("Recipe Management (CRUD)", () => {
         const timestamp = Date.now() + i; // Ensure unique timestamps
         await newRecipePage.createRecipe({
           title: `${name} ${timestamp}`,
-          description: "Test",
-          ingredients: "Test",
-          instructions: "Test",
+          ingredients: "Test ingredients",
+          instructions: "Test instructions",
         });
 
         // Wait for redirect to recipe detail page after each creation with longer timeout
@@ -204,9 +198,8 @@ test.describe.serial("Recipe Management (CRUD)", () => {
       await newRecipePage.goto();
       await newRecipePage.createRecipe({
         title: recipeName,
-        description: "Test",
-        ingredients: "Test",
-        instructions: "Test",
+        ingredients: "Test ingredients",
+        instructions: "Test instructions",
       });
 
       // Wait for redirect to recipe detail page
@@ -244,9 +237,8 @@ test.describe.serial("Recipe Management (CRUD)", () => {
       await newRecipePage.goto();
       await newRecipePage.createRecipe({
         title: recipeName,
-        description: "Will be deleted",
-        ingredients: "Test",
-        instructions: "Test",
+        ingredients: "Test ingredients",
+        instructions: "Test instructions",
       });
 
       // Wait for redirect to recipe detail page

@@ -56,6 +56,24 @@ The AI modification feature generates a new version of the recipe while preservi
   - Clear disclaimer for AI-generated content (especially for allergies)
   - Option to save modified recipe
 
+- **Master Recipe Catalog**
+  - Curated recipe collection viewable by all users
+  - Admin-managed recipes with full CRUD operations
+  - Users can copy master recipes to their personal collection
+  - Pagination and sorting functionality
+  - Dedicated admin interface for recipe management
+
+- **Calorie Counting**
+  - AI-powered calorie estimation using AWS Bedrock
+  - Analyzes recipe ingredients and portions
+  - Provides total kcal and breakdown of calorie sources
+  - Automatically saves calorie information to recipes
+
+- **Admin System**
+  - Role-based access control with admin flag
+  - Admin-only pages for managing master recipes
+  - Restricted operations for privileged users
+
 ## Tech Stack
 
 ### Frontend
@@ -76,10 +94,12 @@ The AI modification feature generates a new version of the recipe while preservi
 
 ### AI
 
-- **[OpenRouter.ai](https://openrouter.ai/)** - AI model aggregator
-  - Access to multiple providers (OpenAI, Anthropic, Google, etc.)
-  - Cost optimization through model selection
-  - Built-in API cost controls
+- **[AWS Bedrock](https://aws.amazon.com/bedrock/)** - Managed AI service
+  - Claude 3 Sonnet for calorie counting
+  - AI-powered recipe modification and customization
+  - AWS SigV4 authentication
+  - Secure and scalable AI inference
+  - Enterprise-grade reliability
 
 ### Testing
 
@@ -109,7 +129,7 @@ The AI modification feature generates a new version of the recipe while preservi
 - **Node.js** `22.14.0` (see `.nvmrc`)
 - **npm** (included with Node.js)
 - **Supabase Account** (for backend services)
-- **OpenRouter API Key** (for AI functionality)
+- **AWS Account** (for AI functionality with Bedrock)
 
 ### Installation
 
@@ -141,15 +161,21 @@ The AI modification feature generates a new version of the recipe while preservi
 Create a `.env` file in the root directory with the following variables:
 
 ```env
+# Supabase Configuration
 SUPABASE_URL=your_supabase_project_url
 SUPABASE_KEY=your_supabase_anon_key
-OPENROUTER_API_KEY=your_openrouter_api_key
+
+# AWS Bedrock (for AI recipe modification and calorie counting)
+AWS_ACCESS_KEY_ID=your_aws_access_key_id
+AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
+AWS_SESSION_TOKEN=your_aws_session_token (optional, for temporary credentials)
+AWS_BEDROCK_REGION=eu-central-1 (optional, defaults to eu-central-1)
 ```
 
 **Where to get these:**
 
 - **Supabase credentials**: Create a project at [supabase.com](https://supabase.com) and find your URL and anon key in Project Settings > API
-- **OpenRouter API key**: Sign up at [openrouter.ai](https://openrouter.ai) and generate an API key in your account settings
+- **AWS credentials**: Create an AWS account and generate IAM credentials with Bedrock access at [console.aws.amazon.com/iam](https://console.aws.amazon.com/iam/)
 
 ### Running the Application
 
@@ -240,7 +266,7 @@ npm run preview
 - Recipe sharing between users
 - Meal planning features
 - Shopping list generation
-- Nutritional information calculation
+- Detailed nutritional breakdown (beyond calorie counting)
 
 ## Success Metrics
 
@@ -269,7 +295,7 @@ The MVP focuses on measuring two key metrics:
 - [ ] User authentication system (email + Google OAuth)
 - [ ] User profile and preferences management
 - [ ] Recipe CRUD functionality
-- [ ] AI integration with OpenRouter
+- [ ] AI integration with AWS Bedrock
 - [ ] Recipe modification feature
 
 ### Planned
@@ -282,8 +308,8 @@ The MVP focuses on measuring two key metrics:
 
 ### Open Questions
 
-- AI provider selection and cost estimation
 - Detailed UI/UX for presenting AI modifications (highlighting changes, change list, etc.)
+- Cost optimization strategies for AWS Bedrock usage
 
 ## License
 

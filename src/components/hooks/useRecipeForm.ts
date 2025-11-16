@@ -11,6 +11,15 @@ export const createRecipeFormSchema = z.object({
   title: z.string().min(1, "Title is required."),
   ingredients: z.string().min(1, "Ingredients are required."),
   instructions: z.string().min(1, "Instructions are required."),
+  kcal: z
+    .string()
+    .optional()
+    .transform((val) => {
+      if (!val || val === "") return null;
+      const parsed = parseInt(val, 10);
+      return isNaN(parsed) ? null : parsed;
+    })
+    .pipe(z.number().int().positive("Calories must be a positive number").nullable().optional()),
 });
 
 export type CreateRecipeFormData = z.infer<typeof createRecipeFormSchema>;
@@ -39,6 +48,7 @@ export function useRecipeForm(): UseRecipeFormReturn {
       title: "",
       ingredients: "",
       instructions: "",
+      kcal: "",
     },
   });
 
@@ -48,8 +58,12 @@ export function useRecipeForm(): UseRecipeFormReturn {
       setIsSubmitting(true);
 
       const payload: CreateRecipeCommand = {
-        ...data,
+        title: data.title,
+        ingredients: data.ingredients,
+        instructions: data.instructions,
+        kcal: data.kcal || null,
         original_recipe_id: null,
+        copied_from_master_id: null,
       };
 
       try {

@@ -3,14 +3,9 @@ import { Page, Locator } from "@playwright/test";
 export class NewRecipePage {
   readonly page: Page;
   readonly titleInput: Locator;
-  readonly descriptionInput: Locator;
   readonly ingredientsInput: Locator;
   readonly instructionsInput: Locator;
-  readonly prepTimeInput: Locator;
-  readonly cookTimeInput: Locator;
-  readonly servingsInput: Locator;
-  readonly categorySelect: Locator;
-  readonly difficultySelect: Locator;
+  readonly kcalInput: Locator;
   readonly submitButton: Locator;
   readonly cancelButton: Locator;
   readonly validationError: Locator;
@@ -18,14 +13,9 @@ export class NewRecipePage {
   constructor(page: Page) {
     this.page = page;
     this.titleInput = page.getByLabel(/^title$/i);
-    this.descriptionInput = page.getByLabel(/description|opis/i); // Not used in actual form
     this.ingredientsInput = page.getByLabel(/^ingredients$/i);
     this.instructionsInput = page.getByLabel(/^instructions$/i);
-    this.prepTimeInput = page.getByLabel(/prep time|czas przygotowania/i); // Not used
-    this.cookTimeInput = page.getByLabel(/cook time|czas gotowania/i); // Not used
-    this.servingsInput = page.getByLabel(/servings|porcje|porcji/i); // Not used
-    this.categorySelect = page.getByLabel(/category|kategoria/i); // Not used
-    this.difficultySelect = page.getByLabel(/difficulty|trudność/i); // Not used
+    this.kcalInput = page.getByLabel(/calories.*kcal/i);
     this.submitButton = page.getByRole("button", { name: /create|save|submit/i });
     this.cancelButton = page.getByRole("button", { name: /cancel|anuluj|reset/i });
     // React Hook Form validation messages (can be in role="alert" or just text)
@@ -38,17 +28,14 @@ export class NewRecipePage {
 
   async fillRecipeForm(recipe: {
     title: string;
-    description?: string;
     ingredients?: string;
     instructions?: string;
-    prepTime?: string;
-    cookTime?: string;
-    servings?: string;
+    kcal?: string;
   }) {
     // Wait for form to be fully loaded
     await this.titleInput.waitFor({ state: "visible", timeout: 10000 });
 
-    // Only fill the 3 required fields that actually exist in the form
+    // Fill required fields
     await this.titleInput.fill(recipe.title);
     await this.page.waitForTimeout(100);
 
@@ -62,11 +49,15 @@ export class NewRecipePage {
       await this.page.waitForTimeout(100);
     }
 
+    // Fill optional kcal field if provided
+    if (recipe.kcal) {
+      await this.kcalInput.fill(recipe.kcal);
+      await this.page.waitForTimeout(100);
+    }
+
     // Wait for React Hook Form to complete validation
     // React Hook Form with mode:"onChange" needs time to validate all fields
     await this.page.waitForTimeout(500);
-
-    // Skip description, prepTime, cookTime, servings - these fields don't exist in the actual form
   }
 
   async submitRecipe() {

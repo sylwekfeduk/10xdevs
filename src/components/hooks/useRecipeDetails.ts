@@ -33,6 +33,7 @@ function transformToViewModel(dto: RecipeDetailDto): RecipeDetailsViewModel {
     statusLabel,
     changesSummary: dto.changes_summary,
     isDisclaimerNeeded: isAIModified,
+    kcal: dto.kcal,
   };
 }
 
