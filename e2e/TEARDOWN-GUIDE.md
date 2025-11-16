@@ -26,6 +26,7 @@ Playwright runs **global setup** and **global teardown** hooks:
 ### What Gets Cleaned Up
 
 The global teardown deletes:
+
 - **All recipes** created by the test user (regardless of when they were created)
 - Related AI modification logs (automatically via CASCADE delete in the database)
 
@@ -62,6 +63,7 @@ test("TC2.1: Create a recipe", async ({ authenticatedPage }) => {
 ### When Teardown Runs
 
 Teardown runs:
+
 - ✅ After all tests complete (global teardown)
 - ✅ Whether tests pass or fail
 - ✅ Only once per test run (not after each test)
@@ -94,6 +96,7 @@ npm run test:e2e:cleanup
 ```
 
 This script:
+
 1. Shows the current recipe count
 2. Waits 3 seconds (giving you time to cancel with Ctrl+C)
 3. Deletes all recipes for the test user
@@ -147,6 +150,7 @@ The implementation uses **global teardown** to clean up all test data after the 
 3. **Global Teardown** → Deletes ALL recipes for the test user
 
 This approach:
+
 - ✅ Runs once per test suite (efficient)
 - ✅ Cleans up regardless of test pass/fail status
 - ✅ Simple and predictable

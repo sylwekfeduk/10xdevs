@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { getLocaleFromUrl, localizedUrl } from "@/lib/i18n";
 import type { GetRecipesQueryParams, PaginatedRecipesResponse, RecipeListItemDto, RecipeViewModel } from "@/types";
 
 interface UseRecipeLibraryReturn {
@@ -17,9 +18,29 @@ const DEFAULT_QUERY_STATE: GetRecipesQueryParams = {
   order: "desc",
 };
 
+/**
+ * Get the current locale from the browser URL
+ */
+function getCurrentLocale() {
+  if (typeof window !== "undefined") {
+    return getLocaleFromUrl(new URL(window.location.href));
+  }
+  return "en"; // Default to English if window is not available
+}
+
 function transformToViewModel(dto: RecipeListItemDto): RecipeViewModel {
-  const isOriginal = dto.original_recipe_id === null;
-  const statusLabel = isOriginal ? "Original" : "AI-Modified";
+  const isCopiedFromMaster = dto.copied_from_master_id !== null;
+  const isOriginal = dto.original_recipe_id === null && !isCopiedFromMaster;
+
+  // Determine status label priority: From Catalog > AI-Modified > Original
+  let statusLabel: RecipeViewModel["statusLabel"];
+  if (isCopiedFromMaster) {
+    statusLabel = "From Catalog";
+  } else if (dto.original_recipe_id !== null) {
+    statusLabel = "AI-Modified";
+  } else {
+    statusLabel = "Original";
+  }
 
   // Format date using Intl.DateTimeFormat for locale-aware display
   const date = new Date(dto.updated_at);
@@ -29,15 +50,19 @@ function transformToViewModel(dto: RecipeListItemDto): RecipeViewModel {
     day: "numeric",
   }).format(date);
 
-  const linkPath = `/recipes/${dto.id}`;
+  // Generate locale-aware link path
+  const locale = getCurrentLocale();
+  const linkPath = localizedUrl(`/recipes/${dto.id}`, locale);
 
   return {
     id: dto.id,
     title: dto.title,
     isOriginal,
+    isCopiedFromMaster,
     statusLabel,
     displayDate,
     linkPath,
+    kcal: dto.kcal,
   };
 }
 
@@ -87,7 +112,8 @@ export function useRecipeLibrary(initialState?: Partial<GetRecipesQueryParams>):
 
         // Handle 401 Unauthorized - redirect to login
         if (response.status === 401) {
-          window.location.href = "/login";
+          const locale = getCurrentLocale();
+          window.location.href = localizedUrl("/login", locale);
           return;
         }
 

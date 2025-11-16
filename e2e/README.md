@@ -5,6 +5,7 @@ This directory contains end-to-end tests for the HealthyMeal recipe management a
 ## Overview
 
 The test suite covers three main areas:
+
 1. **Authentication & Onboarding** - User registration, login, logout, password recovery, and onboarding flow
 2. **Recipe CRUD Operations** - Creating, reading, updating, and deleting recipes
 3. **AI Recipe Modification** - AI-powered recipe modifications with comparison, save/discard functionality
@@ -37,11 +38,13 @@ e2e/
 ### Prerequisites
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Set up `.env.test` file with test environment variables:
+
 ```env
 SUPABASE_URL=your-test-supabase-url
 SUPABASE_KEY=your-test-supabase-key
@@ -79,16 +82,16 @@ All tests use the Page Object Model pattern for maintainability and reusability.
 ### Example Usage
 
 ```typescript
-import { LoginPage } from './pages/LoginPage';
+import { LoginPage } from "./pages/LoginPage";
 
-test('user can login', async ({ page }) => {
+test("user can login", async ({ page }) => {
   const loginPage = new LoginPage(page);
 
   await loginPage.goto();
-  await loginPage.login('user@example.com', 'password123');
+  await loginPage.login("user@example.com", "password123");
   await loginPage.waitForRedirect();
 
-  expect(page.url()).toContain('/dashboard');
+  expect(page.url()).toContain("/dashboard");
 });
 ```
 
@@ -99,7 +102,7 @@ test('user can login', async ({ page }) => {
 Provides a page with an already authenticated user (registered + onboarding completed):
 
 ```typescript
-test('authenticated user can access recipes', async ({ authenticatedPage }) => {
+test("authenticated user can access recipes", async ({ authenticatedPage }) => {
   const recipesPage = new RecipesPage(authenticatedPage);
   await recipesPage.goto();
   // User is already logged in
@@ -111,7 +114,7 @@ test('authenticated user can access recipes', async ({ authenticatedPage }) => {
 Provides unique test user credentials for each test:
 
 ```typescript
-test('register new user', async ({ page, testUser }) => {
+test("register new user", async ({ page, testUser }) => {
   // testUser.email and testUser.password are unique
   const registerPage = new RegisterPage(page);
   await registerPage.register(testUser.email, testUser.password);
@@ -156,23 +159,23 @@ test('register new user', async ({ page, testUser }) => {
 
 ```typescript
 // ✅ Good - semantic, resilient
-page.getByRole('button', { name: /submit/i })
-page.getByLabel(/email/i)
+page.getByRole("button", { name: /submit/i });
+page.getByLabel(/email/i);
 
 // ❌ Avoid - fragile
-page.locator('.submit-btn')
+page.locator(".submit-btn");
 ```
 
 ### 2. Wait for Network Idle
 
 ```typescript
-await page.waitForLoadState('networkidle');
+await page.waitForLoadState("networkidle");
 ```
 
 ### 3. Use Test Data Helpers
 
 ```typescript
-import { TestData, createUniqueRecipe } from './helpers/test-data';
+import { TestData, createUniqueRecipe } from "./helpers/test-data";
 
 const recipe = createUniqueRecipe(TestData.recipes.simple);
 ```
@@ -185,8 +188,8 @@ Each test should be independent and not rely on state from other tests. Use fixt
 
 ```typescript
 // ✅ Use Playwright's expect
-import { expect } from '@playwright/test';
-expect(await page.title()).toContain('Dashboard');
+import { expect } from "@playwright/test";
+expect(await page.title()).toContain("Dashboard");
 
 // ✅ Better - use built-in matchers
 await expect(page).toHaveTitle(/Dashboard/);
@@ -221,6 +224,7 @@ npx playwright test --debug e2e/auth-onboarding.spec.ts
 ## CI/CD Integration
 
 Tests are configured to run in CI with:
+
 - 2 retries for flaky tests
 - Single worker for consistency
 - HTML reporter for test results

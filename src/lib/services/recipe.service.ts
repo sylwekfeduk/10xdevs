@@ -63,6 +63,8 @@ export async function createRecipe(
       ingredients: data.ingredients,
       instructions: data.instructions,
       original_recipe_id: data.original_recipe_id || null,
+      copied_from_master_id: data.copied_from_master_id || null,
+      kcal: data.kcal || null,
       user_id: userId,
     })
     .select()
@@ -201,7 +203,7 @@ export async function getUserRecipes(
       // Query 2: Get paginated data with only necessary fields
       supabase
         .from("recipes")
-        .select("id, user_id, title, original_recipe_id, created_at, updated_at")
+        .select("id, user_id, title, original_recipe_id, copied_from_master_id, kcal, created_at, updated_at")
         .eq("user_id", userId)
         .order(sortBy, { ascending: order === "asc" })
         .range(from, to),

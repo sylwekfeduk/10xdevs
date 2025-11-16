@@ -46,8 +46,44 @@ export type RecipeDetailDto = Tables<"recipes">;
  */
 export type CreateRecipeCommand = Pick<
   TablesInsert<"recipes">,
-  "title" | "ingredients" | "instructions" | "original_recipe_id"
+  "title" | "ingredients" | "instructions" | "original_recipe_id" | "copied_from_master_id" | "kcal"
 >;
+
+/**
+ * Represents a master recipe as it appears in a list.
+ *
+ * @description This DTO is a lightweight representation of a master recipe,
+ * excluding heavier fields like `ingredients` and `instructions`.
+ * It's used in the response of the `GET /api/master-recipes` endpoint.
+ */
+export type MasterRecipeListItemDto = Omit<Tables<"master_recipes">, "ingredients" | "instructions">;
+
+/**
+ * Represents the full details of a single master recipe.
+ *
+ * @description This DTO corresponds to the `master_recipes` table and includes all
+ * fields. It is used in the response for `GET /api/master-recipes/{recipeId}`.
+ */
+export type MasterRecipeDetailDto = Tables<"master_recipes">;
+
+/**
+ * Represents the command for creating a new master recipe.
+ *
+ * @description This command model is used as the request payload for the
+ * `POST /api/master-recipes` endpoint. Only admin users can create master recipes.
+ */
+export type CreateMasterRecipeCommand = Pick<
+  TablesInsert<"master_recipes">,
+  "title" | "ingredients" | "instructions" | "description"
+>;
+
+/**
+ * Represents the command for updating a master recipe.
+ *
+ * @description This command model is used as the request payload for the
+ * `PATCH /api/master-recipes/{recipeId}` endpoint. Only admin users can update master recipes.
+ */
+export type UpdateMasterRecipeCommand = Partial<CreateMasterRecipeCommand>;
 
 /**
  * Represents an unsaved, AI-modified recipe.
@@ -102,6 +138,20 @@ export interface PaginatedRecipesResponse {
 }
 
 /**
+ * Represents the paginated response from the GET /api/master-recipes endpoint.
+ *
+ * @description Contains an array of master recipe list items and pagination metadata.
+ */
+export interface PaginatedMasterRecipesResponse {
+  data: MasterRecipeListItemDto[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+  };
+}
+
+/**
  * Represents the query parameters for fetching recipes.
  *
  * @description Used for managing the state of pagination, sorting, and filtering
@@ -124,7 +174,23 @@ export interface RecipeViewModel {
   id: string;
   title: string;
   isOriginal: boolean;
-  statusLabel: "Original" | "AI-Modified";
+  isCopiedFromMaster: boolean;
+  statusLabel: "Original" | "AI-Modified" | "From Catalog";
+  displayDate: string;
+  linkPath: string;
+  kcal: number | null;
+}
+
+/**
+ * Represents a master recipe in the Master Recipe Catalog View.
+ *
+ * @description This ViewModel is derived from MasterRecipeListItemDto and includes
+ * computed properties for easier rendering and UI logic.
+ */
+export interface MasterRecipeViewModel {
+  id: string;
+  title: string;
+  description: string | null;
   displayDate: string;
   linkPath: string;
 }
@@ -144,6 +210,7 @@ export interface RecipeDetailsViewModel {
   statusLabel: "Original" | "AI-Modified";
   changesSummary: string | null;
   isDisclaimerNeeded: boolean;
+  kcal: number | null;
 }
 
 // ============================================================================

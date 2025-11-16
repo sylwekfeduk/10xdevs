@@ -2,6 +2,29 @@
 import AppLayout from "../../layouts/AppLayout.astro";
 import { ToasterStandalone } from "../../components/ui/toaster-standalone";
 import { NewRecipeForm } from "../../components/forms/NewRecipeForm";
+import { getLocaleFromUrl, getTranslations, t } from "../../lib/i18n";
+
+// Get locale from URL
+const locale = getLocaleFromUrl(Astro.url);
+const translations = getTranslations(locale);
+
+// Extract recipe translations as a plain object for serialization
+const recipeTranslations = {
+  formTitle: translations.recipes.formTitle,
+  formTitlePlaceholder: translations.recipes.formTitlePlaceholder,
+  formIngredients: translations.recipes.formIngredients,
+  formIngredientsPlaceholder: translations.recipes.formIngredientsPlaceholder,
+  formInstructions: translations.recipes.formInstructions,
+  formInstructionsPlaceholder: translations.recipes.formInstructionsPlaceholder,
+  formKcal: translations.recipes.formKcal,
+  formKcalOptional: translations.recipes.formKcalOptional,
+  formKcalPlaceholder: translations.recipes.formKcalPlaceholder,
+  formKcalDescription: translations.recipes.formKcalDescription,
+  createRecipe: translations.recipes.createRecipe,
+  creating: translations.recipes.creating,
+  reset: translations.recipes.reset,
+  error: translations.recipes.error,
+};
 
 // Check if user is authenticated
 if (!Astro.locals.user) {
@@ -10,13 +33,13 @@ if (!Astro.locals.user) {
 }
 ---
 
-<AppLayout title="Create New Recipe">
+<AppLayout title={t(locale, "recipes.newRecipeTitle")}>
   <div class="container mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
     <div class="mb-8 bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-md">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900">Create New Recipe</h1>
-      <p class="text-gray-600 mt-2">Add a delicious new recipe to your collection</p>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900">{t(locale, "recipes.newRecipePageTitle")}</h1>
+      <p class="text-gray-600 mt-2">{t(locale, "recipes.newRecipePageDescription")}</p>
     </div>
-    <NewRecipeForm client:load />
+    <NewRecipeForm client:load translations={recipeTranslations} />
   </div>
   <ToasterStandalone client:load />
 </AppLayout>

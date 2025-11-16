@@ -18,6 +18,7 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
+    "generate-bedrock-key": "node scripts/generate-bedrock-key.js",
     "test:e2e:codegen": "playwright codegen http://localhost:3000",
     "test:e2e:cleanup": "tsx e2e/scripts/cleanup-test-data.ts"
   },
@@ -39,6 +40,7 @@
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
     "astro": "^5.13.7",
+    "aws4fetch": "^1.0.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

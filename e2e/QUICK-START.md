@@ -31,18 +31,21 @@ npm run test:e2e
 ## 📊 What Gets Tested?
 
 ### ✅ Authentication (8 tests)
+
 - User registration
 - Login/logout
 - Password recovery
 - Onboarding flow
 
 ### ✅ Recipe Management (6 tests)
+
 - Create recipes
 - View recipe list
 - Sorting & pagination
 - Delete recipes
 
 ### ✅ AI Features (8 tests)
+
 - AI recipe modification
 - Save/discard changes
 - Error handling
@@ -53,26 +56,32 @@ npm run test:e2e
 ## 🎯 Test Modes
 
 ### UI Mode (Recommended)
+
 ```bash
 npm run test:e2e:ui
 ```
+
 - Visual test runner
 - Watch tests execute
 - Time travel debugging
 - Easy to run individual tests
 
 ### Headless Mode (CI/CD)
+
 ```bash
 npm run test:e2e
 ```
+
 - Runs in background
 - Generates HTML report
 - Perfect for automation
 
 ### Debug Mode
+
 ```bash
 npm run test:e2e:debug
 ```
+
 - Step through tests
 - Inspect elements
 - Set breakpoints
@@ -114,14 +123,14 @@ npm run test:e2e:codegen
 
 ## ⚡ Quick Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm run test:e2e` | Run all tests |
-| `npm run test:e2e:ui` | Interactive UI mode |
-| `npm run test:e2e:debug` | Debug mode |
-| `npx playwright test auth-onboarding` | Run specific suite |
-| `npx playwright test --headed` | See browser |
-| `npx playwright show-report` | View results |
+| Command                               | Description         |
+| ------------------------------------- | ------------------- |
+| `npm run test:e2e`                    | Run all tests       |
+| `npm run test:e2e:ui`                 | Interactive UI mode |
+| `npm run test:e2e:debug`              | Debug mode          |
+| `npx playwright test auth-onboarding` | Run specific suite  |
+| `npx playwright test --headed`        | See browser         |
+| `npx playwright show-report`          | View results        |
 
 ## 🎓 Learn More
 

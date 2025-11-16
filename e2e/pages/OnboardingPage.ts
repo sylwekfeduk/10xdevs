@@ -12,7 +12,7 @@ export class OnboardingPage {
   constructor(page: Page) {
     this.page = page;
     this.heading = page.getByRole("heading", { name: /welcome to healthymeal/i });
-    this.continueButton = page.getByRole("button", { name: /complete setup|saving preferences/i });
+    this.continueButton = page.getByRole("button", { name: /complete profile|saving preferences/i });
     this.skipButton = page.getByRole("button", { name: /skip/i });
     // The form uses MultiSelectCombobox and TagInput, not checkboxes
     this.preferenceCheckboxes = page.locator('input[type="checkbox"]');

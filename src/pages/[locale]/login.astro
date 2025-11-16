@@ -1,0 +1,11 @@
+---
+import AuthLayout from "@/layouts/AuthLayout.astro";
+import { LoginForm } from "@/components/auth/LoginForm";
+import { t, getLocaleFromUrl } from "@/lib/i18n";
+
+const locale = getLocaleFromUrl(Astro.url);
+---
+
+<AuthLayout title={t(locale, "auth.loginTitle")}>
+  <LoginForm client:load />
+</AuthLayout>

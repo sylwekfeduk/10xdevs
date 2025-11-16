@@ -11,9 +11,11 @@
 ### ✅ Critical Fixes Applied
 
 #### 1. **RecipeDetailPage Locators Updated** (e2e/pages/RecipeDetailPage.ts:18-36)
+
 Fixed locators to match actual UI implementation:
 
 **Before:**
+
 ```typescript
 this.title = page.locator('h1, [data-testid="recipe-title"]');
 this.modifyWithAIButton = page.getByRole("button", { name: /modify with ai/i });
@@ -21,9 +23,10 @@ this.deleteButton = page.getByRole("button", { name: /delete|usuń/i });
 ```
 
 **After:**
+
 ```typescript
 // More specific h1 locator
-this.title = page.locator('h1').first();
+this.title = page.locator("h1").first();
 
 // Correct role for link (not button)
 this.modifyWithAIButton = page.getByRole("link", { name: /modify with ai/i });
@@ -36,15 +39,18 @@ this.backButton = page.getByRole("link", { name: /back to recipes/i });
 ```
 
 **Source Components:**
+
 - `src/components/recipe-details/RecipeActionsBar.tsx:14-25`
 - `src/components/recipe-details/RecipeContentDisplay.tsx:14`
 
 ---
 
 #### 2. **DashboardPage Logout Implementation** (e2e/pages/DashboardPage.ts:12-46)
+
 Fixed logout functionality to handle dropdown menu:
 
 **Before:**
+
 ```typescript
 this.logoutButton = page.getByRole("button", { name: /logout|wyloguj/i });
 
@@ -54,6 +60,7 @@ async logout() {
 ```
 
 **After:**
+
 ```typescript
 // Added user menu button locator
 this.userMenuButton = page.getByRole("button", { name: /user menu|open user menu/i })
@@ -77,14 +84,19 @@ async logout() {
 ---
 
 #### 3. **Recipe Detail Page Ingredients/Instructions Locators**
+
 Updated to find content via Card headers:
 
 ```typescript
 // Navigate up from heading to card content
-this.ingredients = page.getByRole('heading', { name: /^ingredients$/i })
-  .locator('..').locator('..');
-this.instructions = page.getByRole('heading', { name: /^instructions$/i })
-  .locator('..').locator('..');
+this.ingredients = page
+  .getByRole("heading", { name: /^ingredients$/i })
+  .locator("..")
+  .locator("..");
+this.instructions = page
+  .getByRole("heading", { name: /^instructions$/i })
+  .locator("..")
+  .locator("..");
 ```
 
 **Source Component:** `src/components/recipe-details/RecipeContentDisplay.tsx:21-38`
@@ -109,6 +121,7 @@ this.instructions = page.getByRole('heading', { name: /^instructions$/i })
 ### ❌ Tests Still Failing - By Category
 
 #### **Registration Tests (Supabase Email Validation)**
+
 These tests fail because Supabase requires valid email domains:
 
 - TC1.1: User can successfully register ❌
@@ -125,6 +138,7 @@ These tests fail because Supabase requires valid email domains:
 ---
 
 #### **Logout Test (Not Redirecting)**
+
 - TC1.5: User loses access after logout ❌
   - **Issue:** User stays on `/recipes` page after logout instead of redirecting to `/login`
   - **Expected:** Redirect to `/login`
@@ -134,6 +148,7 @@ These tests fail because Supabase requires valid email domains:
 ---
 
 #### **Password Recovery (Message Not Visible)**
+
 - TC1.6: User can reset password ❌
   - **Issue:** Success message locator not finding message
   - **Fix Needed:** Inspect password recovery page for correct message locator
@@ -141,6 +156,7 @@ These tests fail because Supabase requires valid email domains:
 ---
 
 #### **Recipe Tests (Require Seeding)**
+
 - TC2.1: Create new recipe ❌
   - **Issue:** Not redirected after recipe creation
   - **Current Title:** "Create New Recipe" (still on form page)
@@ -168,6 +184,7 @@ These tests fail because Supabase requires valid email domains:
 ---
 
 #### **AI Modification Tests (Button Not Found)**
+
 All 8 AI modification tests fail on the same step:
 
 - TC3.1 - TC3.7 + Bonus ❌
@@ -180,34 +197,39 @@ All 8 AI modification tests fail on the same step:
 ## 🔍 Key Discoveries
 
 ### 1. **Logout is in a Dropdown Menu**
+
 The logout button is actually a menu item (`role="menuitem"`) inside a dropdown menu triggered by clicking the user avatar button. Updated DashboardPage.logout() to:
+
 1. Click user avatar button
 2. Wait for menu to open (500ms)
 3. Click "Log out" menu item
 
 ### 2. **"Modify with AI" is a Link, Not a Button**
+
 In RecipeActionsBar.tsx:14, the "Modify with AI" action is implemented as a link (`<a href=...>`), not a button. Changed from `getByRole("button")` to `getByRole("link")`.
 
 ### 3. **Recipe Title is Simple h1**
+
 The recipe title in RecipeContentDisplay.tsx:14 is just `<h1 className="text-4xl font-bold tracking-tight">{recipe.title}</h1>`. Using `.first()` to ensure we get the main h1 and not navigation headings.
 
 ### 4. **Delete Button Has Full Text**
+
 The delete button in RecipeActionsBar.tsx:22 says "Delete Recipe" not just "Delete". Updated locator to match full text.
 
 ---
 
 ## 📈 Progress Metrics
 
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| Tests Passing | 5/26 | 5/26 | No change* |
-| Locator Issues Fixed | Multiple timeouts | All running | ✅ Major |
-| Tests Actually Running | ~50% | 100% | ✅ 100% |
-| Register Button Timeout | BLOCKED many tests | RESOLVED | ✅ Critical |
-| Logout Implementation | Not working | Implemented | ✅ Done |
-| Recipe Detail Locators | Generic/incorrect | Specific/correct | ✅ Done |
+| Metric                  | Before             | After            | Improvement |
+| ----------------------- | ------------------ | ---------------- | ----------- |
+| Tests Passing           | 5/26               | 5/26             | No change\* |
+| Locator Issues Fixed    | Multiple timeouts  | All running      | ✅ Major    |
+| Tests Actually Running  | ~50%               | 100%             | ✅ 100%     |
+| Register Button Timeout | BLOCKED many tests | RESOLVED         | ✅ Critical |
+| Logout Implementation   | Not working        | Implemented      | ✅ Done     |
+| Recipe Detail Locators  | Generic/incorrect  | Specific/correct | ✅ Done     |
 
-*Note: Pass rate unchanged BUT tests now run to completion and fail on actual functional issues, not locator timeouts.
+\*Note: Pass rate unchanged BUT tests now run to completion and fail on actual functional issues, not locator timeouts.
 
 ---
 
@@ -257,6 +279,7 @@ The delete button in RecipeActionsBar.tsx:22 says "Delete Recipe" not just "Dele
 ## 📁 Files Modified
 
 ### Page Objects Updated (3 files)
+
 1. **e2e/pages/RecipeDetailPage.ts**
    - Fixed title locator (line 21)
    - Changed modifyWithAIButton from button to link (line 27)
@@ -300,12 +323,14 @@ The delete button in RecipeActionsBar.tsx:22 says "Delete Recipe" not just "Dele
 ## 🏆 Impact Assessment
 
 ### Before Improvements
+
 - ❌ Register button timeout blocked ~60% of tests
 - ❌ Logout functionality not implemented
 - ❌ Recipe detail page locators incorrect
 - ❌ Many tests failed immediately on setup
 
 ### After Improvements
+
 - ✅ All tests run to completion
 - ✅ Logout implementation complete
 - ✅ Recipe detail page locators accurate
@@ -313,6 +338,7 @@ The delete button in RecipeActionsBar.tsx:22 says "Delete Recipe" not just "Dele
 - ✅ Test suite provides meaningful feedback
 
 ### Value Delivered
+
 - **Eliminated blocking issues** - Tests can now run end-to-end
 - **Accurate locators** - Based on actual component implementation
 - **Better test reliability** - Locators match UI structure

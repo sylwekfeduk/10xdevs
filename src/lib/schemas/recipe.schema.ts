@@ -9,6 +9,8 @@ export const CreateRecipeSchema = z.object({
   ingredients: z.string().min(1, "Ingredients are required and cannot be empty").trim(),
   instructions: z.string().min(1, "Instructions are required and cannot be empty").trim(),
   original_recipe_id: z.string().uuid("Invalid UUID format for original_recipe_id").optional().nullable(),
+  copied_from_master_id: z.string().uuid("Invalid UUID format for copied_from_master_id").optional().nullable(),
+  kcal: z.number().int().positive("Calories must be a positive number").optional().nullable(),
 });
 
 export type CreateRecipeSchemaType = z.infer<typeof CreateRecipeSchema>;

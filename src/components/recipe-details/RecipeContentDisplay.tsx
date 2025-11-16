@@ -1,19 +1,40 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { RecipeDetailsViewModel } from "@/types";
+import { useTranslation } from "@/components/hooks/useTranslation";
 
 interface RecipeContentDisplayProps {
   recipe: RecipeDetailsViewModel;
 }
 
 export function RecipeContentDisplay({ recipe }: RecipeContentDisplayProps) {
+  const { t } = useTranslation();
+
+  // Map status label to translation key
+  const getStatusLabelTranslation = (statusLabel: RecipeDetailsViewModel["statusLabel"]): string => {
+    switch (statusLabel) {
+      case "Original":
+        return t("status.original");
+      case "AI-Modified":
+        return t("status.aiModified");
+      default:
+        return statusLabel;
+    }
+  };
   return (
     <div className="space-y-6">
       {/* Title and Status */}
       <div className="flex items-start justify-between gap-4">
-        <h1 className="text-4xl font-bold tracking-tight">{recipe.title}</h1>
+        <div className="flex-1">
+          <h1 className="text-4xl font-bold tracking-tight">{recipe.title}</h1>
+          {recipe.kcal !== null && (
+            <div className="inline-block mt-2 px-4 py-2 bg-[#3F8C4F] rounded-lg">
+              <p className="text-lg font-semibold text-white">{recipe.kcal} kcal</p>
+            </div>
+          )}
+        </div>
         <Badge variant={recipe.isAIModified ? "secondary" : "default"} className="shrink-0">
-          {recipe.statusLabel}
+          {getStatusLabelTranslation(recipe.statusLabel)}
         </Badge>
       </div>
 

@@ -1,0 +1,11 @@
+---
+import AuthLayout from "@/layouts/AuthLayout.astro";
+import { OnboardingForm } from "@/components/auth/OnboardingForm";
+import { t, getLocaleFromUrl } from "@/lib/i18n";
+
+const locale = getLocaleFromUrl(Astro.url);
+---
+
+<AuthLayout title={t(locale, "onboarding.pageTitle")}>
+  <OnboardingForm client:load />
+</AuthLayout>

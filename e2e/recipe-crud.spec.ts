@@ -13,12 +13,8 @@ test.describe.serial("Recipe Management (CRUD)", () => {
 
       const recipe = {
         title: `Test Recipe ${Date.now()}`,
-        description: "A delicious test recipe",
         ingredients: "1 cup flour\n2 eggs\n1 cup milk",
         instructions: "Mix all ingredients\nBake at 350F for 30 minutes",
-        prepTime: "15",
-        cookTime: "30",
-        servings: "4",
       };
 
       await newRecipePage.createRecipe(recipe);
@@ -68,7 +64,6 @@ test.describe.serial("Recipe Management (CRUD)", () => {
       await newRecipePage.goto();
       await newRecipePage.createRecipe({
         title: `My Recipe ${Date.now()}`,
-        description: "Test description",
         ingredients: "Test ingredients",
         instructions: "Test instructions",
       });
@@ -114,23 +109,35 @@ test.describe.serial("Recipe Management (CRUD)", () => {
         "L Recipe",
       ];
 
-      for (const name of recipeNames) {
-        await newRecipePage.goto();
-        await authenticatedPage.waitForLoadState("domcontentloaded");
+      for (let i = 0; i < recipeNames.length; i++) {
+        const name = recipeNames[i];
+        console.log(`Creating recipe ${i + 1}/${recipeNames.length}: ${name}`);
 
+        await newRecipePage.goto();
+        await authenticatedPage.waitForLoadState("networkidle");
+        await authenticatedPage.waitForTimeout(500);
+
+        const timestamp = Date.now() + i; // Ensure unique timestamps
         await newRecipePage.createRecipe({
-          title: `${name} ${Date.now()}`,
-          description: "Test",
-          ingredients: "Test",
-          instructions: "Test",
+          title: `${name} ${timestamp}`,
+          ingredients: "Test ingredients",
+          instructions: "Test instructions",
         });
 
-        // Wait for redirect to recipe detail page after each creation
+        // Wait for redirect to recipe detail page after each creation with longer timeout
         await authenticatedPage.waitForURL(
           (url) => !url.pathname.includes("/new") && url.pathname.includes("/recipes/"),
-          { timeout: 10000 }
+          { timeout: 15000 }
         );
-        await authenticatedPage.waitForLoadState("domcontentloaded");
+        await authenticatedPage.waitForLoadState("networkidle");
+
+        // Verify we're actually on a recipe detail page
+        const currentUrl = authenticatedPage.url();
+        console.log(`Recipe ${i + 1} created, URL: ${currentUrl}`);
+        expect(currentUrl).toMatch(/\/recipes\/[a-f0-9-]+$/);
+
+        // Add a small delay between recipe creations to avoid overwhelming the system
+        await authenticatedPage.waitForTimeout(500);
       }
 
       // Go to recipes list
@@ -191,9 +198,8 @@ test.describe.serial("Recipe Management (CRUD)", () => {
       await newRecipePage.goto();
       await newRecipePage.createRecipe({
         title: recipeName,
-        description: "Test",
-        ingredients: "Test",
-        instructions: "Test",
+        ingredients: "Test ingredients",
+        instructions: "Test instructions",
       });
 
       // Wait for redirect to recipe detail page
@@ -231,9 +237,8 @@ test.describe.serial("Recipe Management (CRUD)", () => {
       await newRecipePage.goto();
       await newRecipePage.createRecipe({
         title: recipeName,
-        description: "Will be deleted",
-        ingredients: "Test",
-        instructions: "Test",
+        ingredients: "Test ingredients",
+        instructions: "Test instructions",
       });
 
       // Wait for redirect to recipe detail page

@@ -20,6 +20,7 @@
    - ✅ TC1.4: User cannot login with incorrect credentials
 
 **These prove:**
+
 - Page loading works ✅
 - Locators are correct ✅
 - React hydration fix works ✅
@@ -35,11 +36,13 @@
 **Root Cause:** Email validation failing from Supabase
 
 **Evidence from smoke test:**
+
 ```
 Alert: "ErrorEmail address 'test-1762260800248@example.com' is invalid"
 ```
 
 **Impact:** All tests that depend on creating new users fail:
+
 - All registration tests
 - All authenticated tests (use `authenticatedPage` fixture)
 - All recipe and AI tests (need authenticated user)
@@ -59,6 +62,7 @@ Alert: "ErrorEmail address 'test-1762260800248@example.com' is invalid"
 ## 📊 Test Breakdown by Category
 
 ### Authentication & Onboarding (0/8 passing)
+
 - ❌ TC1.1: Registration (email validation)
 - ❌ TC1.2: Registration validation (email validation)
 - ❌ TC1.3: Login (depends on TC1.1)
@@ -69,15 +73,19 @@ Alert: "ErrorEmail address 'test-1762260800248@example.com' is invalid"
 - ❌ TC1.8: Onboarding complete (depends on registration)
 
 ### Recipe CRUD (0/6 passing)
+
 All depend on `authenticatedPage` fixture which requires registration
 
 ### AI Modification (0/8 passing)
+
 All depend on `authenticatedPage` fixture which requires registration
 
 ### Homepage Tests (1/5 passing)
+
 Old example tests that need cleanup
 
 ### Smoke Tests (3/3 passing) ✅
+
 All passing!
 
 ---
@@ -114,6 +122,7 @@ export const test = base.extend<AuthFixtures>({
 ### Option 2: Fix Email Validation
 
 Configure Supabase to accept test emails:
+
 - Disable email validation in test environment
 - Use approved email domains
 - Use proper email format that Supabase accepts
@@ -127,12 +136,14 @@ Intercept Supabase calls and return mock responses for tests.
 ## 📈 Progress Made
 
 ### Before
+
 - 0 tests passing
 - React not hydrating
 - Buttons not found
 - Forms submitting as GET requests
 
 ### After
+
 - 5 tests passing ✅
 - React hydration working ✅
 - All locators correct ✅
@@ -189,6 +200,7 @@ Intercept Supabase calls and return mock responses for tests.
 ## 📁 Files Updated
 
 ### Page Objects (9 files) - ✅ All working
+
 - LoginPage.ts - ✅ Fixed
 - RegisterPage.ts - ✅ Fixed (hydration wait added)
 - OnboardingPage.ts - ✅ Fixed
@@ -200,11 +212,13 @@ Intercept Supabase calls and return mock responses for tests.
 - RecipeModifyPage.ts - ✅ Ready
 
 ### Test Suites (3 files) - ⚠️ Need fixture update
+
 - auth-onboarding.spec.ts - Ready, needs fixture fix
 - recipe-crud.spec.ts - Ready, needs fixture fix
 - recipe-ai-modification.spec.ts - Ready, needs fixture fix
 
 ### Supporting Files - ✅ Complete
+
 - fixtures/base.ts - Needs update to use existing user
 - helpers/test-data.ts - ✅ Working
 - README.md - ✅ Complete

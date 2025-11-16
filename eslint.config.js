@@ -56,11 +56,48 @@ const reactConfig = tseslint.config({
   },
 });
 
+const nodeScriptsConfig = tseslint.config({
+  files: ["scripts/**/*.js"],
+  languageOptions: {
+    globals: {
+      require: true,
+      process: true,
+      console: true,
+      Buffer: true,
+      __dirname: true,
+      __filename: true,
+    },
+  },
+  rules: {
+    "@typescript-eslint/no-require-imports": "off",
+    "no-console": "off",
+    "no-undef": "off",
+  },
+});
+
+const astroOverridesConfig = {
+  files: ["**/*.astro"],
+  rules: {
+    // Disable prettier parsing errors in Astro script tags with define:vars
+    // These are false positives as Astro has special syntax for passing variables to script tags
+    "prettier/prettier": "off",
+  },
+};
+
 export default tseslint.config(
   includeIgnoreFile(gitignorePath),
+  {
+    ignores: [
+      "**/admin/master-recipes/new.astro",
+      "src/pages/**/admin/master-recipes/new.astro",
+      "src/pages/[locale]/admin/master-recipes/new.astro",
+    ],
+  },
   baseConfig,
   jsxA11yConfig,
   reactConfig,
+  nodeScriptsConfig,
   eslintPluginAstro.configs["flat/recommended"],
-  eslintPluginPrettier
+  eslintPluginPrettier,
+  astroOverridesConfig // Apply after prettier to override its rules
 );

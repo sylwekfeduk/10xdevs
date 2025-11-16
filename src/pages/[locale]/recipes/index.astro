@@ -1,0 +1,13 @@
+---
+import AppLayout from "@/layouts/AppLayout.astro";
+import { RecipeLibraryPage } from "@/components/recipes/RecipeLibraryPage";
+import { t, getLocaleFromUrl } from "@/lib/i18n";
+
+const locale = getLocaleFromUrl(Astro.url);
+---
+
+<AppLayout title={t(locale, "recipes.pageTitle")}>
+  <div class="container mx-auto px-4 py-8">
+    <RecipeLibraryPage client:load />
+  </div>
+</AppLayout>

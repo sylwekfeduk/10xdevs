@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -7,6 +8,8 @@ import { Form } from "@/components/ui/form";
 import { AuthFormLayout } from "@/components/auth/shared/AuthFormLayout";
 import { EmailPasswordFields } from "@/components/auth/shared/EmailPasswordFields";
 import { useAuth } from "@/components/hooks/useAuth";
+import { useTranslation } from "@/components/hooks/useTranslation";
+import { localizedUrl } from "@/lib/i18n";
 import { registerFormSchema, type RegisterFormData } from "@/lib/validation/auth.schemas";
 
 /**
@@ -14,7 +17,11 @@ import { registerFormSchema, type RegisterFormData } from "@/lib/validation/auth
  * Calls server-side API endpoint and redirects to onboarding on success.
  */
 export function RegisterForm() {
+  const { t, locale } = useTranslation();
   const { isLoading, error, register } = useAuth();
+
+  // Create locale-aware URL
+  const loginUrl = React.useMemo(() => localizedUrl("/login", locale), [locale]);
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
@@ -31,20 +38,20 @@ export function RegisterForm() {
 
   return (
     <AuthFormLayout
-      title="Create an account"
+      title={t("auth.register")}
       description="Enter your email below to create your account"
       footer={
         <div className="text-sm text-gray-600 text-center">
-          Already have an account?{" "}
-          <a href="/login" className="text-[#3F8C4F] hover:text-[#234a3d] font-medium">
-            Sign in
+          {t("auth.hasAccount")}{" "}
+          <a href={loginUrl} className="text-[#3F8C4F] hover:text-[#234a3d] font-medium">
+            {t("auth.signInHere")}
           </a>
         </div>
       }
     >
       {error && (
         <Alert variant="destructive">
-          <AlertTitle>Error</AlertTitle>
+          <AlertTitle>{t("common.error")}</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
@@ -61,10 +68,10 @@ export function RegisterForm() {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating account...
+                {t("auth.register")}...
               </>
             ) : (
-              "Create account"
+              t("auth.register")
             )}
           </Button>
         </form>

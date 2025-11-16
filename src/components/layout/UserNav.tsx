@@ -1,5 +1,5 @@
 import * as React from "react";
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, Shield } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,13 +9,53 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useTranslation } from "@/components/hooks/useTranslation";
+import { localizedUrl } from "@/lib/i18n";
 
 /**
  * User navigation dropdown component for the application header.
  * Displays user avatar and provides access to profile and logout.
  */
 export function UserNav() {
+  const { t, locale } = useTranslation();
   const [isLoggingOut, setIsLoggingOut] = React.useState(false);
+  const [isAdmin, setIsAdmin] = React.useState(false);
+
+  // Create locale-aware profile URL
+  const profileUrl = React.useMemo(() => {
+    return localizedUrl("/profile", locale);
+  }, [locale]);
+
+  // Create locale-aware admin URL
+  const adminUrl = React.useMemo(() => {
+    return localizedUrl("/admin/master-recipes", locale);
+  }, [locale]);
+
+  const handleAdminClick = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      window.location.href = adminUrl;
+    },
+    [adminUrl]
+  );
+
+  // Fetch user profile to check admin status
+  React.useEffect(() => {
+    const checkAdminStatus = async () => {
+      try {
+        const response = await fetch("/api/me/profile");
+        if (response.ok) {
+          const profile = await response.json();
+          setIsAdmin(profile.is_admin === true);
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("Error fetching profile:", error);
+      }
+    };
+
+    checkAdminStatus();
+  }, []);
 
   const handleLogout = React.useCallback(async () => {
     setIsLoggingOut(true);
@@ -25,17 +65,20 @@ export function UserNav() {
       });
 
       if (!response.ok) {
+        // eslint-disable-next-line no-console
         console.error("Logout failed");
         setIsLoggingOut(false);
         return;
       }
 
-      window.location.href = "/";
+      // Redirect to home with locale awareness
+      window.location.href = localizedUrl("/", locale);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error logging out:", error);
       setIsLoggingOut(false);
     }
-  }, []);
+  }, [locale]);
 
   return (
     <DropdownMenu>
@@ -50,15 +93,21 @@ export function UserNav() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuItem asChild>
-          <a href="/profile" className="cursor-pointer">
+          <a href={profileUrl} className="cursor-pointer">
             <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
+            <span>{t("nav.profile")}</span>
           </a>
         </DropdownMenuItem>
+        {isAdmin && (
+          <DropdownMenuItem onClick={handleAdminClick} className="cursor-pointer">
+            <Shield className="mr-2 h-4 w-4" />
+            <span>{t("nav.adminPanel")}</span>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout} disabled={isLoggingOut} className="cursor-pointer">
           <LogOut className="mr-2 h-4 w-4" />
-          <span>{isLoggingOut ? "Logging out..." : "Log out"}</span>
+          <span>{isLoggingOut ? t("nav.loggingOut") : t("nav.logout")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

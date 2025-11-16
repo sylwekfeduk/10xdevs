@@ -1,7 +1,10 @@
 import type { APIRoute } from "astro";
 
 import { RecipeIdSchema } from "../../../../lib/schemas/recipe.schema";
-import { AIServiceUnavailableError, modifyRecipe } from "../../../../lib/services/ai-modification.service";
+import {
+  CalorieCountingUnavailableError,
+  countRecipeCalories,
+} from "../../../../lib/services/calorie-counting.service";
 import { NotFoundError } from "../../../../lib/services/recipe.service";
 
 // Disable prerendering for this API route
@@ -9,34 +12,32 @@ export const prerender = false;
 
 /**
  * POST /api/recipes/{recipeId}/modify
- * Modifies a recipe using AI based on the user's dietary preferences.
+ * Counts calories for a recipe using AWS Bedrock AI.
  *
- * @returns 200 with ModifiedRecipeDto (unsaved recipe) on success
+ * @returns 200 with CalorieCountResult on success
  * @returns 400 if recipeId is not a valid UUID
  * @returns 401 if user is not authenticated
- * @returns 404 if recipe or profile not found
+ * @returns 404 if recipe not found
  * @returns 503 if AI service is unavailable
  * @returns 500 on server errors
  */
 export const POST: APIRoute = async (context) => {
   try {
-    // TODO: Temporarily disabled for UI testing - Re-enable authentication before production!
     // Check for authenticated user
-    // if (!context.locals.user) {
-    //   return new Response(
-    //     JSON.stringify({
-    //       error: "Unauthorized",
-    //       message: "You must be authenticated to modify recipes",
-    //     }),
-    //     {
-    //       status: 401,
-    //       headers: { "Content-Type": "application/json" },
-    //     }
-    //   );
-    // }
+    if (!context.locals.user) {
+      return new Response(
+        JSON.stringify({
+          error: "Unauthorized",
+          message: "You must be authenticated to count calories",
+        }),
+        {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
 
-    // TEMPORARY: Use a mock user ID for testing
-    const userId = context.locals.user?.id || "00000000-0000-0000-0000-000000000000";
+    const userId = context.locals.user.id;
 
     // Validate recipeId from URL params
     const recipeId = context.params.recipeId;
@@ -56,11 +57,11 @@ export const POST: APIRoute = async (context) => {
       );
     }
 
-    // Call AI modification service
-    const modifiedRecipe = await modifyRecipe(userId, validationResult.data, context.locals.supabase);
+    // Call calorie counting service
+    const calorieResult = await countRecipeCalories(userId, validationResult.data, context.locals.supabase);
 
     // Return success response with 200 OK
-    return new Response(JSON.stringify(modifiedRecipe), {
+    return new Response(JSON.stringify(calorieResult), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -79,12 +80,12 @@ export const POST: APIRoute = async (context) => {
       );
     }
 
-    // Handle AIServiceUnavailableError (503)
-    if (error instanceof AIServiceUnavailableError) {
+    // Handle CalorieCountingUnavailableError (503)
+    if (error instanceof CalorieCountingUnavailableError) {
       return new Response(
         JSON.stringify({
           error: "Service Unavailable",
-          message: "The AI service is temporarily unavailable. Please try again later.",
+          message: "The calorie counting service is temporarily unavailable. Please try again later.",
           details: error.message,
         }),
         {
@@ -96,11 +97,11 @@ export const POST: APIRoute = async (context) => {
 
     // Handle unexpected errors (500)
     // eslint-disable-next-line no-console
-    console.error("Error modifying recipe:", error);
+    console.error("Error counting calories:", error);
     return new Response(
       JSON.stringify({
         error: "Internal Server Error",
-        message: "An unexpected error occurred while modifying the recipe",
+        message: "An unexpected error occurred while counting calories",
       }),
       {
         status: 500,

@@ -1,0 +1,72 @@
+---
+import AppLayout from "../../../layouts/AppLayout.astro";
+import { ToasterStandalone } from "../../../components/ui/toaster-standalone";
+
+// Check if user is authenticated
+if (!Astro.locals.user) {
+  return Astro.redirect("/login");
+}
+
+// Check if user is admin
+const { data: profile } = await Astro.locals.supabase
+  .from("profiles")
+  .select("is_admin")
+  .eq("user_id", Astro.locals.user.id)
+  .single();
+
+if (!profile || !profile.is_admin) {
+  // Not an admin, redirect to dashboard with error
+  return Astro.redirect("/dashboard");
+}
+---
+
+<AppLayout title="Admin - Manage Master Recipes">
+  <div class="container mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div class="space-y-8">
+      <!-- Admin Header -->
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-md border-l-4 border-l-[#9b5de5]">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">Admin - Master Recipes</h1>
+            <p class="text-gray-600 mt-2">Manage the master recipe catalog that all users can view and copy</p>
+          </div>
+          <a
+            href="/admin/master-recipes/new"
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#9b5de5] text-white hover:bg-[#7b3ec7] h-10 px-4 py-2"
+          >
+            Create Master Recipe
+          </a>
+        </div>
+      </div>
+
+      <!-- Info Alert -->
+      <div
+        class="rounded-lg border border-[#9b5de5] bg-[#9b5de5]/5 p-4 text-[#7b3ec7] dark:border-[#9b5de5] dark:bg-[#9b5de5]/10"
+      >
+        <h3 class="mb-1 font-medium leading-none tracking-tight">Admin Access</h3>
+        <p class="text-sm">
+          You have admin access to manage master recipes. These recipes are visible to all users and can be copied to
+          their personal collections.
+        </p>
+      </div>
+
+      <!-- Link to catalog -->
+      <div class="flex gap-4">
+        <a
+          href="/master-recipes"
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+        >
+          View Catalog (User View)
+        </a>
+      </div>
+
+      <!-- Master recipes list will go here -->
+      <p class="text-gray-600">
+        Master recipes management interface. Navigate to the <a href="/master-recipes" class="text-[#9b5de5] underline"
+          >Recipe Catalog</a
+        > to view master recipes from a user perspective.
+      </p>
+    </div>
+  </div>
+  <ToasterStandalone client:load />
+</AppLayout>
