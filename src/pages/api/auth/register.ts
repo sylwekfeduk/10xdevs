@@ -20,7 +20,7 @@ const RegisterSchema = z.object({
  * @returns 400 if request body is invalid or user already exists
  * @returns 500 on server errors
  */
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, locals }) => {
   try {
     // Parse and validate request body
     const body = await request.json();
@@ -46,6 +46,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     const supabase = createSupabaseServerInstance({
       cookies,
       headers: request.headers,
+      runtime: locals.runtime,
     });
 
     // Attempt to sign up with email and password
