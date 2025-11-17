@@ -60,6 +60,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const supabase = createSupabaseServerInstance({
     cookies: context.cookies,
     headers: context.request.headers,
+    runtime: context.locals.runtime,
   });
 
   // Store supabase client in context for use in API routes

@@ -13,12 +13,13 @@ export const prerender = false;
  * @returns 400 if logout fails
  * @returns 500 on server errors
  */
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, locals }) => {
   try {
     // Create Supabase server instance with cookie handling
     const supabase = createSupabaseServerInstance({
       cookies,
       headers: request.headers,
+      runtime: locals.runtime,
     });
 
     // Sign out the user

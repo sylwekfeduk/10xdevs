@@ -21,7 +21,7 @@ const LoginSchema = z.object({
  * @returns 401 if credentials are incorrect
  * @returns 500 on server errors
  */
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, locals }) => {
   try {
     // Parse and validate request body
     const body = await request.json();
@@ -47,6 +47,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     const supabase = createSupabaseServerInstance({
       cookies,
       headers: request.headers,
+      runtime: locals.runtime,
     });
 
     // Attempt to sign in with email and password

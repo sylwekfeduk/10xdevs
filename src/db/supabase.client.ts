@@ -38,9 +38,10 @@ export const supabaseClient = new Proxy({} as SupabaseClientBase<Database>, {
  * WARNING: Only use this on the server side for admin operations.
  * Never expose this client to the client side.
  */
-export const createSupabaseAdminClient = () => {
-  const supabaseUrl = import.meta.env.SUPABASE_URL;
-  const supabaseServiceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+export const createSupabaseAdminClient = (runtime?: { env?: Record<string, string> }) => {
+  // Try to get from Cloudflare runtime first, then fall back to import.meta.env
+  const supabaseUrl = runtime?.env?.SUPABASE_URL ?? import.meta.env.SUPABASE_URL;
+  const supabaseServiceRoleKey = runtime?.env?.SUPABASE_SERVICE_ROLE_KEY ?? import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     throw new Error("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required for admin client");
@@ -79,9 +80,14 @@ function parseCookieHeader(cookieHeader: string): { name: string; value: string 
  * Create a server-side Supabase client with proper cookie handling.
  * Use this in middleware and API routes for authentication.
  */
-export const createSupabaseServerInstance = (context: { headers: Headers; cookies: AstroCookies }) => {
-  const supabaseUrl = import.meta.env.SUPABASE_URL;
-  const supabaseAnonKey = import.meta.env.SUPABASE_KEY;
+export const createSupabaseServerInstance = (context: {
+  headers: Headers;
+  cookies: AstroCookies;
+  runtime?: { env?: Record<string, string> };
+}) => {
+  // Try to get from Cloudflare runtime first, then fall back to import.meta.env
+  const supabaseUrl = context.runtime?.env?.SUPABASE_URL ?? import.meta.env.SUPABASE_URL;
+  const supabaseAnonKey = context.runtime?.env?.SUPABASE_KEY ?? import.meta.env.SUPABASE_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
     throw new Error("SUPABASE_URL and SUPABASE_KEY environment variables are required");

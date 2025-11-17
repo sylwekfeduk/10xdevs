@@ -20,7 +20,7 @@ const PasswordResetSchema = z.object({
  * @returns 404 if email doesn't exist in the database
  * @returns 500 on server errors
  */
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, locals }) => {
   try {
     // Parse and validate request body
     const body = await request.json();
@@ -45,7 +45,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     // Create Supabase admin client to check if user exists
     let adminClient;
     try {
-      adminClient = createSupabaseAdminClient();
+      adminClient = createSupabaseAdminClient(locals.runtime);
     } catch (adminError) {
       console.error("Failed to create admin client:", adminError);
       return new Response(
@@ -98,6 +98,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     const supabase = createSupabaseServerInstance({
       cookies,
       headers: request.headers,
+      runtime: locals.runtime,
     });
 
     // Email exists, send password reset link
